@@ -25,7 +25,7 @@
                         <a class="nav-link active" aria-current="page" href="#">Home</a>
                         <a class="nav-link" href="#">Product</a>
                         <a class="nav-link" href="#">About</a>
-                        <a class="nav-link " href="#"><i class="fa fa-cart-shopping"></i></a>
+                        <a class="nav-link" href="{{url('/cart')}}"><i class="fa fa-cart-shopping"></i></a>
                         <div class="d-flex d-none">
                             <a class="btn btn-dark me-2" href="#">Log In</a>
                             <a class="btn btn-outline-dark" href="#">Sign Up</a>
