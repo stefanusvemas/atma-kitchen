@@ -8,8 +8,8 @@
 
         <div class="card mb-3 p-3">
             <div class="row justify-content-between">
-                <div class="col-md-auto">
-                    <img src="https://masterytricks.com/wp-content/uploads/2024/02/Naked-Cake-Recipe-Card.jpg" class="img-fluid rounded" alt="..." width="180px" style="aspect-ratio:1/1; object-fit: cover;">
+                <div class="col-md-auto col-4">
+                    <img src="https://masterytricks.com/wp-content/uploads/2024/02/Naked-Cake-Recipe-Card.jpg" class="img-fluid rounded" width="180px" alt="..." style="aspect-ratio:1/1; object-fit: cover;">
                 </div>
                 <div class="col">
                     <h4 class="card-title"><strong>Kue Putih</strong></h4>
@@ -39,8 +39,8 @@
 
         <div class="card mb-3 p-3">
             <div class="row justify-content-between">
-                <div class="col-md-auto">
-                    <img src="https://masterytricks.com/wp-content/uploads/2024/02/Naked-Cake-Recipe-Card.jpg" class="img-fluid rounded" alt="..." width="180px" style="aspect-ratio:1/1; object-fit: cover;">
+                <div class="col-md-auto col-4">
+                    <img src="https://masterytricks.com/wp-content/uploads/2024/02/Naked-Cake-Recipe-Card.jpg" class="img-fluid rounded" width="180px" alt="..." style="aspect-ratio:1/1; object-fit: cover;">
                 </div>
                 <div class="col">
                     <h4 class="card-title"><strong>Second Item</strong></h4>
@@ -71,17 +71,19 @@
 
         <hr>
 
-        <div class="row justify-content-end mb-5">
-            <div class="col-auto mb-2">
+        <div class="row justify-content-between mb-5">
+            <div class="col-md-auto col-8">
                 <h5>Grand Total</h5>
                 <p id="grandTotal">Rp. 250.000</p>
             </div>
-            <div class="row justify-content-end">
-                <div class="col-auto">
-                    <a href="{{url('/')}}" class="btn btn-outline-dark">Continue Shopping</a>
-                </div>
-                <div class="col-auto">
-                    <a href="#" class="btn btn-dark">Checkout</a>
+            <div class="col-md-auto col-4">
+                <div class="row justify-content-end">
+                    <div class="col-auto">
+                        <a href="{{url('/')}}" class="btn btn-outline-dark d-none d-sm-block">Continue Shopping</a>
+                    </div>
+                    <div class="col-auto">
+                        <a href="#" class="btn btn-dark">Checkout</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -90,13 +92,13 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        var quantityInputs = document.querySelectorAll('.quantity-input');
+        const quantityInputs = document.querySelectorAll('.quantity-input');
 
         function calculateGrandTotal() {
-            var grandTotal = 0;
+            let grandTotal = 0;
             quantityInputs.forEach(function(input) {
-                var price = parseFloat(input.getAttribute('data-price'));
-                var quantity = parseInt(input.value);
+                let price = parseFloat(input.getAttribute('data-price'));
+                let quantity = parseInt(input.value);
                 grandTotal += price * quantity;
             });
             document.getElementById('grandTotal').textContent = 'Rp. ' + grandTotal.toFixed(2);
