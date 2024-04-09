@@ -26,8 +26,8 @@
                         <a class="nav-link" href="#">Product</a>
                         <a class="nav-link" href="#">About</a>
                         <div class="d-flex">
-                            <a class="btn btn-outline-primary me-2" href="{{url('login')}}">Log In</a>
-                            <a class="btn btn-outline-success" href="{{url('login')}}">Sign Up</a>
+                            <a class="btn btn-dark me-2" href="#">Log In</a>
+                            <a class="btn btn-outline-dark" href="#">Sign Up</a>
                         </div>
                     </div>
                 </div>
