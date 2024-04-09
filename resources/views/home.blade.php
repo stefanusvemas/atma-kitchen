@@ -16,7 +16,6 @@
                 <p>
                     Welcome to <strong>Atma Kitchen</strong>, where every dish is a story waiting to be tasted. Our chefs blend tradition with innovation, crafting culinary experiences that ignite the senses. From carefully sourced ingredients to bold flavors, each bite is a journey of authenticity and delight.
                 </p>
-                <a href="#" class="btn btn-outline-dark">Order Now</a>
             </div>
         </div>
         <div class="row">
@@ -34,7 +33,8 @@
                             <h5>Red Velvet</h5>
                         </a>
                         <p class="card-text">A symphony of crimson cake, cocoa whispers, and cream cheese dreams. Pure bliss in every bite! 🍰✨</p>
-                        <a href="#" class="btn btn-dark">Order</a>
+                        <a href="#" class="btn btn-dark">Order Now</a>
+                        <a href="#" class="btn btn-outline-dark"><i class="fa fa-cart-plus"></i></a>
                     </div>
                 </div>
             </div>
@@ -46,7 +46,8 @@
                             <h5>Chocolate Cake</h5>
                         </a>
                         <p class="card-text">A symphony of crimson cake, cocoa whispers, and cream cheese dreams. Pure bliss in every bite! 🍰✨</p>
-                        <a href="#" class="btn btn-dark">Order</a>
+                        <a href="#" class="btn btn-dark">Order Now</a>
+                        <a href="#" class="btn btn-outline-dark"><i class="fa fa-cart-plus"></i></a>
                     </div>
                 </div>
             </div>
@@ -58,7 +59,8 @@
                             <h5>Birth Day Cake</h5>
                         </a>
                         <p class="card-text">A symphony of crimson cake, cocoa whispers, and cream cheese dreams. Pure bliss in every bite! 🍰✨</p>
-                        <a href="#" class="btn btn-dark">Order</a>
+                        <a href="#" class="btn btn-dark">Order Now</a>
+                        <a href="#" class="btn btn-outline-dark"><i class="fa fa-cart-plus"></i></a>
                     </div>
                 </div>
             </div>
@@ -70,7 +72,8 @@
                             <h5>Red Velvet</h5>
                         </a>
                         <p class="card-text">A symphony of crimson cake, cocoa whispers, and cream cheese dreams. Pure bliss in every bite! 🍰✨</p>
-                        <a href="#" class="btn btn-dark">Order</a>
+                        <a href="#" class="btn btn-dark">Order Now</a>
+                        <a href="#" class="btn btn-outline-dark"><i class="fa fa-cart-plus"></i></a>
                     </div>
                 </div>
             </div>
@@ -82,7 +85,8 @@
                             <h5>Red Velvet</h5>
                         </a>
                         <p class="card-text">A symphony of crimson cake, cocoa whispers, and cream cheese dreams. Pure bliss in every bite! 🍰✨</p>
-                        <a href="#" class="btn btn-dark">Order</a>
+                        <a href="#" class="btn btn-dark disabled">Out of Stock</a>
+                        <a href="#" class="btn btn-outline-dark disabled"><i class="fa fa-cart-plus"></i></a>
                     </div>
                 </div>
             </div>

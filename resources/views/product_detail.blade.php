@@ -16,11 +16,12 @@
                                 <p class="card-text">Warna putih bersih, rasa ringan, dan aroma yang menggoda membuatnya sempurna untuk setiap kesempatan. Setiap gigitan membawa kelezatan yang memuaskan, cocok untuk dinikmati sendiri atau dihidangkan dalam pesta. Simpel namun luar biasa!</p>
 
 
-                                <a href="#" class="btn btn-dark">Beli Produk</a>
+                                <a href="#" class="btn btn-dark">Order Now</a>
+                                <a href="#" class="btn btn-outline-dark"><i class="fa fa-cart-plus"></i></a>
                             </div>
                             <div class="col-auto">
                                 <h3>Rp. 100.000</h3>
-                                <span class="badge text-bg-dark">Stok: 10</span>
+                                <span class="badge text-bg-dark">Stock: 10</span>
                                 <span class="badge text-bg-success">Preorder</span>
                             </div>
                         </div>
@@ -43,7 +44,8 @@
                             <h5>Red Velvet</h5>
                         </a>
                         <p class="card-text">A symphony of crimson cake, cocoa whispers, and cream cheese dreams. Pure bliss in every bite! 🍰✨</p>
-                        <a href="" class="btn btn-dark">Order</a>
+                        <a href="#" class="btn btn-dark">Order Now</a>
+                        <a href="#" class="btn btn-outline-dark"><i class="fa fa-cart-plus"></i></a>
                     </div>
                 </div>
             </div>
@@ -55,7 +57,8 @@
                             <h5>Red Velvet</h5>
                         </a>
                         <p class="card-text">A symphony of crimson cake, cocoa whispers, and cream cheese dreams. Pure bliss in every bite! 🍰✨</p>
-                        <a href="#" class="btn btn-dark">Order</a>
+                        <a href="#" class="btn btn-dark">Order Now</a>
+                        <a href="#" class="btn btn-outline-dark"><i class="fa fa-cart-plus"></i></a>
                     </div>
                 </div>
             </div>
@@ -67,7 +70,8 @@
                             <h5>Red Velvet</h5>
                         </a>
                         <p class="card-text">A symphony of crimson cake, cocoa whispers, and cream cheese dreams. Pure bliss in every bite! 🍰✨</p>
-                        <a href="#" class="btn btn-dark">Order</a>
+                        <a href="#" class="btn btn-dark">Order Now</a>
+                        <a href="#" class="btn btn-outline-dark"><i class="fa fa-cart-plus"></i></a>
                     </div>
                 </div>
             </div>
