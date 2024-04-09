@@ -71,8 +71,8 @@
 
         <hr>
 
-        <div class="row justify-content-between mb-5">
-            <div class="col-2">
+        <div class="row justify-content-end mb-5">
+            <div class="col-auto mb-2">
                 <h5>Grand Total</h5>
                 <p id="grandTotal">Rp. 250.000</p>
             </div>
