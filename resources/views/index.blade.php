@@ -50,7 +50,7 @@
                                             <label for="password">Password</label>
                                             <input type="password" class="form-control" id="password" placeholder="Password">
                                         </div>
-                                        <button type="submit" class="btn btn-primary mt-2">Sign in</button>
+                                        <button type="submit" class="btn btn-dark mt-2">Sign in</button>
                                     </form>
                                     <div class="dropdown-divider"></div>
                                     <li><a class="dropdown-item" href="{{url('/register')}}">Don't have an account? Sign up</a></li>
