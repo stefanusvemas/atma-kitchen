@@ -33,7 +33,7 @@
                             <h5>Red Velvet</h5>
                         </a>
                         <p class="card-text">A symphony of crimson cake, cocoa whispers, and cream cheese dreams. Pure bliss in every bite! 🍰✨</p>
-                        <a href="#" class="btn btn-dark">Order Now</a>
+                        <a href="{{url('/cart')}}" class="btn btn-dark">Order Now</a>
                         <a href="#" class="btn btn-outline-dark"><i class="fa fa-cart-plus"></i></a>
                     </div>
                 </div>
@@ -46,7 +46,7 @@
                             <h5>Chocolate Cake</h5>
                         </a>
                         <p class="card-text">A symphony of crimson cake, cocoa whispers, and cream cheese dreams. Pure bliss in every bite! 🍰✨</p>
-                        <a href="#" class="btn btn-dark">Order Now</a>
+                        <a href="{{url('/cart')}}" class="btn btn-dark">Order Now</a>
                         <a href="#" class="btn btn-outline-dark"><i class="fa fa-cart-plus"></i></a>
                     </div>
                 </div>
@@ -59,7 +59,7 @@
                             <h5>Birth Day Cake</h5>
                         </a>
                         <p class="card-text">A symphony of crimson cake, cocoa whispers, and cream cheese dreams. Pure bliss in every bite! 🍰✨</p>
-                        <a href="#" class="btn btn-dark">Order Now</a>
+                        <a href="{{url('/cart')}}" class="btn btn-dark">Order Now</a>
                         <a href="#" class="btn btn-outline-dark"><i class="fa fa-cart-plus"></i></a>
                     </div>
                 </div>
@@ -72,7 +72,7 @@
                             <h5>Red Velvet</h5>
                         </a>
                         <p class="card-text">A symphony of crimson cake, cocoa whispers, and cream cheese dreams. Pure bliss in every bite! 🍰✨</p>
-                        <a href="#" class="btn btn-dark">Order Now</a>
+                        <a href="{{url('/cart')}}" class="btn btn-dark">Order Now</a>
                         <a href="#" class="btn btn-outline-dark"><i class="fa fa-cart-plus"></i></a>
                     </div>
                 </div>
@@ -85,7 +85,7 @@
                             <h5>Red Velvet</h5>
                         </a>
                         <p class="card-text">A symphony of crimson cake, cocoa whispers, and cream cheese dreams. Pure bliss in every bite! 🍰✨</p>
-                        <a href="#" class="btn btn-dark disabled">Out of Stock</a>
+                        <a href="{{url('/cart')}}" class="btn btn-dark disabled">Out of Stock</a>
                         <a href="#" class="btn btn-outline-dark disabled"><i class="fa fa-cart-plus"></i></a>
                     </div>
                 </div>

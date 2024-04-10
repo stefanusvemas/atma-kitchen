@@ -73,8 +73,8 @@
 
         <div class="row justify-content-between mb-5">
             <div class="col-md-auto col-8">
-                <h5>Grand Total</h5>
-                <p id="grandTotal">Rp. 250.000</p>
+                <h5>Total</h5>
+                <p id="grandTotal">Rp. 0</p>
             </div>
             <div class="col-md-auto col-4">
                 <div class="row justify-content-end">
@@ -82,7 +82,7 @@
                         <a href="{{url('/')}}" class="btn btn-outline-dark d-none d-sm-block">Continue Shopping</a>
                     </div>
                     <div class="col-auto">
-                        <a href="#" class="btn btn-dark">Checkout</a>
+                        <a href="{{url('/checkout')}}" class="btn btn-dark">Checkout</a>
                     </div>
                 </div>
             </div>
