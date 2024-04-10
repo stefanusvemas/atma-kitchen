@@ -23,18 +23,17 @@
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
                     <div class="navbar-nav">
                         <a class="nav-link active" aria-current="page" href="{{url('/')}}">Home</a>
-                        <a class="nav-link" href="#">Product</a>
-                        <a class="nav-link" href="#">About</a>
-                        <a class="nav-link" href="{{url('/cart')}}"><i class="fa fa-cart-shopping"></i>
-                            <span class="position-absolute top-10 start-10 translate-middle badge rounded-pill bg-danger">
-                                2
-                                <span class="visually-hidden">unread messages</span>
-                            </span>
-                        </a>
-
                         <div class="d-flex d-none">
-                            <a class="btn btn-dark me-2" href="#">Log In</a>
-                            <a class="btn btn-outline-dark" href="#">Sign Up</a>
+                            <a class="nav-link" href="{{url('/cart')}}"><i class="fa fa-cart-shopping"></i>
+                                <span class="position-absolute top-10 start-10 translate-middle badge rounded-pill bg-danger">
+                                    2
+                                    <span class="visually-hidden">unread items</span>
+                                </span>
+                            </a>
+                        </div>
+                        <div class="d-flex">
+                            <a class="nav-link" href="{{url('/login')}}">Log In</a>
+                            <a class="nav-link" href="{{url('/register')}}">Sign Up</a>
                         </div>
                     </div>
                 </div>
@@ -48,7 +47,7 @@
     <footer class="mt-auto">
         <nav class="navbar justify-content-between mt-4 bg-dark">
             <div class="container" style="height: 40px;">
-                <p class="text-light">©️Atma Kitchen</p>
+                <p class="text-light">© Atma Kitchen</p>
             </div>
         </nav>
     </footer>
