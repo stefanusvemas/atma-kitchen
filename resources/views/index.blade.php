@@ -13,7 +13,7 @@
 
 <body class="d-flex flex-column min-vh-100" style="background-color: #F0F0F0;">
     <header>
-        <nav class="navbar navbar-expand-lg">
+        <nav class="navbar mx-auto navbar-expand-lg">
             <div class="container">
                 <a class="navbar-brand" href="/">
                     <h3>Atma Kitchen</h3>
@@ -34,8 +34,28 @@
                             </a>
                         </div>
                         <div class="d-flex">
-                            <a class="nav-link {{ Request::is('login') ? 'active' : '' }}" href="{{url('/login')}}">Log In</a>
-                            <a class="nav-link {{ Request::is('register') ? 'active' : '' }}" href="{{url('/register')}}">Sign Up</a>
+                            <div class="d-lg-none d-block">
+                                <a class="nav-link me-2 {{ Request::is('login') ? 'active' : '' }}" href="{{url('/login')}}">Log In</a>
+                                <a class="nav-link {{ Request::is('register') ? 'active' : '' }}" href="{{url('/register')}}">Sign Up</a>
+                            </div>
+                            <div class="btn-group d-none d-lg-flex">
+                                <a href="{{url('/login')}}" class="btn btn-secondary dropdown-toggle" id="dropdownMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Login</a>
+                                <ul class="dropdown-menu dropdown-menu-end" style="width: 400px;" aria-labelledby="dropdownMenu">
+                                    <form class="px-4 py-3">
+                                        <div class="form-group">
+                                            <label for="email">Email</label>
+                                            <input type="email" class="form-control" id="email" placeholder="email@example.com">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="password">Password</label>
+                                            <input type="password" class="form-control" id="password" placeholder="Password">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary mt-2">Sign in</button>
+                                    </form>
+                                    <div class="dropdown-divider"></div>
+                                    <li><a class="dropdown-item" href="{{url('/register')}}">Don't have an account? Sign up</a></li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
