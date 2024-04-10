@@ -39,7 +39,7 @@
                                 <a class="nav-link {{ Request::is('register') ? 'active' : '' }}" href="{{url('/register')}}">Sign Up</a>
                             </div>
                             <div class="btn-group d-none d-lg-flex">
-                                <a href="{{url('/login')}}" class="btn btn-secondary dropdown-toggle" id="dropdownMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Login</a>
+                                <a href="{{url('/login')}}" class="btn btn-outline-dark dropdown-toggle" id="dropdownMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Login</a>
                                 <ul class="dropdown-menu dropdown-menu-end" style="width: 400px;" aria-labelledby="dropdownMenu">
                                     <form class="px-4 py-3">
                                         <div class="form-group">
