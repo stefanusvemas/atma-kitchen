@@ -15,14 +15,16 @@
     <header>
         <nav class="navbar navbar-expand-lg">
             <div class="container">
-                <a class="navbar-brand" href="/">Atma Kitchen</a>
+                <a class="navbar-brand" href="/">
+                    <h3>Atma Kitchen</h3>
+                </a>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
                     <div class="navbar-nav">
-                        <a class="nav-link active" aria-current="page" href="{{url('/')}}">Home</a>
+                        <a class="nav-link {{ Request::is('/') ? 'active' : '' }}" aria-current="page" href="{{url('/')}}">Home</a>
                         <div class="d-flex d-none">
                             <a class="nav-link" href="{{url('/cart')}}"><i class="fa fa-cart-shopping"></i>
                                 <span class="position-absolute top-10 start-10 translate-middle badge rounded-pill bg-danger">
@@ -32,8 +34,8 @@
                             </a>
                         </div>
                         <div class="d-flex">
-                            <a class="nav-link" href="{{url('/login')}}">Log In</a>
-                            <a class="nav-link" href="{{url('/register')}}">Sign Up</a>
+                            <a class="nav-link {{ Request::is('login') ? 'active' : '' }}" href="{{url('/login')}}">Log In</a>
+                            <a class="nav-link {{ Request::is('register') ? 'active' : '' }}" href="{{url('/register')}}">Sign Up</a>
                         </div>
                     </div>
                 </div>
