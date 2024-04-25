@@ -113,7 +113,7 @@ class CustomerController extends Controller
         $atribut = [
             'id_customer' => $customer['id_customer'],
             'email' => $request['email'], 
-            'password' => $request['password'],
+            'password' => Hash::make($request['password']),
         ];
 
           
@@ -136,7 +136,7 @@ class CustomerController extends Controller
         try {
             $customer = Customer::find($id);
             if (!$customer) {
-                throw new \Exception('Staf tidak ditemukan');
+                throw new \Exception('Customer tidak ditemukan');
             }
 
             $customer->delete();

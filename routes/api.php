@@ -10,21 +10,31 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-//karyawan
-Route::get('karyawan', [KaryawanController::class, 'index']);
+
 
 //Customer
 Route::post('login', [SessionController::class, 'login']);    //->middleware('auth:sanctum ')
+
 Route::post('customer/register', [CustomerController::class, 'register']);
 
 Route::group(
     ['middleware' => 'auth:sanctum'],
     function () {
+        //logout
+        Route::post('logout  ', [SessionController::class, 'logout']); 
+
         //customer
         Route::get('customer', [CustomerController::class, 'index']); // tidak perlu untuk customer
         Route::get('customer/{id} ', [CustomerController::class, 'show']);    
         Route::put('customer/{id} ', [CustomerController::class, 'update']);
         Route::delete('customer/{id} ', [CustomerController::class, 'destroy']);
+
+        //karyawan
+        Route::get('karyawan', [KaryawanController::class, 'index']);
+        Route::post('karyawan/store', [KaryawanController::class, 'store']);
+        Route::get('karyawan/{id}', [KaryawanController::class, 'show']);
+        Route::put('karyawan/{id}', [KaryawanController::class, 'update']);
+        Route::delete('karyawan/{id} ', [KaryawanController::class, 'destroy']);
         
     }
 );

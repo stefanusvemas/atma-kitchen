@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
+use App\Models\Karyawan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\user_credential;
@@ -11,12 +12,9 @@ use Illuminate\Support\Facades\Validator;
 
 class SessionController extends Controller
 {
-
-
-
-
     public function login(Request $request)
 {
+        $role = 'customer';
         $rules = [ 
             'email' => 'required',
             'password' => 'required'
@@ -32,20 +30,34 @@ class SessionController extends Controller
         }
 
         if (!Auth::attempt($request->only('email', 'password'))) {
-                    // Jika autentikasi gagal, kembalikan pesan kesalahan
+                // Jika autentikasi gagal, kembalikan pesan kesalahan
                 return response()->json([
                 'status' => false,
                 'message' => 'Email dan password yang dimasukkan tidak sesuai'
             ], 401);
         }
-        $datauser= user_credential::where('email', $request->email)->first();
 
-         
+        $datauser= user_credential::where('email', $request->email)->first(); // mendapatkan data customer
+        if ($datauser['id_customer']==null){
+            $role = 'karyawan';
+        }
+        
+        $detail_user = Auth::user();// Jika autentikasi berhasil, dapatkan data pengguna
+        
+        if ($role = 'karyawan') {
+            # code...
+            $user = Karyawan::where('id_karyawan', $detail_user->id_karyawan)->first();// Dapatkan data pelanggan yang sesuai dengan pengguna
+        }else{
+            $user = Customer::where('id_customer', $detail_user->id_customer)->first();// Dapatkan data pelanggan yang sesuai dengan pengguna
+        }
         return response()->json([
         'status' => true, 
         'message' => 'Berhasil proses login',
         'token' => $datauser->createToken('api-product')->plainTextToken,
-        'user' => $datauser,
+        'role' => $role,
+        'user' => $user,
+        'detail user' => $detail_user,
+       
     ]);
 }
 
@@ -61,9 +73,14 @@ class SessionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function logout(Request $request)
     {
         //
+        $user = $request->user();
+        $user->tokens()->delete();
+        return response()->json([
+            'message' => 'berhasil Logout',
+        ]);
     }
 
     /**
