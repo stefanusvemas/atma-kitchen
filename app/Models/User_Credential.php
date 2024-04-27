@@ -20,6 +20,7 @@ class user_credential extends Authenticatable {
         'id_customer',
         'id_karyawan',
         'email',
+        'verify_key',
         'password',
     ];
 
@@ -32,5 +33,10 @@ class user_credential extends Authenticatable {
     {
         return $this->belongsTo(Karyawan::class, 'id_karyawan', 'id_karyawan');
     }
+
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        // 'password' => 'hashed',
+    ];
 
 }

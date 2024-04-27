@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Validator;
 
 class SessionController extends Controller
 {
+    
     public function login(Request $request)
 {
         $role = 'customer';
@@ -30,11 +31,16 @@ class SessionController extends Controller
         }
 
         if (!Auth::attempt($request->only('email', 'password'))) {
-                // Jika autentikasi gagal, kembalikan pesan kesalahan
                 return response()->json([
                 'status' => false,
                 'message' => 'Email dan password yang dimasukkan tidak sesuai'
             ], 401);
+        }
+        
+        $user = Auth::user();
+        if (!$user->active) {
+            Auth::logout();
+            return response()->json(['error' => 'Akun Anda belum diverifikasi. Silahkan cek email Anda'], 401);
         }
 
         $datauser= user_credential::where('email', $request->email)->first(); // mendapatkan data customer
@@ -45,7 +51,6 @@ class SessionController extends Controller
         $detail_user = Auth::user();// Jika autentikasi berhasil, dapatkan data pengguna
         
         if ($role = 'karyawan') {
-            # code...
             $user = Karyawan::where('id_karyawan', $detail_user->id_karyawan)->first();// Dapatkan data pelanggan yang sesuai dengan pengguna
         }else{
             $user = Customer::where('id_customer', $detail_user->id_customer)->first();// Dapatkan data pelanggan yang sesuai dengan pengguna
@@ -60,6 +65,20 @@ class SessionController extends Controller
        
     ]);
 }
+
+    // public function forgetPassword(Request $request){
+    //     $request->validate([
+    //         'email' => 'required|email|exists:user_credential,email'
+    //     ]);
+
+    //     $data = [
+    //         'email' =>$request->email
+    //     ];
+
+    //     return response()->json([
+    //         'error' => 'Berhasil'
+    //     ]);
+    // }
 
 
     /**

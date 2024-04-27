@@ -17,11 +17,15 @@ Route::post('login', [SessionController::class, 'login']);    //->middleware('au
 
 Route::post('customer/register', [CustomerController::class, 'register']);
 
+Route::get('register/verify/{verify_key}', [CustomerController::class, 'verify'])->name('verify');
+
+Route::post('customer/forgetPassword', [CustomerController::class, 'forgetPassword']);
+
 Route::group(
     ['middleware' => 'auth:sanctum'],
     function () {
         //logout
-        Route::post('logout  ', [SessionController::class, 'logout']); 
+        Route::post('logout', [SessionController::class, 'logout']); 
 
         //customer
         Route::get('customer', [CustomerController::class, 'index']); // tidak perlu untuk customer

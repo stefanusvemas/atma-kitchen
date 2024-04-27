@@ -6,12 +6,14 @@ namespace App\Http\Controllers\Api;
     use Illuminate\Support\Str;
 
 use App\Http\Controllers\Controller;
+use App\Mail\MailSend;
 use App\Models\Customer;
 use App\Models\user_credential;
 use Illuminate\Http\Request;
     use Illuminate\Support\Facades\Auth;
     use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class CustomerController extends Controller
 {
@@ -41,6 +43,7 @@ class CustomerController extends Controller
 
     public function register(Request $request)
     {
+        $str = Str::random(100);
         $validatedData = $request->validate([ // validasi input
             'nama' => 'required',
             'tanggal_lahir' => 'required|date',
@@ -50,16 +53,28 @@ class CustomerController extends Controller
             'password' => 'required|string|min:6'
         ]);
 
-        // $validatedData['password'] = bcrypt($validatedData['password']); // hash pw
-
         $customer = Customer::create($validatedData); // menyimpan data di tabel customer
         $atribut = [
             'id_customer' => $customer['id_customer'],
             'email' => $request['email'] , 
             'password' => Hash::make($request['password']),
+            'verify_key' => $str,
         ];
 
         $customer = user_credential::create($atribut); // membuat baru di tabel user_credential
+
+        // kirim email
+        $details = [
+            'nama' => $request->nama,
+            'website' => 'Atma Kitchen',
+            'datetime' => date('Y-m-d H:i:s'),
+            'url' => request()->getHttpHost() . '/api/register/verify/' . $str
+        ];
+        Mail::to($request->email)->send(new MailSend($details)); //new MailSend($details)
+
+        return response()->json([
+            'message' => 'Link Verifikasi telah dikirim ke email anda. silahkan cek email anda untuk mengaktifkan akun.'
+        ]);
 
         return response([
             'message' => 'Register Success',
@@ -155,5 +170,32 @@ class CustomerController extends Controller
         }
     }
 
+    //email verivy
+    public function verify($verify_key)
+    {
+        $keyCheck = user_credential::select('verify_key')
+            ->where('verify_key', $verify_key)
+            ->exists();
+
+        if ($keyCheck) {
+            $user = user_credential::where('verify_key', $verify_key)
+                ->update([
+                    'active' => 1,
+                    'email_verified_at' => date('Y-m-d H:i:s'),
+                ]);
+
+            return response()->json([
+            'message' => 'Verifikasi Berhasil. Akun Anda sudah aktif'
+            ]);
+        } else {
+            return response()->json([
+                'message' => 'Keys Tidak Valid.'
+            ], 404);
+        }
+    }
+
 }
+
+
+
 
