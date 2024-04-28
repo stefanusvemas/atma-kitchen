@@ -11,7 +11,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 
-<body class="d-flex flex-column min-vh-100" style="background-color: #F0F0F0;">
+<body class="d-flex flex-column min-vh-100" style="background-color: #F0F0F0;" data-bs-theme="">
     <header>
         <nav class="navbar mx-auto navbar-expand-lg">
             <div class="container-fluid">
@@ -22,7 +22,7 @@
                             <h5>Nama Staff</h5>
                             <p>Jabatann</p>
                             <div class="dropdown-divider"></div>
-                            <li><a class="dropdown-item" href="{{url('/register')}}">Logout</a></li>
+                            <li><a class="dropdown-item" href="{{url('/')}}">Logout</a></li>
                         </ul>
                     </div>
                 </div>
@@ -35,15 +35,15 @@
             <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block sidebar">
                 <div class="position-sticky">
                     <div class="list-group">
-                        <a href="{{url('/admin')}}" class="list-group-item list-group-item-action active" aria-current="true">
+                        <a href="{{url('/admin')}}" class="list-group-item list-group-item-action {{ Request::is('admin') ? 'active' : '' }}" aria-current="true">
                             Dashboard
                         </a>
-                        <a href="{{url('/admin/bahan_baku')}}" class="list-group-item list-group-item-action">Bahan Baku</a>
-                        <a href="#" class="list-group-item list-group-item-action">Resep</a>
-                        <a href="#" class="list-group-item list-group-item-action">Products</a>
-                        <a href="#" class="list-group-item list-group-item-action">Hampers</a>
-                        <a href="#" class="list-group-item list-group-item-action">Customers</a>
-                        <a href="#" class="list-group-item list-group-item-action">Poin</a>
+                        <a href="{{url('/admin/bahan_baku')}}" class="list-group-item list-group-item-action {{ Request::is('admin/bahan_baku') ? 'active' : '' }}">Bahan Baku</a>
+                        <a href="{{url('/admin/resep')}}" class="list-group-item list-group-item-action {{ Request::is('admin/resep') ? 'active' : '' }}">Resep</a>
+                        <a href="{{url('/admin/produk')}}" class="list-group-item list-group-item-action {{ Request::is('admin/produk') ? 'active' : '' }}">Produk</a>
+                        <a href="{{url('/admin/hampers')}}" class="list-group-item list-group-item-action {{ Request::is('admin/hampers') ? 'active' : '' }}">Hampers</a>
+                        <a href="{{url('/admin/customers')}}" class="list-group-item list-group-item-action {{ Request::is('admin/customers') ? 'active' : '' }}">Customers</a>
+                        <a href="{{url('/admin/poin')}}" class="list-group-item list-group-item-action disabled {{ Request::is('admin/poin') ? 'active' : '' }}">Poin</a>
                     </div>
                 </div>
             </nav>

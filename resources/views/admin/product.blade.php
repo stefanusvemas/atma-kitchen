@@ -1,0 +1,67 @@
+@extends('admin/index')
+@section('content')
+
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div class="content">
+        <div class="container mt-4">
+            <h3>Produk</h3>
+
+            <div class="row justify-content-between">
+                <div class="col">
+                    <div class="dropdown">
+                        <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Tambah Produk
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{{url('admin/produk/add')}}">Produk Sendiri</a></li>
+                            <li><a class="dropdown-item" href="{{url('/admin/produk/titipan/add')}}">Produk Titipan</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col col-lg-3 mt-md-0 mt-3 col-auto">
+                    <form action="#">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Cari produk...">
+                            <button class="btn btn-outline-primary" type="submit">Cari</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+
+
+            <table class="table table-responsive mt-3">
+                <thead>
+                    <tr>
+                        <th scope="col" class="w-50">Nama</th>
+                        <th scope="col">Stok</th>
+                        <th scope="col">Kuota Produksi</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td scope="row">Kue Coklat</td>
+                        <td>0</td>
+                        <td>10</td>
+                        <td><a href="#">Edit</a> | <a href="#">Hapus</a></td>
+                    </tr>
+                    <tr>
+                        <td scope="row">Red Velvet</td>
+                        <td>3</td>
+                        <td>15</td>
+                        <td><a href="#">Edit</a> | <a href="#">Hapus</a></td>
+                    </tr>
+                    <tr>
+                        <td scope="row">Krupuk <span class="badge rounded-pill text-bg-success">Titipan</span></td>
+                        <td>15</td>
+                        <td>0</td>
+                        <td><a href="#">Edit</a> | <a href="#">Hapus</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+
+@endsection

@@ -4,16 +4,16 @@
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="content">
         <div class="container mt-4">
-            <h3>Bahan Baku</h3>
+            <h3>Customers</h3>
 
             <div class="row justify-content-between">
                 <div class="col">
-                    <a href="{{url('admin/bahan_baku/add')}}" class="btn btn-primary">Tambah Bahan</a>
+
                 </div>
                 <div class="col col-lg-3 mt-md-0 mt-3 col-auto">
                     <form action="#">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Cari bahan...">
+                            <input type="text" class="form-control" placeholder="Cari customer...">
                             <button class="btn btn-outline-primary" type="submit">Cari</button>
                         </div>
                     </form>
@@ -25,24 +25,21 @@
             <table class="table table-responsive mt-3">
                 <thead>
                     <tr>
-                        <th scope="col" class="w-75">Nama</th>
-                        <th>Harga</th>
-                        <th scope="col">Stok</th>
+                        <th scope="col" class="w-50">Nama</th>
+                        <th>Email</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td scope="row">Coklat</td>
-                        <td>20000</td>
-                        <td>10</td>
-                        <td><a href="{{url('admin/bahan_baku/edit')}}">Edit</a> | <a href="#">Hapus</a></td>
+                        <td scope="row">Budi</td>
+                        <td>budi@customer.com</td>
+                        <td><a href="{{url('admin/customers/history')}}">History Pesanan</a></td>
                     </tr>
                     <tr>
-                        <td scope="row">Tepung</td>
-                        <td>20000</td>
-                        <td>15</td>
-                        <td><a href="#">Edit</a> | <a href="#">Hapus</a></td>
+                        <td scope="row">John</td>
+                        <td>john@customer.com</td>
+                        <td><a href="#">History Pesanan</a></td>
                     </tr>
                 </tbody>
             </table>

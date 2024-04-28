@@ -4,16 +4,16 @@
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="content">
         <div class="container mt-4">
-            <h3>Bahan Baku</h3>
+            <h3>Customer History</h3>
 
             <div class="row justify-content-between">
                 <div class="col">
-                    <a href="{{url('admin/bahan_baku/add')}}" class="btn btn-primary">Tambah Bahan</a>
+
                 </div>
                 <div class="col col-lg-3 mt-md-0 mt-3 col-auto">
                     <form action="#">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Cari bahan...">
+                            <input type="text" class="form-control" placeholder="Cari history...">
                             <button class="btn btn-outline-primary" type="submit">Cari</button>
                         </div>
                     </form>
@@ -25,24 +25,32 @@
             <table class="table table-responsive mt-3">
                 <thead>
                     <tr>
-                        <th scope="col" class="w-75">Nama</th>
-                        <th>Harga</th>
-                        <th scope="col">Stok</th>
-                        <th scope="col">Action</th>
+                        <th scope="col" class="w-50">Tanggal Transaksi</th>
+                        <th>Produk</th>
+                        <th>Jumlah</th>
+                        <th scope="col">Total Harga</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td scope="row">Coklat</td>
-                        <td>20000</td>
-                        <td>10</td>
-                        <td><a href="{{url('admin/bahan_baku/edit')}}">Edit</a> | <a href="#">Hapus</a></td>
+                        <td rowspan="2">2024-02-12</td>
+                        <td>Red Velvet</td>
+                        <td>1</td>
+                        <td rowspan="2">Rp. 140,000</td>
                     </tr>
                     <tr>
-                        <td scope="row">Tepung</td>
-                        <td>20000</td>
-                        <td>15</td>
-                        <td><a href="#">Edit</a> | <a href="#">Hapus</a></td>
+                        <td>Kue Putih</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="2">2024-02-02</td>
+                        <td>Kue Coklat</td>
+                        <td>1</td>
+                        <td rowspan="2">Rp. 140,000</td>
+                    </tr>
+                    <tr>
+                        <td>Kue Putih</td>
+                        <td>1</td>
                     </tr>
                 </tbody>
             </table>
