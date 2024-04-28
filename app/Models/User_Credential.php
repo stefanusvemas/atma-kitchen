@@ -22,6 +22,7 @@ class user_credential extends Authenticatable {
         'email',
         'verify_key',
         'password',
+        'pass_key'
     ];
 
     public function customer()

@@ -19,7 +19,9 @@ Route::post('customer/register', [CustomerController::class, 'register']);
 
 Route::get('register/verify/{verify_key}', [CustomerController::class, 'verify'])->name('verify');
 
-Route::post('customer/forgetPassword', [CustomerController::class, 'forgetPassword']);
+Route::post('customer/forgetPassword', [SessionController::class, 'forgetPassword']);
+
+Route::put('customer/verifyForgetPw/{pass_key}', [SessionController::class, 'verifyForgetPw']);
 
 Route::group(
     ['middleware' => 'auth:sanctum'],

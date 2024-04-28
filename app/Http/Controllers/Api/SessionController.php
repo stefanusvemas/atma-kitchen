@@ -2,13 +2,18 @@
 
 namespace App\Http\Controllers\Api;
 
+use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
+use App\Mail\ForgetPwMailSend;
 use App\Models\Customer;
 use App\Models\Karyawan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\user_credential;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\Mail\MailSend;
+use Illuminate\Support\Facades\Mail;
 
 class SessionController extends Controller
 {
@@ -66,19 +71,75 @@ class SessionController extends Controller
     ]);
 }
 
-    // public function forgetPassword(Request $request){
-    //     $request->validate([
-    //         'email' => 'required|email|exists:user_credential,email'
-    //     ]);
+    public function forgetPassword(Request $request){
+        $pass = Str::random(100);
 
-    //     $data = [
-    //         'email' =>$request->email
-    //     ];
+        $request->validate([
+            'email' => 'required|email'
+        ]);
 
-    //     return response()->json([
-    //         'error' => 'Berhasil'
-    //     ]);
-    // }
+        $email = $request->email;
+
+        $user_credential = user_credential::where('email', $email)->first();
+
+        if (!$user_credential) {
+            return response()->json([
+                'message' => 'Email tidak ditemukan dalam database',
+                'data' => null
+            ], 404);
+        }
+
+        $atribut = [
+            'pass_key' => $pass,
+        ];
+
+        $user_credential->update($atribut); 
+
+        if ($user_credential['pass_key'] == null) {
+            return response()->json([
+                'message' => 'PASS_KEY = NULL',
+                'pass_key' => $pass
+            ]);
+        }
+
+        $details = [
+            'nama' => $request->nama,
+            'website' => 'Atma Kitchen',
+            'url' => request()->getHttpHost() . '/api/customer/verifyForgetPw/' . $pass
+        ];
+        Mail::to($request->email)->send(new ForgetPwMailSend($details));
+
+        
+
+        return response()->json([
+            'error' => 'Berhasil',
+            'data' => $user_credential
+        ]);
+    }
+
+    public function verifyForgetPw($pass_key, Request $request)
+    {
+        $keyCheck = user_credential::select('pass_key')
+            ->where('pass_key', $pass_key)
+            ->exists();
+
+        if ($keyCheck) {
+            $atribut = [
+                'password' => Hash::make($request['password']),
+            ];
+
+           $user = user_credential::where('pass_key', $pass_key)
+                ->update($atribut);
+
+            return response()->json([
+            'message' => 'Verifikasi Passwrd Baru Berhasil'
+            ]);
+        } else {
+            return response()->json([
+                'message' => 'Keys Tidak Valid.'
+            ], 404);
+        }
+    }
 
 
     /**

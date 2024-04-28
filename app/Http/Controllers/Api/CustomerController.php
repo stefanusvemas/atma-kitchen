@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
     use Illuminate\Support\Facades\Validator;
-    use Illuminate\Support\Str;
+use Illuminate\Support\Str;
 
 use App\Http\Controllers\Controller;
 use App\Mail\MailSend;
@@ -133,7 +133,7 @@ class CustomerController extends Controller
 
           
         $user_credential= user_credential::where('id_customer', $id)->first();
-        //return $baru['id_user_credentials'];
+        
         $user_credential->update($atribut);
 
         return response([
