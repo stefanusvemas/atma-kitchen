@@ -77,3 +77,15 @@ Route::get('/admin/produk/titipan/add', function () {
 Route::get('/admin/customers/history', function () {
     return view('admin/history_pesanan_customer');
 });
+
+Route::get('/manager', function () {
+    return view('manager/dashboard');
+});
+
+Route::get('/manager/jabatan', function () {
+    return view('manager/jabatan');
+});
+
+Route::get('/manager/karyawan', function () {
+    return view('manager/karyawan');
+});
