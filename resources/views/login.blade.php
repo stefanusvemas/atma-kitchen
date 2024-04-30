@@ -7,14 +7,20 @@
             <div class="card p-3">
                 <div class="card-body">
                     <h3 class="card-title text-center mb-4">Login</h3>
-                    <form>
+                    @if (Session::has('error'))
+                    <div class="alert alert-danger">
+                        <b>Oops!</b> {{session('error')}}
+                    </div>
+                    @endif
+                    <form action="{{ route('loginAction') }}" method="post" id="loginForm">
+                        @csrf
                         <div class="mb-2">
                             <label for="email">Email</label>
-                            <input type="email" class="form-control" id="email" placeholder="Email address">
+                            <input type="email" name="email" class="form-control" id="email" placeholder="Email address" required>
                         </div>
                         <div class="mb-3">
                             <label for="password">Password</label>
-                            <input type="password" class="form-control" id="password" placeholder="Password">
+                            <input type="password" name="password" class="form-control" id="password" placeholder="Password" required>
                         </div>
                         <button type="submit" class="btn btn-dark btn-block">Login</button>
                     </form>
