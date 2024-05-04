@@ -181,3 +181,7 @@ Route::get('/user/profile/edit', function () {
 Route::get('/user/orders_history', function () {
     return view('user/orders_history');
 });
+
+Route::get('/verify', function () {
+    return view('verify');
+});
