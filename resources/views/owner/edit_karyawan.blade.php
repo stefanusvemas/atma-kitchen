@@ -16,6 +16,9 @@
                 <div class="mb-2">
                     <label for="gaji" class="form-label">Gaji</label>
                     <input type="number" class="form-control" name="gaji" id="gaji" value="100000">
+
+                    <label for="bonus" class="form-label">Bonus</label>
+                    <input type="number" class="form-control" name="bonus" id="bonus" value="50000">
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
