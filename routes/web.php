@@ -149,3 +149,15 @@ Route::get('/manager/jabatan/add', function () {
 Route::get('/manager/jabatan/edit', function () {
     return view('manager/edit_jabatan');
 });
+
+Route::get('/owner', function () {
+    return view('owner/dashboard');
+});
+
+Route::get('/owner/karyawan', function () {
+    return view('owner/karyawan');
+});
+
+Route::get('/owner/karyawan/edit', function () {
+    return view('owner/edit_karyawan');
+});
