@@ -150,6 +150,10 @@ Route::get('/manager/jabatan/edit', function () {
     return view('manager/edit_jabatan');
 });
 
+Route::get('/manager/profile', function () {
+    return view('manager/profile');
+});
+
 Route::get('/owner', function () {
     return view('owner/dashboard');
 });
@@ -160,4 +164,20 @@ Route::get('/owner/karyawan', function () {
 
 Route::get('/owner/karyawan/edit', function () {
     return view('owner/edit_karyawan');
+});
+
+Route::get('/owner/profile', function () {
+    return view('owner/profile');
+});
+
+Route::get('/user/profile', function () {
+    return view('user/profile');
+});
+
+Route::get('/user/profile/edit', function () {
+    return view('user/edit_profile');
+});
+
+Route::get('/user/orders_history', function () {
+    return view('user/orders_history');
 });

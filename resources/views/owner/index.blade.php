@@ -22,6 +22,7 @@
                             <h5>Nama Owner</h5>
                             <p>Owner</p>
                             <div class="dropdown-divider"></div>
+                            <li><a class="dropdown-item" href="{{url('/owner/profile')}}">Edit Profile</a></li>
                             <li><a class="dropdown-item" href="{{url('/')}}">Logout</a></li>
                         </ul>
                     </div>

@@ -21,7 +21,9 @@
                         <ul class="dropdown-menu dropdown-menu-end p-3" style="width: 400px;" aria-labelledby="dropdownMenu">
                             <h5>Nama Staff</h5>
                             <p>Manager</p>
-                            <div class="dropdown-divider"></div>
+                            <div class="dropdown-divider">
+                            </div>
+                            <li><a class="dropdown-item" href="{{url('/manager/profile')}}">Edit Profile</a></li>
                             <li><a class="dropdown-item" href="{{url('/')}}">Logout</a></li>
                         </ul>
                     </div>
