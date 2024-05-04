@@ -89,3 +89,63 @@ Route::get('/manager/jabatan', function () {
 Route::get('/manager/karyawan', function () {
     return view('manager/karyawan');
 });
+
+Route::get('/manager/karyawan/add', function () {
+    return view('manager/tambah_karyawan');
+});
+
+Route::get('/manager/karyawan/edit', function () {
+    return view('manager/edit_karyawan');
+});
+
+Route::get('/manager/penitip', function () {
+    return view('manager/penitip');
+});
+
+Route::get('/manager/penitip/add', function () {
+    return view('manager/tambah_penitip');
+});
+
+Route::get('/manager/penitip/edit', function () {
+    return view('manager/edit_penitip');
+});
+
+Route::get('/manager/bahan_baku', function () {
+    return view('manager/bahan_baku');
+});
+
+Route::get('/manager/bahan_baku/edit', function () {
+    return view('manager/edit_bahan_baku');
+});
+
+Route::get('manager/pengeluaran_lain', function () {
+    return view('manager/pengeluaran_lain');
+});
+
+Route::get('manager/pengeluaran_lain/add', function () {
+    return view('manager/tambah_pengeluaran_lain');
+});
+
+Route::get('manager/pengeluaran_lain/edit', function () {
+    return view('manager/edit_pengeluaran_lain');
+});
+
+Route::get('/manager/pembelian_bahan_baku', function () {
+    return view('manager/pembelian_bahan_baku');
+});
+
+Route::get('/manager/pembelian_bahan_baku/add', function () {
+    return view('manager/tambah_pembelian_bahan_baku');
+});
+
+Route::get('/manager/pembelian_bahan_baku/edit', function () {
+    return view('manager/edit_pembelian_bahan_baku');
+});
+
+Route::get('/manager/jabatan/add', function () {
+    return view('manager/tambah_jabatan');
+});
+
+Route::get('/manager/jabatan/edit', function () {
+    return view('manager/edit_jabatan');
+});

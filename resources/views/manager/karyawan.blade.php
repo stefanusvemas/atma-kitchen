@@ -8,7 +8,7 @@
 
             <div class="row justify-content-between">
                 <div class="col">
-                    <a href="#" class="btn btn-primary">Tambah Karyawan</a>
+                    <a href="{{url('/manager/karyawan/add')}}" class="btn btn-primary">Tambah Karyawan</a>
                 </div>
                 <div class="col col-lg-3 mt-md-0 mt-3 col-auto">
                     <form action="#">
@@ -36,7 +36,7 @@
                         <td scope="row">John</td>
                         <td>Manager</td>
                         <td>2020/02/12</td>
-                        <td><a href="#">Edit</a> | <a href="#">Hapus</a></td>
+                        <td><a href="{{url('/manager/karyawan/edit')}}">Edit</a> | <a href="#">Hapus</a></td>
                     </tr>
                     <tr>
                         <td scope="row">John</td>
