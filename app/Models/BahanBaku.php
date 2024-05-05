@@ -5,26 +5,22 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Produk extends Model
+class BahanBaku extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'id_produk';
-    protected $table = 'produk';
+    protected $primaryKey = 'id_bahan_baku';
+    protected $table = 'bahan_baku';
     public $timestamps = false;
 
     protected $fillable = [
-        'id_penitip',
         'nama',
-        'gambar',
-        'harga',
         'stok',
-        'kuota_produksi',
-        'status'
+        'harga'
     ];
 
     public function resep()
     {
-        return $this->hasMany(Resep::class, 'id_produk');
+        return $this->hasMany(Resep::class, 'id_bahan_baku');
     }
 }

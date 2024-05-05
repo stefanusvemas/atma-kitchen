@@ -30,25 +30,26 @@
                         <th>Action</th>
                     </tr>
                 </thead>
+
+
                 <tbody>
+                    @foreach($produk as $produk)
+                    @foreach($produk['resep'] as $resep)
                     <tr>
-                        <td rowspan="2">Red Velvet</td>
-                        <td>Tepung Terigu</td>
-                        <td>50g</td>
-                        <td><a href="{{url('admin/resep/edit')}}">Edit</a> | <a href="#">Hapus</a></td>
+                        <!-- @if ($resep !== 0)
+                        <td rowspan="{{ count($produk->resep) }}">{{ $produk['nama'] }}</td>
+                        @endif -->
+                        <td>{{ $produk['nama'] }}</td>
+                        <td>{{ $resep['bahanBaku']['nama'] }}</td>
+                        <td>{{ $resep['jumlah_bahan_baku'] }} {{ $resep['satuan'] }}</td>
+
+                        <td><a href="{{url('admin/resep/edit/'.$resep['id_bahan_baku'])}}">Edit</a> | <a href="#">Hapus</a></td>
                     </tr>
-                    <tr>
-                        <td>Gula Pasir</td>
-                        <td>10g</td>
-                        <td><a href="{{url('admin/resep/edit')}}">Edit</a> | <a href="#">Hapus</a></td>
-                    </tr>
-                    <tr>
-                        <td rowspan="1">Kue Coklat</td>
-                        <td>Tepung Terigu</td>
-                        <td>40g</td>
-                        <td><a href="{{url('admin/resep/edit')}}">Edit</a> | <a href="#">Hapus</a></td>
-                    </tr>
+                    @endforeach
+                    @endforeach
                 </tbody>
+
+
             </table>
         </div>
     </div>
