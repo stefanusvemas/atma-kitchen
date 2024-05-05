@@ -25,7 +25,8 @@
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
                     <div class="navbar-nav">
                         <a class="nav-link {{ Request::is('/') ? 'active' : '' }}" aria-current="page" href="{{url('/')}}">Home</a>
-                        <div class="d-flex d-none">
+                        @if (Auth::check())
+                        <div class="{{ Auth::check() ? 'd-flex' : 'd-none'}}">
                             <a class="nav-link mx-2" href="{{url('/cart')}}"><i class="fa fa-cart-shopping"></i>
                                 <span class="position-absolute top-10 start-10 translate-middle badge rounded-pill bg-danger">
                                     2
@@ -33,19 +34,20 @@
                                 </span>
                             </a>
                             <div class="btn-group">
-                                <a class="btn btn-outline-dark dropdown-toggle" id="dropdownMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Nama User</a>
+                                <a class="btn btn-outline-dark dropdown-toggle" id="dropdownMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{$user_data['nama']}}</a>
                                 <ul class="dropdown-menu dropdown-menu-end p-3" style="width: 400px;" aria-labelledby="dropdownMenu">
-                                    <h5>Nama User</h5>
-                                    <p>80 <i class="fa fa-coins"></i></p>
+                                    <h5>{{$user_data['nama']}}</h5>
+                                    <p>{{$user_data['jumlah_poin']}} <i class="fa fa-coins"></i></p>
                                     <div class="dropdown-divider"></div>
                                     <li><a class="dropdown-item" href="{{url('/user/profile')}}">Profile</a></li>
                                     <li><a class="dropdown-item" href="{{url('/user/orders_history')}}">Orders History</a></li>
                                     <li><a class="dropdown-item disabled" href="#">Address</a></li>
-                                    <li><a class="dropdown-item" href="{{url('/')}}">Logout</a></li>
+                                    <li><a class="dropdown-item" href="{{url('/logout')}}">Logout</a></li>
                                 </ul>
                             </div>
                         </div>
-                        <div class="d-flex">
+                        @endif
+                        <div class="{{ Auth::check() ? 'd-none' : 'd-flex'}}">
                             <div class="d-lg-none d-block">
                                 <a class="nav-link me-2 {{ Request::is('login') ? 'active' : '' }}" href="{{url('/login')}}">Log In</a>
                                 <a class="nav-link {{ Request::is('register') ? 'active' : '' }}" href="{{url('/register')}}">Sign Up</a>
@@ -53,14 +55,15 @@
                             <div class="btn-group d-none d-lg-flex">
                                 <a href="{{url('/login')}}" class="btn btn-outline-dark dropdown-toggle" id="dropdownMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Login</a>
                                 <ul class="dropdown-menu dropdown-menu-end" style="width: 400px;" aria-labelledby="dropdownMenu">
-                                    <form class="px-4 py-3">
+                                    <form action="{{ route('loginAction') }}" method="post" id="loginForm" class="px-4 py-3">
+                                        @csrf
                                         <div class="form-group">
                                             <label for="email">Email</label>
-                                            <input type="email" class="form-control" id="email" placeholder="email@example.com">
+                                            <input type="email" class="form-control" name="email" id="email" placeholder="email@example.com">
                                         </div>
                                         <div class="form-group">
                                             <label for="password">Password</label>
-                                            <input type="password" class="form-control" id="password" placeholder="Password">
+                                            <input type="password" class="form-control" name="password" id="password" placeholder="Password">
                                         </div>
                                         <button type="submit" class="btn btn-dark mt-2">Sign in</button>
                                     </form>
