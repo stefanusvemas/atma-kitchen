@@ -4,10 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\HomeController;
 
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/detail_product', function () {
     return view('product_detail');
@@ -32,7 +31,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/logout', function () {
         Auth::logout();
-        return redirect('login');
+        return redirect('/');
     });
 
     Route::get('/admin/bahan_baku', function () {
