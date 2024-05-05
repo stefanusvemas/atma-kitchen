@@ -12,18 +12,19 @@
             </nav>
             <h4>Tambah Bahan Baku</h4>
 
-            <form action="" class="p-3">
+            <form action="{{url('/admin/bahan_baku/add')}}" method="post" class="p-3">
+                @csrf
                 <div class="mb-2">
                     <label for="nama" class="form-label">Nama Bahan Baku</label>
-                    <input type="text" class="form-control" id="nama">
+                    <input type="text" class="form-control" id="nama" name="nama">
                 </div>
                 <div class="mb-2">
                     <label for="stok" class="form-label">Stok</label>
-                    <input type="number" class="form-control" id="stok" min="0">
+                    <input type="number" class="form-control" id="stok" min="0" name="stok">
                 </div>
                 <div class="mb-2">
                     <label for="harga" class="form-label">Harga</label>
-                    <input type="number" class="form-control" id="harga">
+                    <input type="number" class="form-control" id="harga" name="harga">
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>

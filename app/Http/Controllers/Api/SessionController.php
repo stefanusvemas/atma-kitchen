@@ -17,18 +17,18 @@ use Illuminate\Support\Facades\Mail;
 
 class SessionController extends Controller
 {
-    
+
     public function login(Request $request)
-{
+    {
         $role = 'customer';
-        $rules = [ 
+        $rules = [
             'email' => 'required',
             'password' => 'required'
         ];
 
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
-                return response()->json([
+            return response()->json([
                 'status' => false,
                 'message' => 'Proses login gagal',
                 'data' => $validator->errors()
@@ -36,42 +36,43 @@ class SessionController extends Controller
         }
 
         if (!Auth::attempt($request->only('email', 'password'))) {
-                return response()->json([
+            return response()->json([
                 'status' => false,
                 'message' => 'Email dan password yang dimasukkan tidak sesuai'
             ], 401);
         }
-        
+
         $user = Auth::user();
         if (!$user->active) {
             Auth::logout();
             return response()->json(['error' => 'Akun Anda belum diverifikasi. Silahkan cek email Anda'], 401);
         }
 
-        $datauser= user_credential::where('email', $request->email)->first(); // mendapatkan data customer
-        if ($datauser['id_customer']==null){
+        $datauser = user_credential::where('email', $request->email)->first(); // mendapatkan data customer
+        if ($datauser['id_customer'] == null) {
             $role = 'karyawan';
         }
-        
-        $detail_user = Auth::user();// Jika autentikasi berhasil, dapatkan data pengguna
-        
+
+        $detail_user = Auth::user(); // Jika autentikasi berhasil, dapatkan data pengguna
+
         if ($role = 'karyawan') {
-            $user = Karyawan::where('id_karyawan', $detail_user->id_karyawan)->first();// Dapatkan data pelanggan yang sesuai dengan pengguna
-        }else{
-            $user = Customer::where('id_customer', $detail_user->id_customer)->first();// Dapatkan data pelanggan yang sesuai dengan pengguna
+            $user = Karyawan::where('id_karyawan', $detail_user->id_karyawan)->first(); // Dapatkan data pelanggan yang sesuai dengan pengguna
+        } else {
+            $user = Customer::where('id_customer', $detail_user->id_customer)->first(); // Dapatkan data pelanggan yang sesuai dengan pengguna
         }
         return response()->json([
-        'status' => true, 
-        'message' => 'Berhasil proses login',
-        'token' => $datauser->createToken('api-product')->plainTextToken,
-        'role' => $role,
-        'user' => $user,
-        'detail user' => $detail_user,
-       
-    ]);
-}
+            'status' => true,
+            'message' => 'Berhasil proses login',
+            'token' => $datauser->createToken('api-product')->plainTextToken,
+            'role' => $role,
+            'user' => $user,
+            'detail user' => $detail_user,
 
-    public function forgetPassword(Request $request){
+        ]);
+    }
+
+    public function forgetPassword(Request $request)
+    {
         $pass = Str::random(100);
 
         $request->validate([
@@ -93,7 +94,7 @@ class SessionController extends Controller
             'pass_key' => $pass,
         ];
 
-        $user_credential->update($atribut); 
+        $user_credential->update($atribut);
 
         if ($user_credential['pass_key'] == null) {
             return response()->json([
@@ -109,7 +110,7 @@ class SessionController extends Controller
         ];
         Mail::to($request->email)->send(new ForgetPwMailSend($details));
 
-        
+
 
         return response()->json([
             'error' => 'Berhasil',
@@ -126,13 +127,14 @@ class SessionController extends Controller
         if ($keyCheck) {
             $atribut = [
                 'password' => Hash::make($request['password']),
+                'pass_key' => null
             ];
 
-           $user = user_credential::where('pass_key', $pass_key)
+            $user = user_credential::where('pass_key', $pass_key)
                 ->update($atribut);
 
             return response()->json([
-            'message' => 'Verifikasi Passwrd Baru Berhasil'
+                'message' => 'Verifikasi Passwrd Baru Berhasil'
             ]);
         } else {
             return response()->json([

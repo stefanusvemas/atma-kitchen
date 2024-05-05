@@ -12,18 +12,19 @@
             </nav>
             <h4>Edit Bahan Baku</h4>
 
-            <form action="" class="p-3">
+            <form action="{{url('admin/bahan_baku/edit/'.$bahan_baku['id_bahan_baku'])}}" method="post" class="p-3">
+                @csrf
                 <div class="mb-2">
                     <label for="nama" class="form-label">Nama Bahan Baku</label>
-                    <input type="text" class="form-control" id="nama" value="Coklat">
+                    <input type="text" class="form-control" id="nama" name="nama" value="{{$bahan_baku['nama']}}">
                 </div>
                 <div class="mb-2">
                     <label for="stok" class="form-label">Stok</label>
-                    <input type="number" class="form-control" id="stok" min="0" value="10">
+                    <input type="number" class="form-control" id="stok" name="stok" min="0" value="{{$bahan_baku['stok']}}">
                 </div>
                 <div class="mb-2">
                     <label for="harga" class="form-label">Harga</label>
-                    <input type="number" class="form-control" id="harga" value="20000">
+                    <input type="number" class="form-control" id="harga" name="harga" value="{{$bahan_baku['harga']}}">
                 </div>
                 <button type="submit" class="btn btn-primary">Save</button>
             </form>

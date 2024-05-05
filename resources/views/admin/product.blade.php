@@ -40,24 +40,18 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @forelse ($produk as $item)
                     <tr>
-                        <td scope="row">Kue Coklat</td>
-                        <td>0</td>
-                        <td>10</td>
-                        <td><a href="#">Edit</a> | <a href="#">Hapus</a></td>
+                        <td scope="row">{{$item['nama']}}</td>
+                        <td>{{$item['stok']}}</td>
+                        <td>{{$item['kuota_produksi']}}</td>
+                        <td><a href="#">Edit</a> | <a href="{{url('admin/produk/delete/'.$item['id_produk'])}}">Hapus</a></td>
                     </tr>
+                    @empty
                     <tr>
-                        <td scope="row">Red Velvet</td>
-                        <td>3</td>
-                        <td>15</td>
-                        <td><a href="#">Edit</a> | <a href="#">Hapus</a></td>
+                        <td colspan="4">No data</td>
                     </tr>
-                    <tr>
-                        <td scope="row">Krupuk <span class="badge rounded-pill text-bg-success">Titipan</span></td>
-                        <td>15</td>
-                        <td>0</td>
-                        <td><a href="#">Edit</a> | <a href="#">Hapus</a></td>
-                    </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
