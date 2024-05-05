@@ -12,13 +12,12 @@
             </nav>
             <h4>Edit Resep</h4>
 
-            <form action="" class="p-3">
+            <form action="{{url('admin/resep/edit/'.$resep['resep'])}}" class="p-3">
                 <label for="produk">Nama produk</label>
                 <select class="form-select mb-2" aria-label="Default select example">
                     <option selected disabled>Pilih produk</option>
                     <option value="1">Red Velvet</option>
-                    <option value="2">Kue Coklat</option>
-                    <option value="3">Kue Putih</option>
+                   
                 </select>
                 <label for="bahan">Bahan baku</label>
                 <select class="form-select mb-2" aria-label="Default select example">
