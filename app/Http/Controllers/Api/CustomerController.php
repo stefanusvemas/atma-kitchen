@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-    use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 use App\Http\Controllers\Controller;
@@ -10,8 +10,8 @@ use App\Mail\MailSend;
 use App\Models\Customer;
 use App\Models\user_credential;
 use Illuminate\Http\Request;
-    use Illuminate\Support\Facades\Auth;
-    use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 
@@ -21,10 +21,10 @@ class CustomerController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    { 
+    {
         //
         try {
-            $customer = Customer::all(); 
+            $customer = Customer::all();
 
             return response()->json([
                 'data' => $customer,
@@ -38,7 +38,6 @@ class CustomerController extends Controller
                 'data' => []
             ], 400);
         }
-
     }
 
     public function register(Request $request)
@@ -49,14 +48,14 @@ class CustomerController extends Controller
             'tanggal_lahir' => 'required|date',
             'jumlah_poin' => 'required|integer',
             'no_telp' => 'required|numeric|digits_between:10,15',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:user_credentials,email',
             'password' => 'required|string|min:6'
         ]);
 
         $customer = Customer::create($validatedData); // menyimpan data di tabel customer
         $atribut = [
             'id_customer' => $customer['id_customer'],
-            'email' => $request['email'] , 
+            'email' => $request['email'],
             'password' => Hash::make($request['password']),
             'verify_key' => $str,
         ];
@@ -68,7 +67,7 @@ class CustomerController extends Controller
             'nama' => $request->nama,
             'website' => 'Atma Kitchen',
             'datetime' => date('Y-m-d H:i:s'),
-            'url' => request()->getHttpHost() . '/api/register/verify/' . $str
+            'url' => request()->getHttpHost() . '/register/verify/' . $str
         ];
         Mail::to($request->email)->send(new MailSend($details)); //new MailSend($details)
 
@@ -124,16 +123,16 @@ class CustomerController extends Controller
             'password' => 'required|string|min:6'
         ]);
 
-        $customer->update($validatedData); 
+        $customer->update($validatedData);
         $atribut = [
             'id_customer' => $customer['id_customer'],
-            'email' => $request['email'], 
+            'email' => $request['email'],
             'password' => Hash::make($request['password']),
         ];
 
-          
-        $user_credential= user_credential::where('id_customer', $id)->first();
-        
+
+        $user_credential = user_credential::where('id_customer', $id)->first();
+
         $user_credential->update($atribut);
 
         return response([
@@ -185,7 +184,7 @@ class CustomerController extends Controller
                 ]);
 
             return response()->json([
-            'message' => 'Verifikasi Berhasil. Akun Anda sudah aktif'
+                'message' => 'Verifikasi Berhasil. Akun Anda sudah aktif'
             ]);
         } else {
             return response()->json([
@@ -193,9 +192,4 @@ class CustomerController extends Controller
             ], 404);
         }
     }
-
 }
-
-
-
-

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\CustomerController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -23,14 +24,12 @@ Route::get('/checkout', function () {
     return view('checkout');
 });
 
-Route::get('/register', function () {
-    return view('register');
-});
-
+Route::get('/register', [CustomerController::class, 'register'])->name('register');
+Route::post('registerAction', [CustomerController::class, 'registerAction'])->name('registerAction');
 
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('loginAction', [LoginController::class, 'loginAction'])->name('loginAction');
-
+Route::get('/register/verify/{verify_key}', [CustomerController::class, 'verify'])->name('verify');
 
 
 Route::middleware(['auth', 'admin'])->group(function () {
@@ -188,8 +187,4 @@ Route::get('/user/profile/edit', function () {
 
 Route::get('/user/orders_history', function () {
     return view('user/orders_history');
-});
-
-Route::get('/verify', function () {
-    return view('verify');
 });

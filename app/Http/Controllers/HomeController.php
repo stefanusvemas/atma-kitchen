@@ -12,8 +12,11 @@ class HomeController extends Controller
     {
         if (Auth::check()) {
             $user_data = Customer::where('id_customer', Auth::user()->id_customer)->first();
-            // return $user_data;
-            return view('home', compact('user_data'));
+            if ($user_data) {
+
+                return view('home', compact('user_data'));
+            }
+            return redirect('/logout');
         }
         return view('home');
     }
