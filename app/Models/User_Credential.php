@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -9,17 +10,19 @@ use Laravel\Passport\HasApiTokens;
 use Laravel\Sanctum\HasApiTokens as SanctumHasApiTokens;
 use Laravel\Sanctum\PersonalAccessToken;
 
-class user_credential extends Authenticatable {
+class user_credential extends Authenticatable
+{
 
     use HasFactory, Notifiable, SanctumHasApiTokens;
     public $timestamps = false;
 
     protected $primaryKey = 'id_user_credentials';
-    protected $table ="user_credentials";
+    protected $table = "user_credentials";
     protected $fillable = [
         'id_customer',
         'id_karyawan',
         'email',
+        'active',
         'verify_key',
         'password',
         'pass_key'
@@ -39,5 +42,4 @@ class user_credential extends Authenticatable {
         'email_verified_at' => 'datetime',
         // 'password' => 'hashed',
     ];
-
 }

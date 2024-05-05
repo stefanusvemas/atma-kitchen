@@ -17,14 +17,14 @@
             <div class="container-fluid">
                 <div class="d-flex flex-grow-1 justify-content-end">
                     <div class="btn-group">
-                        <a class="btn btn-outline-dark dropdown-toggle" id="dropdownMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Nama Manager</a>
+                        <a class="btn btn-outline-dark dropdown-toggle" id="dropdownMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{$user_data['nama']}}</a>
                         <ul class="dropdown-menu dropdown-menu-end p-3" style="width: 400px;" aria-labelledby="dropdownMenu">
-                            <h5>Nama Staff</h5>
-                            <p>Manager</p>
+                            <h5>{{$user_data['nama']}}</h5>
+                            <p>{{$user_data['jabatan']['nama']}}</p>
                             <div class="dropdown-divider">
                             </div>
                             <li><a class="dropdown-item" href="{{url('/manager/profile')}}">Edit Profile</a></li>
-                            <li><a class="dropdown-item" href="{{url('/')}}">Logout</a></li>
+                            <li><a class="dropdown-item" href="{{url('/logout')}}">Logout</a></li>
                         </ul>
                     </div>
                 </div>

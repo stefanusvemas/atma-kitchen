@@ -9,6 +9,9 @@ use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\manager\DashboardController as ManagerDashboardController;
+use App\Http\Controllers\manager\JabatanController;
+use App\Http\Controllers\manager\KaryawanController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -26,10 +29,10 @@ Route::get('/checkout', function () {
 
 Route::get('/register', [CustomerController::class, 'register'])->name('register');
 Route::post('registerAction', [CustomerController::class, 'registerAction'])->name('registerAction');
+Route::get('/register/verify/{verify_key}', [CustomerController::class, 'verify'])->name('verify');
 
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('loginAction', [LoginController::class, 'loginAction'])->name('loginAction');
-Route::get('/register/verify/{verify_key}', [CustomerController::class, 'verify'])->name('verify');
 
 
 Route::middleware(['auth', 'admin'])->group(function () {
@@ -80,86 +83,87 @@ Route::middleware(['auth', 'admin'])->group(function () {
     });
 });
 
+Route::middleware(['auth', 'MO'])->group(function () {
+    Route::get('/manager', [ManagerDashboardController::class, 'index']);
+
+    Route::get('/manager/jabatan', [JabatanController::class, 'index']);
+    Route::get('/manager/jabatan/search', [JabatanController::class, 'search']);
+    Route::get('/manager/jabatan/add', [JabatanController::class, 'add']);
+    Route::post('/manager/jabatan/add', [JabatanController::class, 'addAction']);
+    Route::get('/manager/jabatan/edit/{id}', [JabatanController::class, 'edit']);
+    Route::post('/manager/jabatan/edit/{id}', [JabatanController::class, 'editAction']);
+    Route::get('/manager/jabatan/delete/{id}', [JabatanController::class, 'delete']);
+
+    Route::get('/manager/karyawan', [KaryawanController::class, 'index']);
+    Route::get('/manager/karyawan/search', [KaryawanController::class, 'search']);
+    Route::get('/manager/karyawan/add', [KaryawanController::class, 'add']);
+    Route::post('/manager/karyawan/add', [KaryawanController::class, 'addAction']);
+    Route::get('/manager/karyawan/edit/{id}', [KaryawanController::class, 'edit']);
+    Route::post('/manager/karyawan/edit/{id}', [KaryawanController::class, 'editAction']);
+    Route::get('/manager/karyawan/delete/{id}', [KaryawanController::class, 'delete']);
+
+    Route::get('/manager/karyawan/edit', function () {
+        return view('manager/edit_karyawan');
+    });
+
+    Route::get('/manager/penitip', function () {
+        return view('manager/penitip');
+    });
+
+    Route::get('/manager/penitip/add', function () {
+        return view('manager/tambah_penitip');
+    });
+
+    Route::get('/manager/penitip/edit', function () {
+        return view('manager/edit_penitip');
+    });
+
+    Route::get('/manager/bahan_baku', function () {
+        return view('manager/bahan_baku');
+    });
+
+    Route::get('/manager/bahan_baku/edit', function () {
+        return view('manager/edit_bahan_baku');
+    });
+
+    Route::get('manager/pengeluaran_lain', function () {
+        return view('manager/pengeluaran_lain');
+    });
+
+    Route::get('manager/pengeluaran_lain/add', function () {
+        return view('manager/tambah_pengeluaran_lain');
+    });
+
+    Route::get('manager/pengeluaran_lain/edit', function () {
+        return view('manager/edit_pengeluaran_lain');
+    });
+
+    Route::get('/manager/pembelian_bahan_baku', function () {
+        return view('manager/pembelian_bahan_baku');
+    });
+
+    Route::get('/manager/pembelian_bahan_baku/add', function () {
+        return view('manager/tambah_pembelian_bahan_baku');
+    });
+
+    Route::get('/manager/pembelian_bahan_baku/edit', function () {
+        return view('manager/edit_pembelian_bahan_baku');
+    });
+
+
+
+
+
+    Route::get('/manager/profile', function () {
+        return view('manager/profile');
+    });
+});
+
 Route::get('/logout', function () {
     Auth::logout();
     return redirect('/');
 });
 
-Route::get('/manager', function () {
-    return view('manager/dashboard');
-});
-
-Route::get('/manager/jabatan', function () {
-    return view('manager/jabatan');
-});
-
-Route::get('/manager/karyawan', function () {
-    return view('manager/karyawan');
-});
-
-Route::get('/manager/karyawan/add', function () {
-    return view('manager/tambah_karyawan');
-});
-
-Route::get('/manager/karyawan/edit', function () {
-    return view('manager/edit_karyawan');
-});
-
-Route::get('/manager/penitip', function () {
-    return view('manager/penitip');
-});
-
-Route::get('/manager/penitip/add', function () {
-    return view('manager/tambah_penitip');
-});
-
-Route::get('/manager/penitip/edit', function () {
-    return view('manager/edit_penitip');
-});
-
-Route::get('/manager/bahan_baku', function () {
-    return view('manager/bahan_baku');
-});
-
-Route::get('/manager/bahan_baku/edit', function () {
-    return view('manager/edit_bahan_baku');
-});
-
-Route::get('manager/pengeluaran_lain', function () {
-    return view('manager/pengeluaran_lain');
-});
-
-Route::get('manager/pengeluaran_lain/add', function () {
-    return view('manager/tambah_pengeluaran_lain');
-});
-
-Route::get('manager/pengeluaran_lain/edit', function () {
-    return view('manager/edit_pengeluaran_lain');
-});
-
-Route::get('/manager/pembelian_bahan_baku', function () {
-    return view('manager/pembelian_bahan_baku');
-});
-
-Route::get('/manager/pembelian_bahan_baku/add', function () {
-    return view('manager/tambah_pembelian_bahan_baku');
-});
-
-Route::get('/manager/pembelian_bahan_baku/edit', function () {
-    return view('manager/edit_pembelian_bahan_baku');
-});
-
-Route::get('/manager/jabatan/add', function () {
-    return view('manager/tambah_jabatan');
-});
-
-Route::get('/manager/jabatan/edit', function () {
-    return view('manager/edit_jabatan');
-});
-
-Route::get('/manager/profile', function () {
-    return view('manager/profile');
-});
 
 Route::get('/owner', function () {
     return view('owner/dashboard');

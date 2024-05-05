@@ -11,25 +11,25 @@
                 </ol>
             </nav>
             <h4>Edit Karyawan</h4>
+            @if(session('error'))
+            <div class="alert alert-danger" role="alert">
+                {{session('error')->first()}}
+            </div>
+            @endif
 
-            <form action="" class="p-3">
+            <form action="{{url('manager/karyawan/edit/'.$karyawan['id_karyawan'])}}" method="post" class="p-3">
+                @csrf
                 <div class="mb-2">
                     <label for="nama" class="form-label">Nama</label>
-                    <input type="text" class="form-control" name="nama" id="nama" value="John">
+                    <input type="text" class="form-control" name="nama" id="nama" value="{{$karyawan['nama']}}">
 
                     <label for="jabatan" class="form-label">Jabatan</label>
-                    <select class="form-select" name="jabatan" id="jabatan">
-                        <option selected>Pilih Jabatan</option>
-                        <option value="1">Manager Operasional</option>
-                        <option value="2">Admin</option>
-                        <option value="3">Owner</option>
+                    <select class="form-select" name="id_jabatan" id="jabatan">
+                        <option selected value="{{$karyawan['jabatan']['id_jabatan']}}" hidden>{{$karyawan['jabatan']['nama']}}</option>
+                        @foreach($jabatan as $jabatan)
+                        <option value="{{$jabatan['id_jabatan']}}">{{$jabatan['nama']}}</option>
+                        @endforeach
                     </select>
-
-                    <label for="email" class="form-label">Email</label>
-                    <input type="email" class="form-control" name="email" id="email" value="example@exmp.com">
-
-                    <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control" name="password" id="password">
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
