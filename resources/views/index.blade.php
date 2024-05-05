@@ -26,12 +26,24 @@
                     <div class="navbar-nav">
                         <a class="nav-link {{ Request::is('/') ? 'active' : '' }}" aria-current="page" href="{{url('/')}}">Home</a>
                         <div class="d-flex d-none">
-                            <a class="nav-link" href="{{url('/cart')}}"><i class="fa fa-cart-shopping"></i>
+                            <a class="nav-link mx-2" href="{{url('/cart')}}"><i class="fa fa-cart-shopping"></i>
                                 <span class="position-absolute top-10 start-10 translate-middle badge rounded-pill bg-danger">
                                     2
                                     <span class="visually-hidden">unread items</span>
                                 </span>
                             </a>
+                            <div class="btn-group">
+                                <a class="btn btn-outline-dark dropdown-toggle" id="dropdownMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Nama User</a>
+                                <ul class="dropdown-menu dropdown-menu-end p-3" style="width: 400px;" aria-labelledby="dropdownMenu">
+                                    <h5>Nama User</h5>
+                                    <p>80 <i class="fa fa-coins"></i></p>
+                                    <div class="dropdown-divider"></div>
+                                    <li><a class="dropdown-item" href="{{url('/user/profile')}}">Profile</a></li>
+                                    <li><a class="dropdown-item" href="{{url('/user/orders_history')}}">Orders History</a></li>
+                                    <li><a class="dropdown-item disabled" href="#">Address</a></li>
+                                    <li><a class="dropdown-item" href="{{url('/')}}">Logout</a></li>
+                                </ul>
+                            </div>
                         </div>
                         <div class="d-flex">
                             <div class="d-lg-none d-block">
