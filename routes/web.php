@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\admin\BahanBakuController as AdminBahanBakuController;
+use App\Http\Controllers\admin\CustomerController;
 use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\HampersController;
 use App\Http\Controllers\admin\ProdukController;
@@ -8,6 +9,7 @@ use App\Http\Controllers\admin\ResepController;
 use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
+use App\Models\Customer;
 use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
@@ -49,9 +51,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/hampers/delete/{id}', [HampersController::class, 'destroy']);
     Route::get('/admin/hampers/search', [HampersController::class, 'search']);
 
-    Route::get('/admin/customers', function () {
-        return view('admin/customers');
-    });
+    Route::get('/admin/customers', [CustomerController::class, 'index']);
+    Route::get('/admin/customers/search', [CustomerController::class, 'search']);
 
     Route::get('/admin/bahan_baku', [AdminBahanBakuController::class, 'index']);
     Route::get('/admin/bahan_baku/add', [AdminBahanBakuController::class, 'create']);
@@ -77,7 +78,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('/admin/produk/titipan/add', [ProdukController::class, 'create_titipanAction']); //sendiri
 
     Route::get('/admin/produk/delete/{id}', [ProdukController::class, 'destroy']);
-    Route::get('/admin/resep/search', [ProdukController::class, 'search']);
+    Route::get('/admin/produk/search', [ProdukController::class, 'search']);
 
 
 

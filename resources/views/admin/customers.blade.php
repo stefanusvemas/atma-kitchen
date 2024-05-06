@@ -11,13 +11,12 @@
 
                 </div>
                 <div class="col col-lg-3 mt-md-0 mt-3 col-auto">
-                    <form action="#">
+                    <form action="{{url('/admin/customers/search')}}" method="get">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Cari customer...">
+                            <input type="text" class="form-control" name="search" placeholder="Cari customer...">
                             <button class="btn btn-outline-primary" type="submit">Cari</button>
                         </div>
                     </form>
-
                 </div>
             </div>
 
@@ -31,16 +30,17 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @forelse ($customer as $item)
                     <tr>
-                        <td scope="row">Budi</td>
-                        <td>budi@customer.com</td>
+                        <td scope="row">{{$item['nama']}}</td>
+                        <td>{{$item['user_credential']['email']}}</td>
                         <td><a href="{{url('admin/customers/history')}}">History Pesanan</a></td>
                     </tr>
+                    @empty
                     <tr>
-                        <td scope="row">John</td>
-                        <td>john@customer.com</td>
-                        <td><a href="#">History Pesanan</a></td>
+                        <td colspan="4">No data</td>
                     </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>

@@ -66,7 +66,7 @@ class BahanBakuController extends Controller
         $data = $request->all();
         $validatedData = validator::make($data, [ // validasi input
             'nama' => 'required',
-            'stok' => 'required|numberic',
+            'stok' => 'required',
             'harga' => 'required'
         ]);
 
