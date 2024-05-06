@@ -12,12 +12,8 @@
             </nav>
             <h4>Tambah Pengeluaran Lain</h4>
 
-            <form action="" class="p-3">
-                <div class="mb-3">
-                    <label for="tgl" class="form-label">Tanggal Pembelian</label>
-                    <input type="date" class="form-control" name="tgl_pengeluaran" id="tgl">
-                </div>
-
+            <form action="{{url('manager/pengeluaran_lain/add')}}" method="post" class="p-3">
+                @csrf
                 <div class="mb-3">
                     <label for="deskripsi" class="form-label">Deskripsi</label>
                     <textarea class="form-control" name="deskripsi" id="deskripsi"></textarea>
@@ -25,7 +21,7 @@
 
                 <div class="mb-3">
                     <label for="jumlah" class="form-label">Jumlah Pengeluaran</label>
-                    <input type="number" class="form-control" name="jumlah_pengeluaran" id="jumlah">
+                    <input type="number" class="form-control" name="jumlah" id="jumlah">
                 </div>
 
                 <button type="submit" class="btn btn-primary">Submit</button>

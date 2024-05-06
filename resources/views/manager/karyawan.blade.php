@@ -37,34 +37,35 @@
                         <td scope="row">{{$karyawan['nama']}}</td>
                         <td>{{$karyawan['jabatan']['nama']}}</td>
                         <td>{{$karyawan['tgl_bergabung']}}</td>
-                        <td><a href="{{url('/manager/karyawan/edit/'.$karyawan['id_karyawan'])}}">Edit</a> | <a href="" data-bs-toggle="modal" data-bs-target="#deleteModal">Hapus</a></td>
+                        <td><a href="{{url('/manager/karyawan/edit/'.$karyawan['id_karyawan'])}}">Edit</a> | <a href="" data-bs-toggle="modal" data-bs-target="#deleteModal{{$karyawan['id_karyawan']}}">Hapus</a></td>
                     </tr>
+                    <div class="modal fade" id="deleteModal{{$karyawan['id_karyawan']}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Karyawan</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    Are you sure you want to delete <strong>{{$karyawan['nama']}}</strong>? This action cannot be undone.
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                    <a href="{{url('manager/karyawan/delete/'.$karyawan['id_karyawan'])}}" class="btn btn-danger">Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     @empty
                     <tr>
-                        <td colspan="4">No data</td>
+                        <td colspan="4" class="text-center">No data</td>
                     </tr>
                     @endforelse
                 </tbody>
             </table>
         </div>
     </div>
-    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Karyawan</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    Are you sure you want to delete <strong>{{$karyawan['nama']}}</strong>? This action cannot be undone.
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <a href="{{url('manager/karyawan/delete/'.$karyawan['id_karyawan'])}}" class="btn btn-danger">Delete</a>
-                </div>
-            </div>
-        </div>
-    </div>
+
 </main>
 
 @endsection

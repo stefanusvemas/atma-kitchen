@@ -11,9 +11,9 @@
 
                 </div>
                 <div class="col col-lg-3 mt-md-0 mt-3 col-auto">
-                    <form action="#">
+                    <form action="{{url('manager/bahan_baku/search')}}">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Cari bahan baku...">
+                            <input type="text" class="form-control" name="search" placeholder="Cari bahan baku...">
                             <button class="btn btn-outline-primary" type="submit">Cari</button>
                         </div>
                     </form>
@@ -30,18 +30,16 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @forelse ($bahan_baku as $bahan_baku)
                     <tr>
-                        <td scope="row">Tepung Terigu</td>
-                        <td>20</td>
+                        <td scope="row">{{$bahan_baku['nama']}}</td>
+                        <td>{{$bahan_baku['stok']}}</td>
                     </tr>
+                    @empty
                     <tr>
-                        <td scope="row">Gula Pasir</td>
-                        <td>20</td>
+                        <td colspan="2" class="text-center">No data</td>
                     </tr>
-                    <tr>
-                        <td scope="row">Garam</td>
-                        <td>20</td>
-                    </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>

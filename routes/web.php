@@ -9,9 +9,17 @@ use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\manager\BahanBakuController as ManagerBahanBakuController;
 use App\Http\Controllers\manager\DashboardController as ManagerDashboardController;
 use App\Http\Controllers\manager\JabatanController;
 use App\Http\Controllers\manager\KaryawanController;
+use App\Http\Controllers\manager\PembelianBahanBakuController;
+use App\Http\Controllers\manager\PenitipController;
+use App\Http\Controllers\manager\PengeluaranLainController;
+use App\Http\Controllers\manager\ProfileController as ManagerProfileController;
+use App\Http\Controllers\user\EditProfileController as UserEditProfileController;
+use App\Http\Controllers\user\HistoryController;
+use App\Http\Controllers\user\ProfileController as UserProfileController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -102,61 +110,46 @@ Route::middleware(['auth', 'MO'])->group(function () {
     Route::post('/manager/karyawan/edit/{id}', [KaryawanController::class, 'editAction']);
     Route::get('/manager/karyawan/delete/{id}', [KaryawanController::class, 'delete']);
 
-    Route::get('/manager/karyawan/edit', function () {
-        return view('manager/edit_karyawan');
-    });
+    Route::get('/manager/penitip', [PenitipController::class, 'index']);
+    Route::get('/manager/penitip/search', [PenitipController::class, 'search']);
+    Route::get('/manager/penitip/add', [PenitipController::class, 'add']);
+    Route::post('/manager/penitip/add', [PenitipController::class, 'addAction']);
+    Route::get('/manager/penitip/edit/{id}', [PenitipController::class, 'edit']);
+    Route::post('/manager/penitip/edit/{id}', [PenitipController::class, 'editAction']);
+    Route::get('/manager/penitip/delete/{id}', [PenitipController::class, 'delete']);
 
-    Route::get('/manager/penitip', function () {
-        return view('manager/penitip');
-    });
+    Route::get('/manager/bahan_baku', [ManagerBahanBakuController::class, 'index']);
+    Route::get('/manager/bahan_baku/search', [ManagerBahanBakuController::class, 'search']);
 
-    Route::get('/manager/penitip/add', function () {
-        return view('manager/tambah_penitip');
-    });
+    Route::get('/manager/pembelian_bahan_baku', [PembelianBahanBakuController::class, 'index']);
+    Route::get('/manager/pembelian_bahan_baku/search', [PembelianBahanBakuController::class, 'search']);
+    Route::get('/manager/pembelian_bahan_baku/add', [PembelianBahanBakuController::class, 'add']);
+    Route::post('/manager/pembelian_bahan_baku/add', [PembelianBahanBakuController::class, 'addAction']);
+    Route::get('/manager/pembelian_bahan_baku/edit/{id}', [PembelianBahanBakuController::class, 'edit']);
+    Route::post('/manager/pembelian_bahan_baku/edit/{id}', [PembelianBahanBakuController::class, 'editAction']);
+    Route::get('/manager/pembelian_bahan_baku/delete/{id}', [PembelianBahanBakuController::class, 'delete']);
 
-    Route::get('/manager/penitip/edit', function () {
-        return view('manager/edit_penitip');
-    });
+    Route::get('manager/pengeluaran_lain', [PengeluaranLainController::class, 'index']);
+    Route::get('manager/pengeluaran_lain/search', [PengeluaranLainController::class, 'search']);
+    Route::get('manager/pengeluaran_lain/add', [PengeluaranLainController::class, 'add']);
+    Route::post('manager/pengeluaran_lain/add', [PengeluaranLainController::class, 'addAction']);
+    Route::get('manager/pengeluaran_lain/edit/{id}', [PengeluaranLainController::class, 'edit']);
+    Route::post('manager/pengeluaran_lain/edit/{id}', [PengeluaranLainController::class, 'editAction']);
+    Route::get('manager/pengeluaran_lain/delete/{id}', [PengeluaranLainController::class, 'delete']);
 
-    Route::get('/manager/bahan_baku', function () {
-        return view('manager/bahan_baku');
-    });
+    Route::get('/manager/profile', [ManagerProfileController::class, 'index']);
+    Route::post('/manager/profile/edit', [ManagerProfileController::class, 'edit']);
+});
 
-    Route::get('/manager/bahan_baku/edit', function () {
-        return view('manager/edit_bahan_baku');
-    });
+Route::middleware(['auth', 'user'])->group(function () {
+    Route::get('/user/profile', [UserProfileController::class, 'index']);
+    Route::post('/user/profile', [UserProfileController::class, 'editAction']);
 
-    Route::get('manager/pengeluaran_lain', function () {
-        return view('manager/pengeluaran_lain');
-    });
+    Route::get('/user/profile/edit', [UserEditProfileController::class, 'index']);
+    Route::post('/user/profile/edit', [UserEditProfileController::class, 'editAction']);
 
-    Route::get('manager/pengeluaran_lain/add', function () {
-        return view('manager/tambah_pengeluaran_lain');
-    });
-
-    Route::get('manager/pengeluaran_lain/edit', function () {
-        return view('manager/edit_pengeluaran_lain');
-    });
-
-    Route::get('/manager/pembelian_bahan_baku', function () {
-        return view('manager/pembelian_bahan_baku');
-    });
-
-    Route::get('/manager/pembelian_bahan_baku/add', function () {
-        return view('manager/tambah_pembelian_bahan_baku');
-    });
-
-    Route::get('/manager/pembelian_bahan_baku/edit', function () {
-        return view('manager/edit_pembelian_bahan_baku');
-    });
-
-
-
-
-
-    Route::get('/manager/profile', function () {
-        return view('manager/profile');
-    });
+    Route::get('/user/orders_history', [HistoryController::class, 'index']);
+    Route::get('/user/orders_history/search', [HistoryController::class, 'search']);
 });
 
 Route::get('/logout', function () {
@@ -179,16 +172,4 @@ Route::get('/owner/karyawan/edit', function () {
 
 Route::get('/owner/profile', function () {
     return view('owner/profile');
-});
-
-Route::get('/user/profile', function () {
-    return view('user/profile');
-});
-
-Route::get('/user/profile/edit', function () {
-    return view('user/edit_profile');
-});
-
-Route::get('/user/orders_history', function () {
-    return view('user/orders_history');
 });

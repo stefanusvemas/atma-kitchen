@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\CustomerController;
 use App\Http\Controllers\Api\KaryawanController;
 use App\Http\Controllers\Api\SessionController;
+use App\Http\Controllers\Api\AbsensiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -39,5 +40,9 @@ Route::group(
         Route::get('karyawan/{id}', [KaryawanController::class, 'show']);
         Route::put('karyawan/{id}', [KaryawanController::class, 'update']);
         Route::delete('karyawan/{id} ', [KaryawanController::class, 'destroy']);
+
+        //Absensi
+        Route::get('absensi', [AbsensiController::class, 'index']);
+        Route::post('absensi/store', [AbsensiController::class, 'store']);
     }
 );

@@ -6,40 +6,38 @@
         <div class="container mt-4 bg-light rounded-3 p-4">
             <h4>Orders History</h4>
             <div class="row justify-content-between">
-                <div class="col">
-                </div>
+                <div class="col"></div>
                 <div class="col col-lg-3 mt-md-0 mt-3 col-auto">
-                    <form action="#">
+                    <form action="{{url('user/orders_history/search')}}">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Cari produk...">
+                            <input type="text" class="form-control" name="search" placeholder="Cari produk...">
                             <button class="btn btn-outline-primary" type="submit">Cari</button>
                         </div>
                     </form>
-
                 </div>
             </div>
             <table class="table table-responsive">
                 <thead>
                     <tr>
                         <th scope="col">Date</th>
-                        <th scope="col">Total Harga</th>
-                        <th scope="col" class="w-50">Produk</th>
+                        <th scope="col">Total Price</th>
+                        <th scope="col" class="w-50">Products</th>
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach($orders as $order)
                     <tr>
-                        <td rowspan="2" scope="row">2024-01-11 13:23:44</td>
-                        <td rowspan="2">200000</td>
-                        <td>Kue Putih</td>
+                        <td rowspan="{{ count($order['detail_transaksi']) }}" scope="row">{{ $order['tgl_transaksi'] }}</td>
+                        <td rowspan="{{ count($order['detail_transaksi']) }}">{{ number_format($order['total_harga'],2,",",".") }}</td>
+                        @foreach($order['detail_transaksi'] as $index => $detail)
+                        @if($index > 0)
                     </tr>
                     <tr>
-                        <td>Kue Coklat</td>
+                        @endif
+                        <td>{{ $detail['produk']['nama'] }}</td>
+                        @endforeach
                     </tr>
-                    <tr>
-                        <td scope="row">2024-01-01 13:23:44</td>
-                        <td>150000</td>
-                        <td>Red Velvet</td>
-                    </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
