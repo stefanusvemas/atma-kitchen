@@ -19,7 +19,7 @@
                     </div>
                 </div>
                 <div class="col col-lg-3 mt-md-0 mt-3 col-auto">
-                    <form action="{{url('/admin/resep/search')}}" method="get">
+                    <form action="{{url('/admin/produk/search')}}" method="get">
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="Cari produk..." name="search">
                             <button class="btn btn-outline-primary" type="submit">Cari</button>
