@@ -11,14 +11,20 @@
                 </ol>
             </nav>
             <h4>Edit Karyawan</h4>
+            @if(session('error'))
+            <div class="alert alert-danger" role="alert">
+                {{session('error')->first()}}
+            </div>
+            @endif
 
-            <form action="" class="p-3">
+            <form action="{{url('owner/karyawan/edit/'.$karyawan['id_karyawan'])}}" method="post" class="p-3">
+                @csrf
                 <div class="mb-2">
                     <label for="gaji" class="form-label">Gaji</label>
-                    <input type="number" class="form-control" name="gaji" id="gaji" value="100000">
+                    <input type="number" class="form-control" name="gaji" id="gaji" value="{{$karyawan['gaji']}}">
 
                     <label for="bonus" class="form-label">Bonus</label>
-                    <input type="number" class="form-control" name="bonus" id="bonus" value="50000">
+                    <input type="number" class="form-control" name="bonus" id="bonus" value="{{$karyawan['bonus']}}">
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>

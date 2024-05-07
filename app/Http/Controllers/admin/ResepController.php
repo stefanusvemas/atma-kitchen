@@ -17,9 +17,9 @@ class ResepController extends Controller
     public function index()
     {
         $user_data = Karyawan::where('id_karyawan', Auth::user()->id_karyawan)->with('jabatan')->first();
-        $produk = Produk::with('resep.bahanBaku')->get();
-        // return ($resep);
-        return view('admin.resep', compact('user_data', 'produk'));
+        $products = Produk::with('resep.bahanBaku')->get()->groupBy('id_produk');
+        // return ($produk);
+        return view('admin.resep', compact('user_data', 'products'));
     }
 
     public function edit($id)
@@ -109,8 +109,8 @@ class ResepController extends Controller
     {
         $search = $request->query('search');
         $user_data = Karyawan::where('id_karyawan', Auth::user()->id_karyawan)->with('jabatan')->first();
-        $produk = Produk::where('nama', 'like', "%$search%")->get();
+        $products = Produk::where('nama', 'like', "%$search%")->get()->groupBy('id_produk');
         // return ($search);
-        return view('admin.resep', compact('user_data', 'produk'));
+        return view('admin.resep', compact('user_data', 'products'));
     }
 }

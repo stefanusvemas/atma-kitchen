@@ -22,6 +22,7 @@
                             <h5>{{$user_data['nama']}}</h5>
                             <p>{{$user_data['jabatan']['nama']}}</p>
                             <div class="dropdown-divider"></div>
+                            <li><a class="dropdown-item" href="{{url('/admin/profile')}}">Edit Profile</a></li>
                             <li><a class="dropdown-item" href="{{url('/logout')}}">Logout</a></li>
                         </ul>
                     </div>

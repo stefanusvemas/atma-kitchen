@@ -17,7 +17,6 @@
                             <button class="btn btn-outline-primary" type="submit">Cari</button>
                         </div>
                     </form>
-
                 </div>
             </div>
 
@@ -30,26 +29,28 @@
                         <th>Action</th>
                     </tr>
                 </thead>
-
-
                 <tbody>
-                    @foreach($produk as $produk)
-                    @foreach($produk['resep'] as $resep)
+                    @if(!empty($products))
+                    @foreach ($products as $productId => $productList)
+                    @foreach ($productList as $index => $product)
                     <tr>
-                        <!-- @if ($resep !== 0)
-                        <td rowspan="{{ count($produk->resep) }}">{{ $produk['nama'] }}</td>
-                        @endif -->
-                        <td>{{ $produk['nama'] }}</td>
-                        <td>{{ $resep['bahanBaku']['nama'] }}</td>
-                        <td>{{ $resep['jumlah_bahan_baku'] }} {{ $resep['satuan'] }}</td>
-
-                        <td><a href="{{url('admin/resep/edit/'.$resep['id_resep'])}}">Edit</a> | <a href="{{url('admin/resep/delete/'.$resep['id_resep'])}}">Hapus</a></td>
+                        @if ($index === 0)
+                        <td rowspan="{{ count($productList) }}">{{ $product['nama'] }}</td>
+                        <td rowspan="{{ count($productList) }}">{{ $product['harga'] }}</td>
+                        @endif
+                        <td>{{ $product['nama'] }}</td>
+                        <td>{{ $product['harga'] }}</td>
+                        <!-- Add more columns to display other attributes as needed -->
                     </tr>
                     @endforeach
                     @endforeach
+                    @else
+                    <tr>
+                        <td colspan="5" class="text-center">No data</td>
+                    </tr>
+                    @endif
+
                 </tbody>
-
-
             </table>
         </div>
     </div>

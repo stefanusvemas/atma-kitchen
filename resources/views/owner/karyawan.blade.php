@@ -10,9 +10,9 @@
                 <div class="col">
                 </div>
                 <div class="col col-lg-3 mt-md-0 mt-3 col-auto">
-                    <form action="#">
+                    <form action="{{url('owner/karyawan/search')}}">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Cari karyawan...">
+                            <input type="text" class="form-control" name="search" placeholder="Cari karyawan...">
                             <button class="btn btn-outline-primary" type="submit">Cari</button>
                         </div>
                     </form>
@@ -24,31 +24,29 @@
             <table class="table table-responsive mt-3">
                 <thead>
                     <tr>
-                        <th scope="col" class="w-50">Nama</th>
+                        <th scope="col" class="w-25">Nama</th>
                         <th scope="col">Jabatan</th>
                         <th scope="col">Tanggal Bergabung</th>
+                        <th>Gaji</th>
+                        <th>Bonus</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody>
+                    @forelse ($karyawan as $item)
                     <tr>
-                        <td scope="row">John</td>
-                        <td>Manager</td>
-                        <td>2020/02/12</td>
-                        <td><a href="{{url('/owner/karyawan/edit')}}">Edit</a> | <a href="#">Hapus</a></td>
+                        <td scope="row">{{$item['nama']}}</td>
+                        <td>{{$item['Jabatan']['nama']}}</td>
+                        <td>{{$item['tgl_bergabung']}}</td>
+                        <td>Rp. {{number_format($item['gaji'],2,",",".")}}</td>
+                        <td>Rp. {{number_format($item['bonus'],2,",",".")}}</td>
+                        <td><a href="{{url('/owner/karyawan/edit/'.$item['id_karyawan'])}}">Edit</a></td>
                     </tr>
+                    @empty
                     <tr>
-                        <td scope="row">John</td>
-                        <td>Manager</td>
-                        <td>2020/02/12</td>
-                        <td><a href="#">Edit</a> | <a href="#">Hapus</a></td>
+                        <td colspan="4" class="text-center">No data</td>
                     </tr>
-                    <tr>
-                        <td scope="row">John</td>
-                        <td>Manager</td>
-                        <td>2020/02/12</td>
-                        <td><a href="#">Edit</a> | <a href="#">Hapus</a></td>
-                    </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
