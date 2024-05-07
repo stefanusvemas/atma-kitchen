@@ -71,6 +71,7 @@
                                         <button type="submit" class="btn btn-dark mt-2">Sign in</button>
                                     </form>
                                     <div class="dropdown-divider"></div>
+                                    <li><a class="dropdown-item" href="{{url('/forgot_password')}}">Forgot password?</a></li>
                                     <li><a class="dropdown-item" href="{{url('/register')}}">Don't have an account? Sign up</a></li>
                                 </ul>
                             </div>

@@ -188,7 +188,7 @@ Route::middleware(['auth', 'owner'])->group(function () {
 
 
 
-Route::get('/inputEmail', [CustomerController::class, 'resetPassword']);
+Route::get('/forgot_password', [CustomerController::class, 'resetPassword']);
 Route::post('/inputEmail', [CustomerController::class, 'resetPasswordAction']);
 Route::get('/inputEmail/verifyResetPassword/{pass_key}', [CustomerController::class, 'verifyResetPassword'])->name('verifyResetPassword');
 Route::post('/inputEmail/verifyResetPassword/{pass_key}', [CustomerController::class, 'verifyResetPasswordAction'])->name('verifyResetPasswordAction');
