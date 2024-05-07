@@ -125,7 +125,7 @@ class SessionController extends Controller
         $details = [
             'nama' => $request->nama,
             'website' => 'Atma Kitchen',
-            'url' => 'http://127.0.0.1:8000/' . '/customer/verifyForgetPw/' . $pass
+            'url' => 'http://127.0.0.1:8000' . '/inputEmail/verifyResetPassword/' . $pass
         ];
         Mail::to($request->email)->send(new ForgetPwMailSend($details));
 
