@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Mail;
 class CustomerController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the resource. API
      */
     public function index()
     {
@@ -90,7 +90,7 @@ class CustomerController extends Controller
         //
         try {
             $customer = Customer::where('id_customer', $id)->get()->load('user_credential');
-            
+
 
             if (!$customer) {
                 throw new \Exception('Customer tidak ditemukan');
@@ -143,7 +143,7 @@ class CustomerController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified resource from storage. API
      */
     public function destroy(string $id)
     {
