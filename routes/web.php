@@ -5,6 +5,7 @@ use App\Http\Controllers\admin\CustomerController as AdminCustomerController;
 use App\Http\Controllers\admin\ProfileController as AdminProfileController;
 use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\HampersController;
+use App\Http\Controllers\admin\HistoryPesananController;
 use App\Http\Controllers\admin\ProdukController;
 use App\Http\Controllers\admin\ResepController;
 use Illuminate\Support\Facades\Route;
@@ -99,11 +100,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/produk/delete/{id}', [ProdukController::class, 'destroy']);
     Route::get('/admin/produk/search', [ProdukController::class, 'search']);
 
-
-
-    Route::get('/admin/customers/history', function () {
-        return view('admin/history_pesanan_customer');
-    });
+    Route::get('/admin/customers/history/{id}', [HistoryPesananController::class, 'index']);
+    Route::get('/admin/customers/history/{id}/search', [HistoryPesananController::class, 'search']);
 });
 
 Route::middleware(['auth', 'MO'])->group(function () {

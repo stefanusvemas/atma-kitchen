@@ -11,9 +11,9 @@
 
                 </div>
                 <div class="col col-lg-3 mt-md-0 mt-3 col-auto">
-                    <form action="#">
+                    <form action="{{url('/admin/customers/history/'.$id).'/search'}}">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Cari history...">
+                            <input type="text" class="form-control" name="search" placeholder="Cari history...">
                             <button class="btn btn-outline-primary" type="submit">Cari</button>
                         </div>
                     </form>
@@ -26,32 +26,26 @@
                 <thead>
                     <tr>
                         <th scope="col" class="w-50">Tanggal Transaksi</th>
+                        <th scope="col">Total Harga</th>
                         <th>Produk</th>
                         <th>Jumlah</th>
-                        <th scope="col">Total Harga</th>
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach($orders as $order)
                     <tr>
-                        <td rowspan="2">2024-02-12</td>
-                        <td>Red Velvet</td>
-                        <td>1</td>
-                        <td rowspan="2">Rp. 140,000</td>
+                        <td rowspan="{{ count($order['detail_transaksi']) }}" scope="row">{{ $order['tgl_transaksi'] }}</td>
+                        <td rowspan="{{ count($order['detail_transaksi']) }}">Rp. {{ number_format($order['total_harga'],2,",",".") }}</td>
+                        @foreach($order['detail_transaksi'] as $index => $detail)
+                        @if($index > 0)
                     </tr>
                     <tr>
-                        <td>Kue Putih</td>
-                        <td>1</td>
+                        @endif
+                        <td>{{ $detail['produk']['nama'] }}</td>
+                        <td>{{ $detail['jumlah'] }}</td>
+                        @endforeach
                     </tr>
-                    <tr>
-                        <td rowspan="2">2024-02-02</td>
-                        <td>Kue Coklat</td>
-                        <td>1</td>
-                        <td rowspan="2">Rp. 140,000</td>
-                    </tr>
-                    <tr>
-                        <td>Kue Putih</td>
-                        <td>1</td>
-                    </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
