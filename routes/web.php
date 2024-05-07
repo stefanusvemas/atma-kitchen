@@ -1,11 +1,14 @@
 <?php
 
 use App\Http\Controllers\admin\BahanBakuController as AdminBahanBakuController;
+use App\Http\Controllers\admin\CustomerController;
 use App\Http\Controllers\admin\DashboardController;
+use App\Http\Controllers\admin\HampersController;
 use App\Http\Controllers\admin\ProdukController;
 use App\Http\Controllers\admin\ResepController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
+use App\Models\Customer;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\HomeController;
 
@@ -41,21 +44,15 @@ Route::middleware(['auth', 'admin'])->group(function () {
         return redirect('/');
     });
 
+    Route::get('/admin/hampers', [HampersController::class, 'index']);
+    Route::get('/admin/hampers/add', [HampersController::class, 'create']);
+    Route::get('/admin/hampers/delete/{id}', [HampersController::class, 'destroy']);
+    Route::get('/admin/hampers/search', [HampersController::class, 'search']);
+
+    Route::get('/admin/customers', [CustomerController::class, 'index']);
+    Route::get('/admin/customers/search', [CustomerController::class, 'search']);
+
     Route::get('/admin/bahan_baku', [AdminBahanBakuController::class, 'index']);
-
-    Route::get('/admin/resep', [ResepController::class, 'index']);
-
-    Route::get('/admin/produk', [ProdukController::class, 'index']);
-    Route::get('/admin/produk/delete/{id}', [ProdukController::class, 'destroy']);
-
-    Route::get('/admin/hampers', function () {
-        return view('admin/hampers');
-    });
-
-    Route::get('/admin/customers', function () {
-        return view('admin/customers');
-    });
-
     Route::get('/admin/bahan_baku/add', [AdminBahanBakuController::class, 'create']);
     Route::post('/admin/bahan_baku/add', [AdminBahanBakuController::class, 'createAction']);
     Route::get('/admin/bahan_baku/search', [AdminBahanBakuController::class, 'search']);
@@ -63,18 +60,25 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('/admin/bahan_baku/edit/{id}', [AdminBahanBakuController::class, 'editAction']);
     Route::get('/admin/bahan_baku/delete/{id}', [AdminBahanBakuController::class, 'destroy']);
 
-    Route::get('/admin/resep/add', function () {
-        return view('admin/tambah_resep');
-    });
-
+    Route::get('/admin/resep', [ResepController::class, 'index']);
+    Route::get('/admin/resep/add', [ResepController::class, 'create']);
+    Route::post('/admin/resep/add', [ResepController::class, 'createAction']);
     Route::get('/admin/resep/edit/{id}', [ResepController::class, 'edit']);
+    Route::post('/admin/resep/edit/{id}', [ResepController::class, 'editAction']);
+    Route::get('/admin/resep/delete/{id}', [ResepController::class, 'destroy']);
+    Route::get('/admin/resep/search', [ResepController::class, 'search']);
 
-    Route::get('/admin/produk/add', [ProdukController::class, 'create_sendiri']);
-    Route::post('/admin/produk/add', [ProdukController::class, 'create_sendiriAction']);
+    Route::get('/admin/produk', [ProdukController::class, 'index']);
+    Route::get('/admin/produk/add', [ProdukController::class, 'create_sendiri']); //sendiri
+    Route::post('/admin/produk/add', [ProdukController::class, 'create_sendiriAction']); //sendiri
 
-    Route::get('/admin/produk/titipan/add', function () {
-        return view('admin/tambah_produk_titipan');
-    });
+    Route::get('/admin/produk/titipan/add', [ProdukController::class, 'create_titipan']); //titipan
+    Route::post('/admin/produk/titipan/add', [ProdukController::class, 'create_titipanAction']); //sendiri
+
+    Route::get('/admin/produk/delete/{id}', [ProdukController::class, 'destroy']);
+    Route::get('/admin/produk/search', [ProdukController::class, 'search']);
+
+
 
     Route::get('/admin/customers/history', function () {
         return view('admin/history_pesanan_customer');

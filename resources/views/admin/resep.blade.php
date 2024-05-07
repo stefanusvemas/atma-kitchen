@@ -11,9 +11,9 @@
                     <a href="{{url('admin/resep/add')}}" class="btn btn-primary">Tambah Resep</a>
                 </div>
                 <div class="col col-lg-3 mt-md-0 mt-3 col-auto">
-                    <form action="#">
+                    <form action="{{url('admin/resep/search')}}">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Cari resep...">
+                            <input type="text" class="form-control" name="search" placeholder="Cari resep...">
                             <button class="btn btn-outline-primary" type="submit">Cari</button>
                         </div>
                     </form>
@@ -43,7 +43,7 @@
                         <td>{{ $resep['bahanBaku']['nama'] }}</td>
                         <td>{{ $resep['jumlah_bahan_baku'] }} {{ $resep['satuan'] }}</td>
 
-                        <td><a href="{{url('admin/resep/edit/'.$resep['id_bahan_baku'])}}">Edit</a> | <a href="#">Hapus</a></td>
+                        <td><a href="{{url('admin/resep/edit/'.$resep['id_resep'])}}">Edit</a> | <a href="{{url('admin/resep/delete/'.$resep['id_resep'])}}">Hapus</a></td>
                     </tr>
                     @endforeach
                     @endforeach

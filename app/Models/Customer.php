@@ -14,7 +14,7 @@ class Customer extends Model
     public $timestamps = false;
 
     protected $primaryKey = 'id_customer';
-    protected $table ="customer";
+    protected $table = "customer";
     protected $fillable = [
         'nama',
         'tanggal_lahir',
@@ -27,5 +27,3 @@ class Customer extends Model
         return $this->hasOne(user_credential::class, 'id_customer', 'id_customer');
     }
 }
-
-

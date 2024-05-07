@@ -66,14 +66,14 @@ class BahanBakuController extends Controller
         $data = $request->all();
         $validatedData = validator::make($data, [ // validasi input
             'nama' => 'required',
-            'stok' => 'required|numberic',
+            'stok' => 'required',
             'harga' => 'required'
         ]);
 
         if ($validatedData->fails()) {
             return back()->withErrors($validatedData);
         }
-        // $user_data = Karyawan::where('id_karyawan', Auth::user()->id_karyawan)->with('jabatan')->first();
+
         $bahan_baku = BahanBaku::where('id_bahan_baku', $id)->first();
 
         $atribut = [
@@ -83,7 +83,6 @@ class BahanBakuController extends Controller
         ];
 
         $bahan_baku->update($atribut);
-        // return ($bahan_baku);
         return redirect('admin/bahan_baku')->with('success', 'Berhasil ubah data');
     }
 
