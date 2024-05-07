@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\admin\BahanBakuController as AdminBahanBakuController;
-use App\Http\Controllers\admin\CustomerController;
+use App\Http\Controllers\admin\CustomerController as AdminCustomerController;
 use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\HampersController;
 use App\Http\Controllers\admin\ProdukController;
@@ -59,8 +59,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/hampers/delete/{id}', [HampersController::class, 'destroy']);
     Route::get('/admin/hampers/search', [HampersController::class, 'search']);
 
-    Route::get('/admin/customers', [CustomerController::class, 'index']);
-    Route::get('/admin/customers/search', [CustomerController::class, 'search']);
+    Route::get('/admin/customers', [AdminCustomerController::class, 'index']);
+    Route::get('/admin/customers/search', [AdminCustomerController::class, 'search']);
 
     Route::get('/admin/bahan_baku', [AdminBahanBakuController::class, 'index']);
     Route::get('/admin/bahan_baku/add', [AdminBahanBakuController::class, 'create']);
