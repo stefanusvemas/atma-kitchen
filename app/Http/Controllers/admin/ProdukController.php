@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\Karyawan;
 use App\Models\Penitip;
 use App\Models\Produk;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 
 class ProdukController extends Controller
 {
@@ -17,6 +19,7 @@ class ProdukController extends Controller
     {
         $user_data = Karyawan::where('id_karyawan', Auth::user()->id_karyawan)->with('jabatan')->first();
         $produk = Produk::all();
+        // return $produk;
         return view('admin.product', compact('user_data', 'produk'));
     }
 
@@ -48,6 +51,7 @@ class ProdukController extends Controller
 
         if ($request->hasFile('gambar')) {
             $gambarPath = $request->file('gambar')->store('public/produkImages');
+            $gambarPath = str_replace('public/', 'storage/', $gambarPath);
             // Simpan path gambar ke dalam $data
             $data['gambar'] = $gambarPath;
         }
@@ -70,11 +74,9 @@ class ProdukController extends Controller
         $data = $request->all();
         // Lakukan validasi input
         $validatedData = validator::make($data, [
-
             'nama' => 'required',
             'gambar' => 'required',
             'stok' => 'required',
-            'kuota_produksi' => 'required',
             'id_penitip' => 'required',
             'harga' => 'required',
             'deskripsi' => 'required'
@@ -89,6 +91,7 @@ class ProdukController extends Controller
 
         if ($request->hasFile('gambar')) {
             $gambarPath = $request->file('gambar')->store('public/produkImages');
+            $gambarPath = str_replace('public/', 'storage/', $gambarPath);
             // Simpan path gambar ke dalam $data
             $data['gambar'] = $gambarPath;
         }
@@ -109,44 +112,43 @@ class ProdukController extends Controller
     public function edit($id)
     {
         $user_data = Karyawan::where('id_karyawan', Auth::user()->id_karyawan)->with('jabatan')->first();
-        $produk = Produk::where('id_produk', $id)->first();
+        $produk = Produk::where('id_produk', $id)->first()->load('penitip');
         $penitip = Penitip::all();
-        // return ($bahan_baku);
+        // return ($produk);
         return view('admin.edit_produk', compact('user_data', 'produk', 'penitip'));
     }
 
     public function editAction(Request $request, $id)
     {
         $data = $request->all();
-        $validatedData = validator::make($data, [
-
-            'nama' => 'required',
-            'gambar' => 'required',
-            'stok' => 'required',
-            'kuota_produksi' => 'required',
-            'id_penitip' => '',
-            'harga' => 'required',
-            'deskripsi' => 'required'
-
-        ]);
-
-        if ($validatedData->fails()) {
-            return back()->withErrors($validatedData);
-        }
 
         $data['status'] = 'aktif';
 
+        $produk = Produk::where('id_produk', $id)->first();
+
         if ($request->hasFile('gambar')) {
+            $publicPath = str_replace('storage', 'public', $produk->gambar);
+
+            if (Storage::disk('public')->exists($publicPath)) {
+                Storage::disk('public')->delete($publicPath);
+            }
+
             $gambarPath = $request->file('gambar')->store('public/produkImages');
             // Simpan path gambar ke dalam $data
             $data['gambar'] = $gambarPath;
+            $atribut = [
+                'nama' => $request['nama'],
+                'gambar' => $data['gambar'],
+                'stok' => $request['stok'],
+                'kuota_produksi' => $request['kuota_produksi'],
+                'id_penitip' => $request['id_penitip'],
+                'harga' => $request['harga'],
+                'status' => $data['status'],
+                'deskripsi' => $request['deskripsi']
+            ];
         }
-
-        $produk = Produk::where('id_produk', $id)->first();
-
         $atribut = [
             'nama' => $request['nama'],
-            'gambar' => $data['gambar'],
             'stok' => $request['stok'],
             'kuota_produksi' => $request['kuota_produksi'],
             'id_penitip' => $request['id_penitip'],
