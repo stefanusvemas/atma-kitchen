@@ -172,10 +172,18 @@ class HampersController extends Controller
 
     public function search(Request $request)
     {
-        $search = $request->query('search');
         $user_data = Karyawan::where('id_karyawan', Auth::user()->id_karyawan)->with('jabatan')->first();
-        $hampers = Hampers::where('nama', 'like', "%$search%")->get();
-        // return ($search);
+        $hampers = DetailHampers::with(['produk', 'hampers'])->get()->groupBy('id_hampers');
+
+        // Perform search if search query is provided
+        if ($request->has('search')) {
+            $searchTerm = $request->input('search');
+            $hampers = $hampers->filter(function ($item) use ($searchTerm) {
+                return stripos($item->first()['produk']['nama'], $searchTerm) !== false;
+            });
+        }
+
+        // return $hampers;
         return view('admin.hampers', compact('user_data', 'hampers'));
     }
 }
