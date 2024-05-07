@@ -20,7 +20,6 @@ class SessionController extends Controller
     
     public function login(Request $request)
 {
-        $role = 'customer';
         $rules = [ 
             'email' => 'required',
             'password' => 'required'
@@ -50,24 +49,42 @@ class SessionController extends Controller
 
         $datauser= user_credential::where('email', $request->email)->first(); // mendapatkan data customer
         if ($datauser['id_customer']==null){
+            $jabatan = Karyawan::where('id_karyawan', $datauser['id_karyawan'])->first()->load('jabatan');
             $role = 'karyawan';
-        }
-        
-        $detail_user = Auth::user();// Jika autentikasi berhasil, dapatkan data pengguna
-        
-        if ($role = 'karyawan') {
-            $user = Karyawan::where('id_karyawan', $detail_user->id_karyawan)->first();// Dapatkan data pelanggan yang sesuai dengan pengguna
+            return response()->json([
+                'status' => true, 
+                'message' => 'Berhasil proses login',
+                'token' => $datauser->createToken('api-product')->plainTextToken,
+                'role' => $role,
+                'user' => $user,
+                'detail user' => $user,
+                'jabatan' => $jabatan
+            ]);
         }else{
-            $user = Customer::where('id_customer', $detail_user->id_customer)->first();// Dapatkan data pelanggan yang sesuai dengan pengguna
+            $role = 'customer';
         }
+
+        // return response()->json([
+        //     'role' => $role,
+        // ]);
+
+        
+        // if ($role = 'karyawan') {
+        //     $user = Karyawan::where('id_karyawan', $user->id_karyawan)->first();// Dapatkan data pelanggan yang sesuai dengan pengguna
+        // }else{
+        //     $user = Customer::where('id_customer', $user->id_customer)->first();// Dapatkan data pelanggan yang sesuai dengan pengguna
+        // }
+
+        
+        
+
         return response()->json([
         'status' => true, 
         'message' => 'Berhasil proses login',
         'token' => $datauser->createToken('api-product')->plainTextToken,
         'role' => $role,
         'user' => $user,
-        'detail user' => $detail_user,
-       
+        'detail user' => $user,
     ]);
 }
 
