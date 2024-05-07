@@ -25,6 +25,10 @@ use App\Http\Controllers\user\EditProfileController as UserEditProfileController
 use App\Http\Controllers\user\HistoryController;
 use App\Http\Controllers\user\ProfileController as UserProfileController;
 
+use App\Http\Controllers\owner\DashboardController as OwnerDashboardController;
+use App\Http\Controllers\owner\KaryawanController as OwnerKaryawanController;
+use App\Http\Controllers\owner\ProfileController as OwnerProfileController;
+
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/detail_product', function () {
@@ -169,18 +173,14 @@ Route::get('/logout', function () {
 });
 
 
-Route::get('/owner', function () {
-    return view('owner/dashboard');
-});
+Route::middleware(['auth', 'owner'])->group(function () {
+    Route::get('/owner', [OwnerDashboardController::class, 'index']);
 
-Route::get('/owner/karyawan', function () {
-    return view('owner/karyawan');
-});
+    Route::get('/owner/karyawan', [OwnerKaryawanController::class, 'index']);
+    Route::get('/owner/karyawan/search', [OwnerKaryawanController::class, 'search']);
+    Route::get('/owner/karyawan/edit/{id}', [OwnerKaryawanController::class, 'edit']);
+    Route::post('/owner/karyawan/edit/{id}', [OwnerKaryawanController::class, 'editAction']);
 
-Route::get('/owner/karyawan/edit', function () {
-    return view('owner/edit_karyawan');
-});
-
-Route::get('/owner/profile', function () {
-    return view('owner/profile');
+    Route::get('/owner/profile', [OwnerProfileController::class, 'index']);
+    Route::post('/owner/profile/edit', [OwnerProfileController::class, 'edit']);
 });
