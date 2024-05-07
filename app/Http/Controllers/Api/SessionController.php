@@ -19,8 +19,9 @@ class SessionController extends Controller
 {
 
     public function login(Request $request)
+    {
 
-        $rules = [ 
+        $rules = [
             'email' => 'required',
             'password' => 'required'
         ];
@@ -47,12 +48,12 @@ class SessionController extends Controller
             return response()->json(['error' => 'Akun Anda belum diverifikasi. Silahkan cek email Anda'], 401);
         }
 
-        $datauser= user_credential::where('email', $request->email)->first(); // mendapatkan data customer
-        if ($datauser['id_customer']==null){
+        $datauser = user_credential::where('email', $request->email)->first(); // mendapatkan data customer
+        if ($datauser['id_customer'] == null) {
             $jabatan = Karyawan::where('id_karyawan', $datauser['id_karyawan'])->first()->load('jabatan');
             $role = 'karyawan';
             return response()->json([
-                'status' => true, 
+                'status' => true,
                 'message' => 'Berhasil proses login',
                 'token' => $datauser->createToken('api-product')->plainTextToken,
                 'role' => $role,
@@ -60,7 +61,7 @@ class SessionController extends Controller
                 'detail user' => $user,
                 'jabatan' => $jabatan
             ]);
-        }else{
+        } else {
             $role = 'customer';
         }
 
@@ -68,28 +69,26 @@ class SessionController extends Controller
         //     'role' => $role,
         // ]);
 
-        
+
         // if ($role = 'karyawan') {
         //     $user = Karyawan::where('id_karyawan', $user->id_karyawan)->first();// Dapatkan data pelanggan yang sesuai dengan pengguna
         // }else{
         //     $user = Customer::where('id_customer', $user->id_customer)->first();// Dapatkan data pelanggan yang sesuai dengan pengguna
         // }
 
-        
-        
+
+
 
         return response()->json([
-        'status' => true, 
-        'message' => 'Berhasil proses login',
-        'token' => $datauser->createToken('api-product')->plainTextToken,
-        'role' => $role,
-        'user' => $user,
-        'detail user' => $user,
-    ]);
-}
-
+            'status' => true,
+            'message' => 'Berhasil proses login',
+            'token' => $datauser->createToken('api-product')->plainTextToken,
+            'role' => $role,
+            'user' => $user,
+            'detail user' => $user,
         ]);
     }
+
 
     public function forgetPassword(Request $request)
     {
