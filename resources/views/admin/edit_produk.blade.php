@@ -12,6 +12,12 @@
             </nav>
             <h4>Edit Produk</h4>
 
+            @if(session('error'))
+            <div class="alert alert-danger" role="alert">
+                {{session('error')->first()}}
+            </div>
+            @endif
+
             <form action="{{url('/admin/produk/edit/'.$produk['id_produk'])}}" class="p-3" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-2">
@@ -22,10 +28,11 @@
                     <label for="gambar" class="form-label">Gambar</label>
                     <input type="file" accept="image/png, image/jpeg" class="form-control" id="gambar" name="gambar">
                 </div>
+
+                @if($produk['id_penitip'] != null)
                 <label for="">Penitip</label>
                 <select class="form-select mb-2" aria-label="Default select example" name="id_penitip">
-                    <option selected disabled>Nama penitip</option>
-                    <option value=>Produk Sendiri</option>
+                    <option selected hidden value="{{$produk['id_penitip']}}">{{$produk['penitip']['nama']}}</option>
                     @forelse ($penitip as $item)
                     <option value="{{$item['id_penitip']}}">{{$item['nama']}}</option>
                     @empty
@@ -34,6 +41,8 @@
                     </tr>
                     @endforelse
                 </select>
+                @endif
+
                 <div class="mb-2">
                     <label for="stok" class="form-label">Stok</label>
                     <input type="number" class="form-control" id="stok" min="0" name="stok" value="{{ $produk['stok']}}">
@@ -44,7 +53,7 @@
                 </div>
                 <div class="mb-2">
                     <label for="deskripsi" class="form-label">Deskripsi</label>
-                    <input type="text" class="form-control" id="deskripsi" min="0" name="deskripsi" value="{{ $produk['deskripsi']}}">
+                    <textarea class="form-control" rows="4" name="deskripsi" id="deskripsi">{{$produk['deskripsi']}}</textarea>
                 </div>
                 <div class="mb-2">
                     <label for="harga" class="form-label">Harga</label>

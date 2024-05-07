@@ -31,18 +31,24 @@
             <table class="table table-responsive mt-3">
                 <thead>
                     <tr>
-                        <th scope="col" class="w-50">Nama</th>
+                        <th scope="col">Nama</th>
                         <th scope="col">Stok</th>
                         <th scope="col">Kuota Produksi</th>
+                        <th scope="col">Harga</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse ($produk as $item)
                     <tr>
+                        @if ($item['id_penitip'] != null)
+                        <td scope="row">{{$item['nama']}} <span class="badge rounded-pill text-bg-primary">Titipan</span></td>
+                        @else
                         <td scope="row">{{$item['nama']}}</td>
+                        @endif
                         <td>{{$item['stok']}}</td>
                         <td>{{$item['kuota_produksi']}}</td>
+                        <td>Rp. {{number_format($item['harga'],2,",",".")}}</td>
                         <td><a href="{{url('admin/produk/edit/'.$item['id_produk'])}}">Edit</a> | <a href="{{url('admin/produk/delete/'.$item['id_produk'])}}">Hapus</a></td>
                     </tr>
                     @empty

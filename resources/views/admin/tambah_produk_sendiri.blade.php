@@ -32,7 +32,7 @@
                 </div>
                 <div class="mb-2">
                     <label for="deskripsi" class="form-label">Deskripsi</label>
-                    <input type="text" class="form-control" id="deskripsi" min="0" name="deskripsi">
+                    <textarea class="form-control" rows="4" name="deskripsi" id="deskripsi"></textarea>
                 </div>
                 <div class="mb-2">
                     <label for="harga" class="form-label">Harga</label>
