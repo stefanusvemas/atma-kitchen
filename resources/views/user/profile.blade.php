@@ -46,11 +46,14 @@
                     <label for="email" class="form-label">Email</label>
                     <input type="email" class="form-control" name="email" id="email" required value="{{$user_data['user_credential']['email']}}">
 
-                    <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control" name="password" id="password" required>
+                    <!-- <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" name="password" id="password" required> -->
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
+            <!-- <button type="submit" class="btn btn-primary" href="{{url('/inputEmail')}}">Ubah Password</button> -->
+            <a href="{{ url('/inputEmail') }}" class="btn btn-primary">Ubah Password</a>
+
         </div>
     </div>
 </main>
