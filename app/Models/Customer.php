@@ -24,6 +24,6 @@ class Customer extends Model
 
     public function user_credential()
     {
-        return $this->hasOne(user_credential::class, 'id_customer');
+        return $this->hasOne(user_credential::class, 'id_customer', 'id_customer');
     }
 }

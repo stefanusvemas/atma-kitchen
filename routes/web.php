@@ -6,15 +6,13 @@ use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\HampersController;
 use App\Http\Controllers\admin\ProdukController;
 use App\Http\Controllers\admin\ResepController;
-use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Models\Customer;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\HomeController;
 
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/detail_product', function () {
     return view('product_detail');
@@ -43,7 +41,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     Route::get('/logout', function () {
         Auth::logout();
-        return redirect('login');
+        return redirect('/');
     });
 
     Route::get('/admin/hampers', [HampersController::class, 'index']);
@@ -89,5 +87,113 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
 Route::get('/logout', function () {
     Auth::logout();
-    return redirect('login');
+    return redirect('/');
+});
+
+Route::get('/manager', function () {
+    return view('manager/dashboard');
+});
+
+Route::get('/manager/jabatan', function () {
+    return view('manager/jabatan');
+});
+
+Route::get('/manager/karyawan', function () {
+    return view('manager/karyawan');
+});
+
+Route::get('/manager/karyawan/add', function () {
+    return view('manager/tambah_karyawan');
+});
+
+Route::get('/manager/karyawan/edit', function () {
+    return view('manager/edit_karyawan');
+});
+
+Route::get('/manager/penitip', function () {
+    return view('manager/penitip');
+});
+
+Route::get('/manager/penitip/add', function () {
+    return view('manager/tambah_penitip');
+});
+
+Route::get('/manager/penitip/edit', function () {
+    return view('manager/edit_penitip');
+});
+
+Route::get('/manager/bahan_baku', function () {
+    return view('manager/bahan_baku');
+});
+
+Route::get('/manager/bahan_baku/edit', function () {
+    return view('manager/edit_bahan_baku');
+});
+
+Route::get('manager/pengeluaran_lain', function () {
+    return view('manager/pengeluaran_lain');
+});
+
+Route::get('manager/pengeluaran_lain/add', function () {
+    return view('manager/tambah_pengeluaran_lain');
+});
+
+Route::get('manager/pengeluaran_lain/edit', function () {
+    return view('manager/edit_pengeluaran_lain');
+});
+
+Route::get('/manager/pembelian_bahan_baku', function () {
+    return view('manager/pembelian_bahan_baku');
+});
+
+Route::get('/manager/pembelian_bahan_baku/add', function () {
+    return view('manager/tambah_pembelian_bahan_baku');
+});
+
+Route::get('/manager/pembelian_bahan_baku/edit', function () {
+    return view('manager/edit_pembelian_bahan_baku');
+});
+
+Route::get('/manager/jabatan/add', function () {
+    return view('manager/tambah_jabatan');
+});
+
+Route::get('/manager/jabatan/edit', function () {
+    return view('manager/edit_jabatan');
+});
+
+Route::get('/manager/profile', function () {
+    return view('manager/profile');
+});
+
+Route::get('/owner', function () {
+    return view('owner/dashboard');
+});
+
+Route::get('/owner/karyawan', function () {
+    return view('owner/karyawan');
+});
+
+Route::get('/owner/karyawan/edit', function () {
+    return view('owner/edit_karyawan');
+});
+
+Route::get('/owner/profile', function () {
+    return view('owner/profile');
+});
+
+Route::get('/user/profile', function () {
+    return view('user/profile');
+});
+
+Route::get('/user/profile/edit', function () {
+    return view('user/edit_profile');
+});
+
+Route::get('/user/orders_history', function () {
+    return view('user/orders_history');
+});
+
+Route::get('/verify', function () {
+    return view('verify');
 });

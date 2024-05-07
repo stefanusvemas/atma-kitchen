@@ -37,7 +37,7 @@ class LoginController extends Controller
             // return $jabatan;
             if ($user->active) { //$user->active
                 if ($user->id_customer != null) {
-                    return redirect('user');
+                    return redirect('');
                 } else {
                     $jabatan = Karyawan::where('id_karyawan', $user->id_karyawan)->first();
                     $jabatan = $jabatan->id_jabatan;
@@ -63,6 +63,7 @@ class LoginController extends Controller
     public function actionLogout()
     {
         Auth::logout();
-        return redirect('/');
+        return "testt";
+        return redirect('home');
     }
 }
