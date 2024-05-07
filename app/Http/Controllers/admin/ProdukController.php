@@ -37,6 +37,7 @@ class ProdukController extends Controller
             'stok' => 'required',
             'kuota_produksi' => 'required',
             'harga' => 'required',
+            'deskripsi' => 'required'
         ]);
 
         if ($validatedData->fails()) {
@@ -76,6 +77,7 @@ class ProdukController extends Controller
             'kuota_produksi' => 'required',
             'id_penitip' => 'required',
             'harga' => 'required',
+            'deskripsi' => 'required'
 
         ]);
 
@@ -104,13 +106,58 @@ class ProdukController extends Controller
         return redirect('admin/produk')->with('success', 'Berhasil hapus data');
     }
 
-    // public function edit($id)
-    // {
-    //     $user_data = Karyawan::where('id_karyawan', Auth::user()->id_karyawan)->with('jabatan')->first();
-    //     // $bahan_baku = BahanBaku::where('id_bahan_baku', $id)->first();
-    //     // return ($bahan_baku);
-    //     return view('admin.edit_', compact('user_data', 'bahan_baku'));
-    // }
+    public function edit($id)
+    {
+        $user_data = Karyawan::where('id_karyawan', Auth::user()->id_karyawan)->with('jabatan')->first();
+        $produk = Produk::where('id_produk', $id)->first();
+        $penitip = Penitip::all();
+        // return ($bahan_baku);
+        return view('admin.edit_produk', compact('user_data', 'produk', 'penitip'));
+    }
+
+    public function editAction(Request $request, $id)
+    {
+        $data = $request->all();
+        $validatedData = validator::make($data, [
+
+            'nama' => 'required',
+            'gambar' => 'required',
+            'stok' => 'required',
+            'kuota_produksi' => 'required',
+            'id_penitip' => '',
+            'harga' => 'required',
+            'deskripsi' => 'required'
+
+        ]);
+
+        if ($validatedData->fails()) {
+            return back()->withErrors($validatedData);
+        }
+
+        $data['status'] = 'aktif';
+
+        if ($request->hasFile('gambar')) {
+            $gambarPath = $request->file('gambar')->store('public/produkImages');
+            // Simpan path gambar ke dalam $data
+            $data['gambar'] = $gambarPath;
+        }
+
+        $produk = Produk::where('id_produk', $id)->first();
+
+        $atribut = [
+            'nama' => $request['nama'],
+            'gambar' => $data['gambar'],
+            'stok' => $request['stok'],
+            'kuota_produksi' => $request['kuota_produksi'],
+            'id_penitip' => $request['id_penitip'],
+            'harga' => $request['harga'],
+            'status' => $data['status'],
+            'deskripsi' => $request['deskripsi']
+        ];
+
+        $produk->update($atribut);
+        return redirect('admin/produk')->with('success', 'Berhasil ubah data');
+    }
 
     public function search(Request $request)
     {

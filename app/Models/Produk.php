@@ -20,7 +20,8 @@ class Produk extends Model
         'harga',
         'stok',
         'kuota_produksi',
-        'status'
+        'status',
+        'deskripsi'
     ];
 
     public function resep()
