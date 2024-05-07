@@ -12,7 +12,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h6 class="card-title">Today's Orders</h6>
-                            <h5 class="card-text">10</h5>
+                            <h5 class="card-text">{{$today_order}}</h5>
                         </div>
                     </div>
                 </div>
@@ -20,7 +20,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h6 class="card-title">Today's Revenue</h6>
-                            <h5 class="card-text">Rp. 1.000.000</h5>
+                            <h5 class="card-text">Rp. {{$today_income}}</h5>
                         </div>
                     </div>
                 </div>
@@ -35,19 +35,21 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @forelse ($recent_transaction as $items => $transactions)
+                    @foreach ($transactions as $index => $transaction)
                     <tr>
-                        <td rowspan="2">Mark</td>
-                        <td rowspan="2" scope="row">2024-01-11 13:23:44</td>
-                        <td>Kue Putih</td>
+                        @if ($index === 0)
+                        <td rowspan="{{ count($transactions) }}">{{ $transaction['transaksi']['customer']['nama'] }}</td>
+                        @endif
+                        <td>{{ $transaction['transaksi']['tgl_transaksi'] }}</td>
+                        <td>{{ $transaction['produk']['nama'] }}</td>
                     </tr>
+                    @endforeach
+                    @empty
                     <tr>
-                        <td>Kue Coklat</td>
+                        <td colspan="3">No data</td>
                     </tr>
-                    <tr>
-                        <td rowspan="1">Jacob</td>
-                        <td scope="row">2024-01-11 13:23:44</td>
-                        <td>Red Velvet</td>
-                    </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>

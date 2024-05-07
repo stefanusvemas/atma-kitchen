@@ -12,10 +12,11 @@
             </nav>
             <h4>Edit Jabatan</h4>
 
-            <form action="" class="p-3">
+            <form action="{{url('manager/jabatan/edit/'.$jabatan['id_jabatan'])}}" method="post" class="p-3">
+                @csrf
                 <div class="mb-2">
                     <label for="nama" class="form-label">Nama Jabatan</label>
-                    <input type="text" class="form-control" name="nama" id="nama" value="////nama jbatan////">
+                    <input type="text" class="form-control" name="nama" id="nama" value="{{$jabatan['nama']}}">
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>

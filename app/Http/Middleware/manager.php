@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class admin
+class manager
 {
     /**
      * Handle an incoming request.
@@ -21,14 +21,14 @@ class admin
             return redirect('login');
         }
 
-        $user_data = Karyawan::where('id_karyawan', Auth::user()->id_karyawan)->value('id_jabatan'); // Mengambil informasi pegawai terkait dari model User
+        $user_data = Karyawan::where('id_karyawan', Auth::user()->id_karyawan)->value('id_jabatan');
 
         if (!$user_data) {
             abort(403, 'Unauthorized access');
         }
 
         // Memeriksa apakah jabatan pegawai adalah admin
-        if ($user_data == 2) {
+        if ($user_data == 3) {
             return $next($request);
         }
 

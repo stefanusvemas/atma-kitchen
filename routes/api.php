@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\CustomerController;
 use App\Http\Controllers\Api\KaryawanController;
 use App\Http\Controllers\Api\SessionController;
+use App\Http\Controllers\Api\AbsensiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,8 +18,6 @@ Route::post('login', [SessionController::class, 'login']);    //->middleware('au
 
 Route::post('customer/register', [CustomerController::class, 'register']);
 
-Route::get('register/verify/{verify_key}', [CustomerController::class, 'verify'])->name('verify');
-
 Route::post('customer/forgetPassword', [SessionController::class, 'forgetPassword']);
 
 Route::put('customer/verifyForgetPw/{pass_key}', [SessionController::class, 'verifyForgetPw']);
@@ -29,11 +28,11 @@ Route::group(
     ['middleware' => 'auth:sanctum'],
     function () {
         //logout
-        Route::post('logout', [SessionController::class, 'logout']); 
+        Route::post('logout', [SessionController::class, 'logout']);
 
         //customer
         Route::get('customer', [CustomerController::class, 'index']); // tidak perlu untuk customer
-        Route::get('customer/{id} ', [CustomerController::class, 'show']);    
+        Route::get('customer/{id} ', [CustomerController::class, 'show']);
         Route::put('customer/{id} ', [CustomerController::class, 'update']);
         Route::delete('customer/{id} ', [CustomerController::class, 'destroy']);
 
@@ -43,7 +42,9 @@ Route::group(
         Route::get('karyawan/{id}', [KaryawanController::class, 'show']);
         Route::put('karyawan/{id}', [KaryawanController::class, 'update']);
         Route::delete('karyawan/{id} ', [KaryawanController::class, 'destroy']);
-        
+
+        //Absensi
+        Route::get('absensi', [AbsensiController::class, 'index']);
+        Route::post('absensi/store', [AbsensiController::class, 'store']);
     }
 );
-   

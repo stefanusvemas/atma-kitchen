@@ -11,8 +11,14 @@
                 </ol>
             </nav>
             <h4>Tambah Penitip</h4>
+            @if(session('error'))
+            <div class="alert alert-danger" role="alert">
+                {{session('error')->first()}}
+            </div>
+            @endif
 
-            <form action="" class="p-3">
+            <form action="{{url('manager/penitip/add')}}" method="post" class="p-3">
+                @csrf
                 <div class="mb-2">
                     <label for="nama" class="form-label">Nama</label>
                     <input type="text" class="form-control" name="nama" id="nama">
@@ -21,7 +27,7 @@
                     <input type="text" class="form-control" name="alamat" id="alamat">
 
                     <label for="telp">No Telp</label>
-                    <input type="text" class="form-control" name="telp" id="telp">
+                    <input type="text" class="form-control" name="no_telp" id="telp">
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>

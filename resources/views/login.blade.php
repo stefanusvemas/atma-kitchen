@@ -12,6 +12,11 @@
                         <b>Oops!</b> {{session('error')}}
                     </div>
                     @endif
+                    @if (Session::has('success'))
+                    <div class="alert alert-success">
+                        <b>Success!</b> {{session('success')}}
+                    </div>
+                    @endif
                     <form action="{{ route('loginAction') }}" method="post" id="loginForm">
                         @csrf
                         <div class="mb-2">

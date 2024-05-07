@@ -11,9 +11,9 @@
                     <a href="{{url('/manager/karyawan/add')}}" class="btn btn-primary">Tambah Karyawan</a>
                 </div>
                 <div class="col col-lg-3 mt-md-0 mt-3 col-auto">
-                    <form action="#">
+                    <form action="{{url('/manager/karyawan/search')}}">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Cari karyawan...">
+                            <input type="text" class="form-control" name="search" placeholder="Cari karyawan...">
                             <button class="btn btn-outline-primary" type="submit">Cari</button>
                         </div>
                     </form>
@@ -32,28 +32,40 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @forelse($karyawan as $karyawan)
                     <tr>
-                        <td scope="row">John</td>
-                        <td>Manager</td>
-                        <td>2020/02/12</td>
-                        <td><a href="{{url('/manager/karyawan/edit')}}">Edit</a> | <a href="#">Hapus</a></td>
+                        <td scope="row">{{$karyawan['nama']}}</td>
+                        <td>{{$karyawan['jabatan']['nama']}}</td>
+                        <td>{{$karyawan['tgl_bergabung']}}</td>
+                        <td><a href="{{url('/manager/karyawan/edit/'.$karyawan['id_karyawan'])}}">Edit</a> | <a href="" data-bs-toggle="modal" data-bs-target="#deleteModal{{$karyawan['id_karyawan']}}">Hapus</a></td>
                     </tr>
+                    <div class="modal fade" id="deleteModal{{$karyawan['id_karyawan']}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Karyawan</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    Are you sure you want to delete <strong>{{$karyawan['nama']}}</strong>? This action cannot be undone.
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                    <a href="{{url('manager/karyawan/delete/'.$karyawan['id_karyawan'])}}" class="btn btn-danger">Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @empty
                     <tr>
-                        <td scope="row">John</td>
-                        <td>Manager</td>
-                        <td>2020/02/12</td>
-                        <td><a href="#">Edit</a> | <a href="#">Hapus</a></td>
+                        <td colspan="4" class="text-center">No data</td>
                     </tr>
-                    <tr>
-                        <td scope="row">John</td>
-                        <td>Manager</td>
-                        <td>2020/02/12</td>
-                        <td><a href="#">Edit</a> | <a href="#">Hapus</a></td>
-                    </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
     </div>
+
 </main>
 
 @endsection
