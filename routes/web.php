@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\admin\BahanBakuController as AdminBahanBakuController;
 use App\Http\Controllers\admin\CustomerController as AdminCustomerController;
+use App\Http\Controllers\admin\ProfileController as AdminProfileController;
 use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\HampersController;
 use App\Http\Controllers\admin\ProdukController;
@@ -53,6 +54,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
         Auth::logout();
         return redirect('/');
     });
+
+    Route::get('/admin/profile', [AdminProfileController::class, 'index']);
+    Route::post('/admin/profile/edit', [AdminProfileController::class, 'edit']);
 
     Route::get('/admin/hampers', [HampersController::class, 'index']);
     Route::get('/admin/hampers/add', [HampersController::class, 'create']);
