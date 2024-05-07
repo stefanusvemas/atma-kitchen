@@ -8,10 +8,11 @@
 
             <div class="row justify-content-between">
                 <div class="col">
-                    <button class="btn btn-primary">Tambah Hampers</button>
+                    <!-- <a href="{{url('admin/bahan_baku/add')}}" class="btn btn-primary">Tambah Bahan</a> -->
+                    <a class="btn btn-primary" href="{{url('admin/hampers/add')}}">Tambah Hampers</a>
                 </div>
                 <div class="col col-lg-3 mt-md-0 mt-3 col-auto">
-                    <form action="#">
+                    <form action="{{url('/admin/hampers/search')}}">
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="Cari hampers...">
                             <button class="btn btn-outline-primary" type="submit">Cari</button>
@@ -32,28 +33,25 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @forelse ($hampers as $item)
+                    @foreach ($item as $detail)
                     <tr>
-                        <td rowspan="2">Hampers Lebaran 1</td>
-                        <td>Red Velvet</td>
-                        <td>1</td>
-                        <td rowspan="2">Rp. 140,000</td>
-                        <td rowspan="2"><a href="#">Edit</a> | <a href="#">Hapus</a></td>
+                        @if ($loop->first)
+                        <td rowspan="{{ count($item) }}">{{ $detail['hampers']['nama'] }}</td>
+                        @endif
+                        <td>{{ $detail['produk']['nama'] }}</td>
+                        <td>{{ $detail['jumlah'] }}</td>
+                        @if ($loop->first)
+                        <td rowspan="{{ count($item) }}">{{ $detail['hampers']['harga'] }}</td>
+                        <td rowspan="{{ count($item) }}"><a href="#">Edit</a> | <a href="{{url('admin/hampers/delete/'.$detail['hampers']['id_hampers'])}}">Hapus</a></td>
+                        @endif
                     </tr>
+                    @endforeach
+                    @empty
                     <tr>
-                        <td>Kue Putih</td>
-                        <td>1</td>
+                        <td colspan="4">No data</td>
                     </tr>
-                    <tr>
-                        <td rowspan="2">Hampers Lebaran 2</td>
-                        <td>Red Velvet</td>
-                        <td>1</td>
-                        <td rowspan="2">Rp. 140,000</td>
-                        <td rowspan="2"><a href="#">Edit</a> | <a href="#">Hapus</a></td>
-                    </tr>
-                    <tr>
-                        <td>Kue Coklat</td>
-                        <td>1</td>
-                    </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>

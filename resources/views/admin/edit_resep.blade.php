@@ -12,33 +12,47 @@
             </nav>
             <h4>Edit Resep</h4>
 
-            <form action="{{url('admin/resep/edit/'.$resep['resep'])}}" class="p-3">
+            <form action="{{url('admin/resep/edit/'.$resep['id_resep'])}}" class="p-3" method="post">
+                @csrf
                 <label for="produk">Nama produk</label>
-                <select class="form-select mb-2" aria-label="Default select example">
-                    <option selected disabled>Pilih produk</option>
-                    <option value="1">Red Velvet</option>
-                   
+                <select class="form-select mb-2" aria-label="Default select example" name="id_produk">
+
+                    @forelse ($produk as $item)
+                    <option value="{{$item['id_produk']}}">{{$item['nama']}}</option>
+                    @empty
+                    <tr>
+                        <td colspan="4">No data</td>
+                    </tr>
+                    @endforelse
                 </select>
+
+
                 <label for="bahan">Bahan baku</label>
-                <select class="form-select mb-2" aria-label="Default select example">
-                    <option selected disabled>Pilih bahan baku</option>
-                    <option value="1">Tepung Terigu</option>
-                    <option value="2">Coklat</option>
-                    <option value="3">Susu</option>
+                <select class="form-select mb-2" aria-label="Default select example" name="id_bahan_baku">
+
+                    @forelse ($bahanBaku as $item)
+                    <option value="{{$item['id_bahan_baku']}}">{{$item['nama']}}</option>
+                    @empty
+                    <tr>
+                        <td colspan="4">No data</td>
+                    </tr>
+                    @endforelse
                 </select>
+
                 <div class="mb-2">
                     <label for="harga" class="form-label">Jumlah</label>
-                    <input type="number" class="form-control" id="harga" min="0">
+                    <input type="number" class="form-control" id="harga" min="0" name="jumlah_bahan_baku">
                 </div>
                 <label for="bahan">Satuan</label>
-                <select class="form-select mb-2" aria-label="Default select example">
-                    <option selected disabled>Pilih satuan</option>
+                <select class="form-select mb-2" aria-label="Default select example" name="satuan">
+
                     <option value="mg">Miligram (mg)</option>
                     <option value="g">Gram (g)</option>
                     <option value="kg">Kilogram (kg)</option>
                     <option value="ml">Mililiter (ml)</option>
                     <option value="l">Liter (l)</option>
                 </select>
+
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>

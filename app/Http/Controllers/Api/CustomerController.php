@@ -89,7 +89,8 @@ class CustomerController extends Controller
     {
         //
         try {
-            $customer = Customer::find($id);
+            $customer = Customer::where('id_customer', $id)->get()->load('user_credential');
+            
 
             if (!$customer) {
                 throw new \Exception('Customer tidak ditemukan');

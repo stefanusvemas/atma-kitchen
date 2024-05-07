@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Penitip extends Model
 {
     use HasFactory;
-
     protected $table = 'penitip';
     protected $primaryKey = 'id_penitip';
     public $timestamps = false;
@@ -17,4 +16,9 @@ class Penitip extends Model
         'alamat',
         'no_telp',
     ];
+
+    public function produk()
+    {
+        return $this->hasMany(Produk::class, 'id_penitip', 'id_penitip');
+    }
 }

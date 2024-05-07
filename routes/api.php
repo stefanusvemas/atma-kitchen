@@ -22,6 +22,8 @@ Route::post('customer/forgetPassword', [SessionController::class, 'forgetPasswor
 
 Route::put('customer/verifyForgetPw/{pass_key}', [SessionController::class, 'verifyForgetPw']);
 
+Route::post('karyawan/store', [KaryawanController::class, 'store']);
+
 Route::group(
     ['middleware' => 'auth:sanctum'],
     function () {
@@ -36,7 +38,7 @@ Route::group(
 
         //karyawan
         Route::get('karyawan', [KaryawanController::class, 'index']);
-        Route::post('karyawan/store', [KaryawanController::class, 'store']);
+       
         Route::get('karyawan/{id}', [KaryawanController::class, 'show']);
         Route::put('karyawan/{id}', [KaryawanController::class, 'update']);
         Route::delete('karyawan/{id} ', [KaryawanController::class, 'destroy']);

@@ -27,4 +27,14 @@ class Produk extends Model
     {
         return $this->hasMany(Resep::class, 'id_produk');
     }
+
+    public function detailHampers()
+    {
+        return $this->hasMany(DetailHampers::class, 'id_produk');
+    }
+
+    public function penitip()
+    {
+        return $this->belongsTo(Penitip::class, 'id_penitip', 'id_penitip');
+    }
 }
