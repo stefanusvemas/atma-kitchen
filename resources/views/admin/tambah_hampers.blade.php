@@ -36,6 +36,12 @@
                     <label for="harga" class="form-label">Harga</label>
                     <input type="number" class="form-control" id="harga" name="harga">
                 </div>
+
+                <div class="mb-2">
+                    <label for="harga" class="form-label">Harga</label>
+                    <input type="number" class="form-control" id="harga" name="harga">
+                </div>
+
                 <hr>
                 <h5>Produk</h5>
                 <div class="mb-4" id="produk-container">

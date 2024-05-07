@@ -182,7 +182,6 @@ class HampersController extends Controller
                 return stripos($item->first()['produk']['nama'], $searchTerm) !== false;
             });
         }
-
         // return $hampers;
         return view('admin.hampers', compact('user_data', 'hampers'));
     }
