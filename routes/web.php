@@ -56,6 +56,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     Route::get('/admin/hampers', [HampersController::class, 'index']);
     Route::get('/admin/hampers/add', [HampersController::class, 'create']);
+    Route::post('/admin/hampers/add', [HampersController::class, 'createAction']);
+    Route::get('/admin/hampers/edit/{id}', [HampersController::class, 'edit']);
+    Route::post('/admin/hampers/edit/{id}', [HampersController::class, 'editAction']);
     Route::get('/admin/hampers/delete/{id}', [HampersController::class, 'destroy']);
     Route::get('/admin/hampers/search', [HampersController::class, 'search']);
 
