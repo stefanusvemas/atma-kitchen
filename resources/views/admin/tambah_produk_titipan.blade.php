@@ -16,11 +16,11 @@
                 @csrf
                 <div class="mb-2">
                     <label for="nama" class="form-label">Nama</label>
-                    <input type="text" class="form-control" id="nama" name="nama">
+                    <input type="text" class="form-control" id="nama" name="nama" required>
                 </div>
                 <div class="mb-2">
                     <label for="gambar" class="form-label">Gambar</label>
-                    <input type="file" accept="image/png, image/jpeg" class="form-control" id="gambar" name="gambar">
+                    <input type="file" accept="image/png, image/jpeg" class="form-control" id="gambar" name="gambar" required>
                 </div>
                 <label for="">Penitip</label>
                 <select class="form-select mb-2" aria-label="Default select example" name="id_penitip">
@@ -35,7 +35,7 @@
                 </select>
                 <div class="mb-2">
                     <label for="stok" class="form-label">Stok</label>
-                    <input type="number" class="form-control" id="stok" min="0" name="stok">
+                    <input type="number" class="form-control" id="stok" min="0" name="stok" required>
                 </div>
                 <div class="mb-2">
                     <label for="deskripsi" class="form-label">Deskripsi</label>
@@ -43,7 +43,7 @@
                 </div>
                 <div class="mb-2">
                     <label for="harga" class="form-label">Harga</label>
-                    <input type="number" class="form-control" id="harga" min="0" name="harga">
+                    <input type="number" class="form-control" id="harga" min="0" name="harga" required>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>

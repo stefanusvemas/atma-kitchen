@@ -46,11 +46,7 @@
                         @endforeach
                     </tr>
                     @endforeach
-                    @if(count($orders) == 0)
-                    <tr>
-                        <td colspan="4" class="text-center">No data</td>
-                    </tr>
-                    @endif
+
                 </tbody>
             </table>
         </div>

@@ -32,24 +32,27 @@
                 <tbody>
                     @if(!empty($products))
                     @foreach ($products as $productId => $productList)
-                    @foreach ($productList as $index => $product)
+                    @foreach ($productList as $product)
+                    @foreach ($product['resep'] as $index => $resep)
                     <tr>
                         @if ($index === 0)
-                        <td rowspan="{{ count($productList) }}">{{ $product['nama'] }}</td>
-                        <td rowspan="{{ count($productList) }}">{{ $product['harga'] }}</td>
+                        <td rowspan="{{ count($product['resep']) }}">{{ $product['nama'] }}</td>
                         @endif
-                        <td>{{ $product['nama'] }}</td>
-                        <td>{{ $product['harga'] }}</td>
-                        <!-- Add more columns to display other attributes as needed -->
+                        <td>{{ $resep['bahanBaku']['nama'] }}</td>
+                        <td>{{ $resep['jumlah_bahan_baku'] }} {{ $resep['satuan'] }}</td>
+                        <td rowspan="">
+                            <a href="{{url('admin/resep/edit/'.$resep['id_resep'])}}">Edit</a> |
+                            <a href="{{url('admin/resep/delete/'.$resep['id_resep'])}}">Hapus</a>
+                        </td>
                     </tr>
+                    @endforeach
                     @endforeach
                     @endforeach
                     @else
                     <tr>
-                        <td colspan="5" class="text-center">No data</td>
+                        <td colspan="4" class="text-center">No data</td>
                     </tr>
                     @endif
-
                 </tbody>
             </table>
         </div>

@@ -39,7 +39,7 @@
                 </select>
                 <div class="mb-2">
                     <label for="harga" class="form-label">Jumlah</label>
-                    <input type="number" class="form-control" id="harga" min="0" name="jumlah_bahan_baku">
+                    <input type="number" class="form-control" id="harga" min="0" name="jumlah_bahan_baku" required>
                 </div>
                 <label for="bahan">Satuan</label>
                 <select class="form-select mb-2" aria-label="Default select example" name="satuan">
