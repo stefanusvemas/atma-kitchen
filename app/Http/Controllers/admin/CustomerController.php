@@ -15,7 +15,7 @@ class CustomerController extends Controller
     {
         $user_data = Karyawan::where('id_karyawan', Auth::user()->id_karyawan)->with('jabatan')->first();
         $customer = Customer::with(['user_credential'])->get();
-        // return ($bahan_baku);
+        // return ($customer);
         return view('admin.customers', compact('user_data', 'customer'));
     }
 

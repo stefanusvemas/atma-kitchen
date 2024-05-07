@@ -25,7 +25,7 @@
                 <thead>
                     <tr>
                         <th scope="col" class="w-50">Nama</th>
-                        <th>Email</th>
+                        <th>Poin</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
@@ -33,8 +33,8 @@
                     @forelse ($customer as $item)
                     <tr>
                         <td scope="row">{{$item['nama']}}</td>
-                        <td>{{$item['user_credential']['email']}}</td>
-                        <td><a href="{{url('admin/customers/history')}}">History Pesanan</a></td>
+                        <td>{{$item['jumlah_poin']}}</td>
+                        <td><a href="{{url('admin/customers/history/'.$item['id_customer'])}}">History Pesanan</a></td>
                     </tr>
                     @empty
                     <tr>
