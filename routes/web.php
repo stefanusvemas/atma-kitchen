@@ -8,6 +8,7 @@ use App\Http\Controllers\admin\HampersController;
 use App\Http\Controllers\admin\HistoryPesananController;
 use App\Http\Controllers\admin\ProdukController;
 use App\Http\Controllers\admin\ResepController;
+use App\Http\Controllers\Api\CustomerController as ApiCustomerController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Models\Customer;
@@ -185,3 +186,14 @@ Route::middleware(['auth', 'owner'])->group(function () {
     Route::get('/owner/profile', [OwnerProfileController::class, 'index']);
     Route::post('/owner/profile/edit', [OwnerProfileController::class, 'edit']);
 });
+
+
+
+Route::get('/inputEmail', [CustomerController::class, 'resetPassword']);
+Route::post('/inputEmail', [CustomerController::class, 'resetPasswordAction']);
+Route::get('/inputEmail/verifyResetPassword/{pass_key}', [CustomerController::class, 'verifyResetPassword'])->name('verifyResetPassword');
+Route::post('/inputEmail/verifyResetPassword/{pass_key}', [CustomerController::class, 'verifyResetPasswordAction'])->name('verifyResetPasswordAction');
+
+
+// Route::get('/resetPassword', [CustomerController::class, 'resetPassword']);
+// Route::post('/resetPassword', [CustomerController::class, 'resetPasswordAction']);

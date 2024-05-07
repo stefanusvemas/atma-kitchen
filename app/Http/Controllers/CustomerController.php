@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
+use App\Mail\ForgetPwMailSend;
+
 use App\Http\Controllers\Controller;
 use App\Mail\MailSend;
 use App\Models\Customer;
@@ -68,8 +70,6 @@ class CustomerController extends Controller
         return redirect('/login')->with('success', 'Register Success');
     }
 
-
-
     /**
      * Update the specified resource in storage.
      */
@@ -118,5 +118,86 @@ class CustomerController extends Controller
         } else {
             abort(404);
         }
+    }
+
+    public function resetPassword()
+    {
+        return view('user.inputEmail');
+    }
+
+    public function resetPasswordAction(Request $request)
+    {
+        $pass = Str::random(100);
+
+        $request->validate([
+            'email' => 'required|email'
+        ]);
+
+        $email = $request->email;
+
+        $user_credential = user_credential::where('email', $email)->first();
+
+        if (!$user_credential) {
+            return response()->json([
+                'message' => 'Email tidak ditemukan dalam database',
+                'data' => null
+            ], 404);
+        }
+
+        $atribut = [
+            'pass_key' => $pass,
+        ];
+
+        $user_credential->update($atribut);
+
+        if ($user_credential['pass_key'] == null) {
+            return response()->json([
+                'message' => 'PASS_KEY = NULL',
+                'pass_key' => $pass
+            ]);
+        }
+
+        $details = [
+            'nama' => $request->nama,
+            'website' => 'Atma Kitchen',
+            'url' => request()->getHttpHost() . '/inputEmail/verifyResetPassword/' . $pass
+        ];
+        Mail::to($request->email)->send(new ForgetPwMailSend($details));
+
+        return view('verifyResetPassword');
+    }
+
+    // public function verifyResetPassword($pass_key)
+    // {
+    // }
+
+    public function verifyResetPassword($pass_key, Request $request)
+    {
+        $keyCheck = user_credential::select('pass_key')
+            ->where('pass_key', $pass_key)
+            ->exists();
+
+        if ($keyCheck) {
+            return view('resetPassword', compact('pass_key'));
+        } else {
+            abort(404);
+        }
+    }
+
+    public function verifyResetPasswordAction($pass_key, Request $request)
+    {
+        $keyCheck = user_credential::select('pass_key')
+            ->where('pass_key', $pass_key)
+            ->exists();
+
+        $atribut = [
+            'password' => Hash::make($request['password']),
+            'pass_key' => null
+        ];
+
+        $user = user_credential::where('pass_key', $pass_key)
+            ->update($atribut);
+
+        return redirect('/login');
     }
 }
