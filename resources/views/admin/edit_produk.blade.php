@@ -7,16 +7,16 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{url('admin/produk')}}">Produk</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Tambah</li>
+                    <li class="breadcrumb-item active" aria-current="page">Edit</li>
                 </ol>
             </nav>
-            <h4>Tambah Produk Titipan</h4>
+            <h4>Edit Produk</h4>
 
-            <form action="{{url('/admin/produk/titipan/add')}}" class="p-3" method="post" enctype="multipart/form-data">
+            <form action="{{url('/admin/produk/edit/'.$produk['id_produk'])}}" class="p-3" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-2">
                     <label for="nama" class="form-label">Nama</label>
-                    <input type="text" class="form-control" id="nama" name="nama">
+                    <input type="text" class="form-control" id="nama" name="nama" value="{{ $produk['nama']}}">
                 </div>
                 <div class="mb-2">
                     <label for="gambar" class="form-label">Gambar</label>
@@ -25,6 +25,7 @@
                 <label for="">Penitip</label>
                 <select class="form-select mb-2" aria-label="Default select example" name="id_penitip">
                     <option selected disabled>Nama penitip</option>
+                    <option value=>Produk Sendiri</option>
                     @forelse ($penitip as $item)
                     <option value="{{$item['id_penitip']}}">{{$item['nama']}}</option>
                     @empty
@@ -35,21 +36,21 @@
                 </select>
                 <div class="mb-2">
                     <label for="stok" class="form-label">Stok</label>
-                    <input type="number" class="form-control" id="stok" min="0" name="stok">
+                    <input type="number" class="form-control" id="stok" min="0" name="stok" value="{{ $produk['stok']}}">
                 </div>
                 <div class="mb-2">
                     <label for="kuota_produksi" class="form-label">Kuota Produksi</label>
-                    <input type="number" class="form-control" id="kuota_produksi" min="0" name="kuota_produksi">
+                    <input type="number" class="form-control" id="kuota_produksi" min="0" name="kuota_produksi" value="{{ $produk['kuota_produksi']}}">
                 </div>
                 <div class="mb-2">
                     <label for="deskripsi" class="form-label">Deskripsi</label>
-                    <input type="text" class="form-control" id="deskripsi" min="0" name="deskripsi">
+                    <input type="text" class="form-control" id="deskripsi" min="0" name="deskripsi" value="{{ $produk['deskripsi']}}">
                 </div>
                 <div class="mb-2">
                     <label for="harga" class="form-label">Harga</label>
-                    <input type="number" class="form-control" id="harga" min="0" name="harga">
+                    <input type="number" class="form-control" id="harga" min="0" name="harga" value="{{ $produk['harga']}}">
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type=" submit" class="btn btn-primary">Submit</button>
             </form>
         </div>
     </div>

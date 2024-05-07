@@ -132,7 +132,7 @@ class SessionController extends Controller
 
 
         return response()->json([
-            'error' => 'Berhasil',
+            'message' => 'Berhasil',
             'data' => $user_credential
         ]);
     }

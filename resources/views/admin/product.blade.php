@@ -28,8 +28,6 @@
 
                 </div>
             </div>
-
-
             <table class="table table-responsive mt-3">
                 <thead>
                     <tr>
@@ -45,7 +43,7 @@
                         <td scope="row">{{$item['nama']}}</td>
                         <td>{{$item['stok']}}</td>
                         <td>{{$item['kuota_produksi']}}</td>
-                        <td><a href="#">Edit</a> | <a href="{{url('admin/produk/delete/'.$item['id_produk'])}}">Hapus</a></td>
+                        <td><a href="{{url('admin/produk/edit/'.$item['id_produk'])}}">Edit</a> | <a href="{{url('admin/produk/delete/'.$item['id_produk'])}}">Hapus</a></td>
                     </tr>
                     @empty
                     <tr>

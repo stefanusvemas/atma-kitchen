@@ -82,6 +82,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/produk/add', [ProdukController::class, 'create_sendiri']); //sendiri
     Route::post('/admin/produk/add', [ProdukController::class, 'create_sendiriAction']); //sendiri
 
+    Route::get('/admin/produk/edit/{id}', [ProdukController::class, 'edit']);
+    Route::post('/admin/produk/edit/{id}', [ProdukController::class, 'editAction']);
+
     Route::get('/admin/produk/titipan/add', [ProdukController::class, 'create_titipan']); //titipan
     Route::post('/admin/produk/titipan/add', [ProdukController::class, 'create_titipanAction']); //sendiri
 

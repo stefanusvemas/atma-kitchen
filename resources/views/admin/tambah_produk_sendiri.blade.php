@@ -31,6 +31,10 @@
                     <input type="number" class="form-control" id="kuota_produksi" min="0" name="kuota_produksi">
                 </div>
                 <div class="mb-2">
+                    <label for="deskripsi" class="form-label">Deskripsi</label>
+                    <input type="text" class="form-control" id="deskripsi" min="0" name="deskripsi">
+                </div>
+                <div class="mb-2">
                     <label for="harga" class="form-label">Harga</label>
                     <input type="number" class="form-control" id="harga" min="0" name="harga">
                 </div>
