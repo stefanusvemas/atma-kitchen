@@ -22,19 +22,19 @@
                 @csrf
                 <div class="mb-2">
                     <label for="nama" class="form-label">Nama Hampers</label>
-                    <input type="text" class="form-control" id="nama" name="nama">
+                    <input type="text" class="form-control" id="nama" name="nama" required>
                 </div>
                 <div class="mb-2">
                     <label for="gambar" class="form-label">Gambar</label>
-                    <input type="file" accept="image/png, image/jpeg" class="form-control" id="gambar" name="foto_hampers">
+                    <input type="file" accept="image/png, image/jpeg" class="form-control" id="gambar" name="foto_hampers" required>
                 </div>
                 <div class="mb-2">
                     <label for="deskripsi" class="form-label">Deskripsi</label>
-                    <input type="text" class="form-control" id="deskripsi" name="deskripsi">
+                    <input type="text" class="form-control" id="deskripsi" name="deskripsi" required>
                 </div>
                 <div class="mb-2">
                     <label for="harga" class="form-label">Harga</label>
-                    <input type="number" class="form-control" id="harga" name="harga">
+                    <input type="number" class="form-control" id="harga" name="harga" required>
                 </div>
 
                 <div class="mb-2">

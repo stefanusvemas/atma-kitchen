@@ -16,7 +16,7 @@
                 @csrf
                 <label for="produk">Nama produk</label>
                 <select class="form-select mb-2" aria-label="Default select example" name="id_produk">
-
+                    <option hidden value="{{$resep['produk']['id_produk']}}">{{$resep['produk']['nama']}}</option>
                     @forelse ($produk as $item)
                     <option value="{{$item['id_produk']}}">{{$item['nama']}}</option>
                     @empty
@@ -29,7 +29,7 @@
 
                 <label for="bahan">Bahan baku</label>
                 <select class="form-select mb-2" aria-label="Default select example" name="id_bahan_baku">
-
+                    <option hidden value="{{$resep['bahanBaku']['id_bahan_baku']}}">{{$resep['bahanBaku']['nama']}}</option>
                     @forelse ($bahanBaku as $item)
                     <option value="{{$item['id_bahan_baku']}}">{{$item['nama']}}</option>
                     @empty
@@ -41,11 +41,11 @@
 
                 <div class="mb-2">
                     <label for="harga" class="form-label">Jumlah</label>
-                    <input type="number" class="form-control" id="harga" min="0" name="jumlah_bahan_baku">
+                    <input type="number" class="form-control" id="harga" min="0" name="jumlah_bahan_baku" value="{{$resep['jumlah_bahan_baku']}}">
                 </div>
                 <label for="bahan">Satuan</label>
                 <select class="form-select mb-2" aria-label="Default select example" name="satuan">
-
+                    <option value="" selected disabled>Pilih satuan</option>
                     <option value="mg">Miligram (mg)</option>
                     <option value="g">Gram (g)</option>
                     <option value="kg">Kilogram (kg)</option>

@@ -17,19 +17,21 @@ class ResepController extends Controller
     public function index()
     {
         $user_data = Karyawan::where('id_karyawan', Auth::user()->id_karyawan)->with('jabatan')->first();
-        $products = Produk::with('resep.bahanBaku')->get()->groupBy('id_produk');
-        // return ($produk);
+        $products = Produk::has('resep')->get()->load('resep', 'resep.bahanBaku')->groupBy('id_produk');
+        // return ($products);
         return view('admin.resep', compact('user_data', 'products'));
     }
 
     public function edit($id)
     {
         $user_data = Karyawan::where('id_karyawan', Auth::user()->id_karyawan)->with('jabatan')->first();
-        $resep = Resep::where('id_resep', $id)->first();
+        $resep = Resep::where('id_resep', $id)->first()->load('produk', 'bahanBaku');
 
         if (!$resep) {
             return redirect()->back()->with('error', 'Resep tidak ditemukan');
         }
+
+        // return $resep;
 
         // Ambil produk berdasarkan resep
         $produk = Produk::all();

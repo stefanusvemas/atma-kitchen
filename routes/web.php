@@ -30,20 +30,15 @@ use App\Http\Controllers\user\ProfileController as UserProfileController;
 use App\Http\Controllers\owner\DashboardController as OwnerDashboardController;
 use App\Http\Controllers\owner\KaryawanController as OwnerKaryawanController;
 use App\Http\Controllers\owner\ProfileController as OwnerProfileController;
+use App\Http\Controllers\user\CartController;
+use App\Http\Controllers\user\CheckoutController;
+use App\Http\Controllers\DetailProdukController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/detail_product', function () {
-    return view('product_detail');
-});
+Route::get('/detail_product', [DetailProdukController::class, 'index']);
 
-Route::get('/cart', function () {
-    return view('cart');
-});
 
-Route::get('/checkout', function () {
-    return view('checkout');
-});
 
 Route::get('/register', [CustomerController::class, 'register'])->name('register');
 Route::post('registerAction', [CustomerController::class, 'registerAction'])->name('registerAction');
@@ -167,6 +162,10 @@ Route::middleware(['auth', 'user'])->group(function () {
 
     Route::get('/user/orders_history', [HistoryController::class, 'index']);
     Route::get('/user/orders_history/search', [HistoryController::class, 'search']);
+
+    Route::get('/cart', [CartController::class, 'index']);
+
+    Route::get('/checkout', [CheckoutController::class, 'index']);
 });
 
 Route::get('/logout', function () {

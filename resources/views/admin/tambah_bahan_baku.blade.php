@@ -16,15 +16,15 @@
                 @csrf
                 <div class="mb-2">
                     <label for="nama" class="form-label">Nama Bahan Baku</label>
-                    <input type="text" class="form-control" id="nama" name="nama">
+                    <input type="text" class="form-control" id="nama" name="nama" required>
                 </div>
                 <div class="mb-2">
                     <label for="stok" class="form-label">Stok</label>
-                    <input type="number" class="form-control" id="stok" min="0" name="stok">
+                    <input type="number" class="form-control" id="stok" min="0" name="stok" required>
                 </div>
                 <div class="mb-2">
                     <label for="harga" class="form-label">Harga</label>
-                    <input type="number" class="form-control" id="harga" name="harga">
+                    <input type="number" class="form-control" id="harga" name="harga" required>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>

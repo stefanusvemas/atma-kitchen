@@ -125,7 +125,7 @@ class SessionController extends Controller
         $details = [
             'nama' => $request->nama,
             'website' => 'Atma Kitchen',
-            'url' => request()->getHttpHost() . '/api/customer/verifyForgetPw/' . $pass
+            'url' => 'http://127.0.0.1:8000/' . '/customer/verifyForgetPw/' . $pass
         ];
         Mail::to($request->email)->send(new ForgetPwMailSend($details));
 
