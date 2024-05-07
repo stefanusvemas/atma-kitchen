@@ -34,7 +34,7 @@
                     <tr>
                         <td scope="row">{{$item['nama']}}</td>
                         <td>{{$item['jumlah_poin']}}</td>
-                        <td><a href="{{url('admin/customers/history')}}">History Pesanan</a></td>
+                        <td><a href="{{url('admin/customers/history/'.$item['id_customer'])}}">History Pesanan</a></td>
                     </tr>
                     @empty
                     <tr>
