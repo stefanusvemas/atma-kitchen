@@ -11,6 +11,7 @@ class Produk extends Model
 
     protected $primaryKey = 'id_produk';
     protected $table = 'produk';
+    public $timestamps = false;
 
     protected $fillable = [
         'id_penitip',
@@ -22,8 +23,8 @@ class Produk extends Model
         'status'
     ];
 
-    // public function penitip()
-    // {
-    //     return $this->belongsTo(Penitip::class, 'id_penitip', 'id_penitip');
-    // }
+    public function resep()
+    {
+        return $this->hasMany(Resep::class, 'id_produk');
+    }
 }

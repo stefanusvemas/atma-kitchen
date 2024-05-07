@@ -12,7 +12,20 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //
+        // 
+        $middleware->web(append: [
+            // \App\Http\Middleware\HandleInertiaRequests::class,
+            \Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class,
+        ]);
+
+        $middleware->alias([
+            // 'role' => \App\Http\Middleware\RoleMiddleware::class,
+            'admin' => App\Http\Middleware\admin::class,
+            // 'MO' => \App\Http\Middleware\manager_operasional::class,
+            // 'owner' => \App\Http\Middleware\owner::class,
+            // 'pelanggan' => \App\Http\Middleware\customer::class,
+            // 'auth.check' => \App\Http\Middleware\CheckAuthenticated::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

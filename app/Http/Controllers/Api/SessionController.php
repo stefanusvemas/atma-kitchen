@@ -17,9 +17,9 @@ use Illuminate\Support\Facades\Mail;
 
 class SessionController extends Controller
 {
-    
+
     public function login(Request $request)
-{
+
         $rules = [ 
             'email' => 'required',
             'password' => 'required'
@@ -27,7 +27,7 @@ class SessionController extends Controller
 
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
-                return response()->json([
+            return response()->json([
                 'status' => false,
                 'message' => 'Proses login gagal',
                 'data' => $validator->errors()
@@ -35,12 +35,12 @@ class SessionController extends Controller
         }
 
         if (!Auth::attempt($request->only('email', 'password'))) {
-                return response()->json([
+            return response()->json([
                 'status' => false,
                 'message' => 'Email dan password yang dimasukkan tidak sesuai'
             ], 401);
         }
-        
+
         $user = Auth::user();
         if (!$user->active) {
             Auth::logout();
@@ -88,7 +88,11 @@ class SessionController extends Controller
     ]);
 }
 
-    public function forgetPassword(Request $request){
+        ]);
+    }
+
+    public function forgetPassword(Request $request)
+    {
         $pass = Str::random(100);
 
         $request->validate([
@@ -110,7 +114,7 @@ class SessionController extends Controller
             'pass_key' => $pass,
         ];
 
-        $user_credential->update($atribut); 
+        $user_credential->update($atribut);
 
         if ($user_credential['pass_key'] == null) {
             return response()->json([
@@ -126,7 +130,7 @@ class SessionController extends Controller
         ];
         Mail::to($request->email)->send(new ForgetPwMailSend($details));
 
-        
+
 
         return response()->json([
             'error' => 'Berhasil',
@@ -143,13 +147,14 @@ class SessionController extends Controller
         if ($keyCheck) {
             $atribut = [
                 'password' => Hash::make($request['password']),
+                'pass_key' => null
             ];
 
-           $user = user_credential::where('pass_key', $pass_key)
+            $user = user_credential::where('pass_key', $pass_key)
                 ->update($atribut);
 
             return response()->json([
-            'message' => 'Verifikasi Passwrd Baru Berhasil'
+                'message' => 'Verifikasi Passwrd Baru Berhasil'
             ]);
         } else {
             return response()->json([
