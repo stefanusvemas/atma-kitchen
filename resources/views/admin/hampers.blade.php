@@ -6,7 +6,7 @@
         <div class="container mt-4">
             <h3>Hampers</h3>
 
-            <div class="row justify-content-between">
+            <div class="row justify-content-between mb-3">
                 <div class="col">
                     <!-- <a href="{{url('admin/bahan_baku/add')}}" class="btn btn-primary">Tambah Bahan</a> -->
                     <a class="btn btn-primary" href="{{url('admin/hampers/add')}}">Tambah Hampers</a>
@@ -21,6 +21,19 @@
 
                 </div>
             </div>
+
+            @if(session('error'))
+            <div class="alert alert-danger" role="alert">
+                {{ session('error')->first() }}
+            </div>
+
+            @endif
+
+            @if(session('success'))
+            <div class="alert alert-success" role="alert">
+                {{ session('success')}}
+            </div>
+            @endif
 
             <table class="table table-responsive mt-3">
                 <thead>
@@ -43,7 +56,7 @@
                         <td>{{ $detail['jumlah'] }}</td>
                         @if ($loop->first)
                         <td rowspan="{{ count($item) }}">{{ $detail['hampers']['harga'] }}</td>
-                        <td rowspan="{{ count($item) }}"><a href="#">Edit</a> | <a href="{{url('admin/hampers/delete/'.$detail['hampers']['id_hampers'])}}">Hapus</a></td>
+                        <td rowspan="{{ count($item) }}"><a href="{{url('admin/hampers/edit/'.$detail['hampers']['id_hampers'])}}">Edit</a> | <a href="{{url('admin/hampers/delete/'.$detail['hampers']['id_hampers'])}}">Hapus</a></td>
                         @endif
                     </tr>
                     @endforeach
