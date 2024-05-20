@@ -23,14 +23,31 @@ class CartController extends Controller
         $alamat_selected = Pengiriman::where('id_transaksi', $transaksi['id_transaksi'])->first()->load('alamat');
         // return $alamat_selected;
 
-        $kuota = Transaksi::where('tgl_ambil', $transaksi['tgl_ambil'])->with('detail_transaksi')->get();
+        // -------------------------- Hitung Kuota/Stok berdasarkan tgl (subject to change) ------------------------------
+        $jumlah = DetailTransaksi::all()->load('produk', 'transaksi')->where('transaksi.tgl_ambil', $transaksi['tgl_ambil'])->groupBy('produk.id_produk');
+        $jumlahTotal = [];
+        $remainingQuota = [];
+        $currentTransactionId = $transaksi['id_transaksi'];
+        // return $jumlah;
 
-        $allDetails = $kuota->pluck('detail_transaksi')->flatten();
+        foreach ($jumlah as $productId => $details) {
+            $jumlahTotal[$productId] = 0; // Initialize total jumlah for each product
 
-        $groupedByProduct = $allDetails->groupBy('id_produk')->map(function ($group) {
-            $jumlah = $group->sum('jumlah');
-            return $jumlah;
-        });
+            foreach ($details as $detail) {
+                if ($detail['id_transaksi'] != $currentTransactionId) {
+                    $jumlahTotal[$productId] += $detail['jumlah']; // Sum jumlah for each detail, excluding the current transaction
+                }
+            }
+
+            // Calculate remaining quota
+            $product = $details[0]['produk']; // Assuming all details for the same product have the same product info
+            if ($product['id_penitip'] == null) {
+                $remainingQuota[$productId] = $product['kuota_produksi'] - $jumlahTotal[$productId];
+            } else {
+                $remainingQuota[$productId] = $product['stok'] - $jumlahTotal[$productId];
+            }
+        }
+        // ===========================================
 
 
         if ($transaksi == null) {
@@ -44,7 +61,7 @@ class CartController extends Controller
         $cart_count = DetailTransaksi::where('id_transaksi', $transaksi->id_transaksi)->sum('jumlah');
         // return $produk;
 
-        return view('cart', compact('user_data', 'transaksi', 'produk', 'cart_count', 'alamat', 'alamat_selected'));
+        return view('cart', compact('user_data', 'transaksi', 'produk', 'cart_count', 'alamat', 'alamat_selected', 'remainingQuota'));
     }
 
     public function addAction($id)

@@ -14,6 +14,11 @@
                 </div>
                 <div class="col">
                     <h4 class="card-title"><strong>{{$produk['produk']['nama']}}</strong></h4>
+                    @if ($produk['produk']['id_penitip'] == null)
+                    <span class="badge rounded-pill text-bg-primary">Kuota : {{$remainingQuota[$produk['produk']['id_produk']]}}</span>
+                    @else
+                    <span class="badge rounded-pill text-bg-success">Stok : {{$remainingQuota[$produk['produk']['id_produk']]}}</span>
+                    @endif
                     <p>Rp. {{number_format($produk['produk']['harga'],2,",",".")}}</p>
                 </div>
                 <div class="col-auto">
