@@ -134,7 +134,10 @@ class ProdukController extends Controller
             }
 
             $gambarPath = $request->file('gambar')->store('public/produkImages');
+            $gambarPath = str_replace('public/', 'storage/', $gambarPath);
             // Simpan path gambar ke dalam $data
+            $data['gambar'] = $gambarPath;
+
             $data['gambar'] = $gambarPath;
             $atribut = [
                 'nama' => $request['nama'],
@@ -146,16 +149,17 @@ class ProdukController extends Controller
                 'status' => $data['status'],
                 'deskripsi' => $request['deskripsi']
             ];
+        } else {
+            $atribut = [
+                'nama' => $request['nama'],
+                'stok' => $request['stok'],
+                'kuota_produksi' => $request['kuota_produksi'],
+                'id_penitip' => $request['id_penitip'],
+                'harga' => $request['harga'],
+                'status' => $data['status'],
+                'deskripsi' => $request['deskripsi']
+            ];
         }
-        $atribut = [
-            'nama' => $request['nama'],
-            'stok' => $request['stok'],
-            'kuota_produksi' => $request['kuota_produksi'],
-            'id_penitip' => $request['id_penitip'],
-            'harga' => $request['harga'],
-            'status' => $data['status'],
-            'deskripsi' => $request['deskripsi']
-        ];
 
         $produk->update($atribut);
         return redirect('admin/produk')->with('success', 'Berhasil ubah data');

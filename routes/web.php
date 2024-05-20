@@ -36,7 +36,7 @@ use App\Http\Controllers\DetailProdukController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/detail_product', [DetailProdukController::class, 'index']);
+Route::get('/detail_product/{id}', [DetailProdukController::class, 'index']);
 
 
 
@@ -166,6 +166,13 @@ Route::middleware(['auth', 'user'])->group(function () {
     Route::get('/cart', [CartController::class, 'index']);
 
     Route::get('/checkout', [CheckoutController::class, 'index']);
+
+    Route::get('/actionAddCart/{id}', [CartController::class, 'addAction']);
+    Route::get('/addToCart/{id}', [CartController::class, 'addToCart']);
+    route::get('/removeCart/{id}', [CartController::class, 'removeAction']);
+
+    route::post('/cart/update/{id}', [CartController::class, 'updateAction']);
+    route::post('/cart/updateTglAmbil', [CartController::class, 'updateTanggalAmbil']);
 });
 
 Route::get('/logout', function () {
