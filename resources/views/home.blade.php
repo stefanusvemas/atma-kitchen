@@ -30,12 +30,18 @@
                 <div class="card">
                     <img src="{{asset($produk['gambar'])}}" class="card-img-top" alt="Menu Item" height="380px" style="aspect-ratio:1/1; object-fit: cover;">
                     <div class="card-body">
-                        <a href="{{url('/detail_product')}}" class="card-title text-decoration-none">
+                        <a href="{{url('/detail_product'.'/'.$produk['id_produk'])}}" class="card-title text-decoration-none">
                             <h5>{{$produk['nama']}}</h5>
                         </a>
                         <p class="card-text">Rp. {{number_format($produk['harga'],2,",",".")}}</p>
-                        <a href="{{url('/cart')}}" class="btn btn-dark">Order Now</a>
-                        <a href="#" class="btn btn-outline-dark"><i class="fa fa-cart-plus"></i></a>
+                        @if ($produk['stok'] <= 0 && $produk['kuota_produksi'] <=0) <a href="#" class="btn btn-dark disabled">Order Now</a>
+                            <a href="#" class="btn btn-outline-dark disabled"><i class="fa fa-cart-plus"></i></a>
+                            @else
+                            <a href="{{url('/addToCart'.'/'.$produk['id_produk'])}}" class="btn btn-dark">Order Now</a>
+                            <a href="{{url('/actionAddCart'.'/'.$produk['id_produk'])}}" class="btn btn-outline-dark"><i class="fa fa-cart-plus"></i></a>
+
+
+                            @endif
                     </div>
                 </div>
             </div>

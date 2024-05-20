@@ -6,23 +6,46 @@
         <div class="card mb-3 p-3">
             <div class="row g-0">
                 <div class="col-md-4">
-                    <img src="https://masterytricks.com/wp-content/uploads/2024/02/Naked-Cake-Recipe-Card.jpg" class="img-fluid rounded" alt="...">
+                    <img src="{{asset($produk['gambar'])}}" class="img-fluid rounded" style="height: 280px; aspect-ratio: 16/9; object-fit:cover;" alt="...">
                 </div>
                 <div class="col-md-8">
                     <div class="card-body">
                         <div class="row">
                             <div class="col">
-                                <h2 class="card-title">Kue Putih</h2>
-                                <p class="card-text">Warna putih bersih, rasa ringan, dan aroma yang menggoda membuatnya sempurna untuk setiap kesempatan. Setiap gigitan membawa kelezatan yang memuaskan, cocok untuk dinikmati sendiri atau dihidangkan dalam pesta. Simpel namun luar biasa!</p>
+                                <h2 class="card-title">{{$produk['nama']}}</h2>
+                                @if ($produk['id_penitip'] != null)
+                                <p class="card-text">Penitip: <strong>{{$produk['penitip']['nama']}}</strong></p>
+                                @endif
+                                @if ($produk['deskripsi'] != null)
+                                <p class="card-text">{{$produk['deskripsi']}}</p>
+                                @else
+                                <p class="card-text h-100"></p>
+                                @endif
+
+                                @if ($produk['stok'] <= 0 && $produk['kuota_produksi'] <=0) <a href="#" class="btn btn-dark disabled">Order Now</a>
+                                    <a href="#" class="btn btn-outline-dark disabled"><i class="fa fa-cart-plus"></i></a>
+                                    @else
+                                    <a href="#" class="btn btn-dark">Order Now</a>
+                                    <a href="#" class="btn btn-outline-dark"><i class="fa fa-cart-plus"></i></a>
 
 
-                                <a href="#" class="btn btn-dark">Order Now</a>
-                                <a href="#" class="btn btn-outline-dark"><i class="fa fa-cart-plus"></i></a>
+                                    @endif
                             </div>
                             <div class="col-auto">
-                                <h3>Rp. 100.000</h3>
-                                <span class="badge text-bg-dark">Stock: 10</span>
+                                <h3>Rp. {{number_format($produk['harga'],2,",",".")}}</h3>
+                                @if ($produk['stok'] > 0)
+                                <span class="badge text-bg-dark">Stock: {{$produk['stok']}}</span>
+
+                                @elseif ($produk['stok'] == 0 && $produk['kuota_produksi'] == 0)
+                                <span class="badge text-black-50">Out of Stock</span>
+                                @endif
+
+                                @if ($produk['kuota_produksi'] > 0)
+                                <span class="badge text-bg-success">Kuota Produksi: {{$produk['kuota_produksi']}}</span>
                                 <span class="badge text-bg-success">Preorder</span>
+                                @elseif ($produk['kuota_produksi'] == 0 && $produk['stok'] == 0)
+                                <span class="badge text-black-50">Out of Quota</span>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -36,45 +59,30 @@
             </div>
         </div>
         <div class="row">
+            @forelse($produk_lain as $produk)
             <div class="col-md-4 mb-4">
                 <div class="card">
-                    <img src="https://img.freepik.com/free-photo/red-velvet-cake-slices-with-yellof-cherry-top-mint-leaves_114579-2593.jpg?t=st=1712044026~exp=1712047626~hmac=95ffc92b21fed5600d087f69210cf3f48aaecdb566fde2e342af1aaa75a8274d&w=360" class="card-img-top" alt="Menu Item" height="280px" style="aspect-ratio:1/1; object-fit: cover;">
+                    <img src="{{asset($produk['gambar'])}}" class="card-img-top" alt="Menu Item" height="280px" style="aspect-ratio:1/1; object-fit: cover;">
                     <div class="card-body">
-                        <a href="#" class="card-title text-decoration-none">
-                            <h5>Red Velvet</h5>
+                        <a href="{{url('/detail_product'.'/'.$produk['id_produk'])}}" class="card-title text-decoration-none">
+                            <h5>{{$produk['nama']}}</h5>
                         </a>
-                        <p class="card-text">A symphony of crimson cake, cocoa whispers, and cream cheese dreams. Pure bliss in every bite! 🍰✨</p>
-                        <a href="#" class="btn btn-dark">Order Now</a>
-                        <a href="#" class="btn btn-outline-dark"><i class="fa fa-cart-plus"></i></a>
+                        @if ($produk['stok'] <= 0 && $produk['kuota_produksi'] <=0) <a href="#" class="btn btn-dark disabled">Order Now</a>
+                            <a href="#" class="btn btn-outline-dark disabled"><i class="fa fa-cart-plus"></i></a>
+                            @else
+                            <a href="#" class="btn btn-dark">Order Now</a>
+                            <a href="#" class="btn btn-outline-dark"><i class="fa fa-cart-plus"></i></a>
+
+
+                            @endif
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 mb-4">
-                <div class="card">
-                    <img src="https://img.freepik.com/free-photo/red-velvet-cake-slices-with-yellof-cherry-top-mint-leaves_114579-2593.jpg?t=st=1712044026~exp=1712047626~hmac=95ffc92b21fed5600d087f69210cf3f48aaecdb566fde2e342af1aaa75a8274d&w=360" class="card-img-top" alt="Menu Item" height="280px" style="aspect-ratio:1/1; object-fit: cover;">
-                    <div class="card-body">
-                        <a href="#" class="card-title text-decoration-none">
-                            <h5>Red Velvet</h5>
-                        </a>
-                        <p class="card-text">A symphony of crimson cake, cocoa whispers, and cream cheese dreams. Pure bliss in every bite! 🍰✨</p>
-                        <a href="#" class="btn btn-dark">Order Now</a>
-                        <a href="#" class="btn btn-outline-dark"><i class="fa fa-cart-plus"></i></a>
-                    </div>
-                </div>
+            @empty
+            <div class="alert alert-danger text-center">
+                No products found.
             </div>
-            <div class="col-md-4 mb-4">
-                <div class="card">
-                    <img src="https://img.freepik.com/free-photo/red-velvet-cake-slices-with-yellof-cherry-top-mint-leaves_114579-2593.jpg?t=st=1712044026~exp=1712047626~hmac=95ffc92b21fed5600d087f69210cf3f48aaecdb566fde2e342af1aaa75a8274d&w=360" class="card-img-top" alt="Menu Item" height="280px" style="aspect-ratio:1/1; object-fit: cover;">
-                    <div class="card-body">
-                        <a href="#" class="card-title text-decoration-none">
-                            <h5>Red Velvet</h5>
-                        </a>
-                        <p class="card-text">A symphony of crimson cake, cocoa whispers, and cream cheese dreams. Pure bliss in every bite! 🍰✨</p>
-                        <a href="#" class="btn btn-dark">Order Now</a>
-                        <a href="#" class="btn btn-outline-dark"><i class="fa fa-cart-plus"></i></a>
-                    </div>
-                </div>
-            </div>
+            @endforelse
         </div>
     </div>
 

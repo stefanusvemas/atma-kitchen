@@ -6,68 +6,84 @@
         <h4>Shopping Cart</h4>
         <hr>
 
+        @forelse($produk as $produk)
         <div class="card mb-3 p-3">
             <div class="row justify-content-between">
                 <div class="col-md-auto col-4">
-                    <img src="https://masterytricks.com/wp-content/uploads/2024/02/Naked-Cake-Recipe-Card.jpg" class="img-fluid rounded" width="180px" alt="..." style="aspect-ratio:1/1; object-fit: cover;">
+                    <img src="{{asset($produk['produk']['gambar'])}}" class="img-fluid rounded" width="180px" alt="..." style="aspect-ratio:1/1; object-fit: cover;">
                 </div>
                 <div class="col">
-                    <h4 class="card-title"><strong>Kue Putih</strong></h4>
-                    <p>Rp. 100.000</p>
+                    <h4 class="card-title"><strong>{{$produk['produk']['nama']}}</strong></h4>
+                    <p>Rp. {{number_format($produk['produk']['harga'],2,",",".")}}</p>
                 </div>
                 <div class="col-auto">
-                    <div class="row">
-                        <div class="col">
-                            <span class="badge text-bg-dark">Stock: 10</span>
-                            <span class="badge text-bg-success">Preorder</span>
+                    <form action="{{ url('/cart/update/' . $produk['produk']['id_produk']) }}" method="POST">
+                        @csrf
+                        <div class="row">
+                            <div class="col-auto">
+                                <label for="quantityInput{{$produk['produk']['id_produk']}}" class="form-label">Quantity:</label>
+                                <input type="number" name="jumlah" class="form-control quantity-input" id="quantityInput{{$produk['produk']['id_produk']}}" value="{{$produk['jumlah']}}" min="1" max="10" data-price="{{$produk['produk']['harga']}}">
+                            </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-auto">
-                            <label for="quantityInput1" class="form-label">Quantity:</label>
-                            <input type="number" class="form-control quantity-input" id="quantityInput1" value="1" min="1" max="10" data-price="100000">
+                        <div class="row mt-3">
+                            <div class="col">
+                                <button type="submit" class="btn btn-outline-primary">Update</button>
+                                <a href="{{url('/removeCart'.'/'.$produk['produk']['id_produk'])}}" class="btn btn-outline-danger remove-item"><i class="fa fa-trash"></i> Remove Item</a>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col">
-                            <a href="#" class="btn btn-outline-danger remove-item"><i class="fa fa-trash"></i> Remove Item</a>
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
-
-        <div class="card mb-3 p-3">
-            <div class="row justify-content-between">
-                <div class="col-md-auto col-4">
-                    <img src="https://masterytricks.com/wp-content/uploads/2024/02/Naked-Cake-Recipe-Card.jpg" class="img-fluid rounded" width="180px" alt="..." style="aspect-ratio:1/1; object-fit: cover;">
-                </div>
-                <div class="col">
-                    <h4 class="card-title"><strong>Second Item</strong></h4>
-                    <p>Rp. 150.000</p>
-                </div>
-                <div class="col-auto">
-                    <div class="row">
-                        <div class="col">
-                            <span class="badge text-bg-dark">Stock: 5</span>
-                            <span class="badge text-bg-success">Preorder</span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-auto">
-                            <label for="quantityInput2" class="form-label">Quantity:</label>
-                            <input type="number" class="form-control quantity-input" id="quantityInput2" value="1" min="1" max="5" data-price="150000">
-                        </div>
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col">
-                            <a href="#" class="btn btn-outline-danger remove-item"><i class="fa fa-trash"></i> Remove Item</a>
-                        </div>
-                    </div>
-                </div>
+        @empty
+        <div class="col-md">
+            <div class="alert alert-danger text-center">
+                Shopping cart is empty.
             </div>
         </div>
+        @endforelse
 
+        <hr>
+
+        <div class="row mb-2">
+            <form action="{{url('/cart/updateTglAmbil')}}" method="post" class="d-flex align-items-center">
+                @csrf
+                <div class="col">
+                    <div class="row">
+                        <div class="col">
+                            <label for="tanggal_ambil" class="me-2">Tanggal Ambil</label>
+                            <input type="date" class="form-control me-2" name="tanggal_ambil" id="tanggal_ambil" min="{{date('Y-m-d')}}" value="{{$transaksi['tgl_ambil']}}" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label for="">Alamat</label>
+                            <select class="form-control" id="addressSelect" name="alamat">
+                                @if ($alamat_selected != null)
+                                <option value="{{$alamat_selected['id_alamat']}}" selected hidden>{{$alamat_selected['alamat']['nama_jalan']}}</option>
+                                @endif
+                                <option value="-1">Self Pickup</option>
+
+                                @forelse($alamat as $item)
+                                <option value="{{$item['id_alamat']}}">{{$item['nama_jalan']}}</option>
+                                @empty
+                                <option value="0" disabled>No address</option>
+                                @endforelse
+                            </select>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mt-2">
+                            <button type="submit" class="btn btn-primary"><i class="fa-regular fa-floppy-disk"></i></button>
+
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+
+        </div>
 
         <hr>
 
@@ -75,6 +91,9 @@
             <div class="col-md-auto col-8">
                 <h5>Total</h5>
                 <p id="grandTotal">Rp. 0</p>
+            </div>
+            <div class="col-md-auto col-4">
+
             </div>
             <div class="col-md-auto col-4">
                 <div class="row justify-content-end">
@@ -87,6 +106,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 </div>
 

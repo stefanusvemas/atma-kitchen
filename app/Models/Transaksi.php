@@ -13,6 +13,7 @@ class Transaksi extends Model
 
     protected $primaryKey = 'id_transaksi';
     protected $table = 'transaksi';
+    public $timestamps = false;
 
     protected $fillable = [
         'id_customer',
@@ -21,7 +22,8 @@ class Transaksi extends Model
         'status',
         'tgl_transaksi',
         'total_harga',
-        'foto_bukti'
+        'foto_bukti',
+        'tgl_ambil'
     ];
 
     public function customer()
