@@ -142,6 +142,9 @@ Route::middleware(['auth', 'MO'])->group(function () {
     Route::post('/manager/pembelian_bahan_baku/edit/{id}', [PembelianBahanBakuController::class, 'editAction']);
     Route::get('/manager/pembelian_bahan_baku/delete/{id}', [PembelianBahanBakuController::class, 'delete']);
 
+    Route::get('manager/list_pesanan', [TransaksiController::class, 'index']);
+
+
     Route::get('manager/pengeluaran_lain', [PengeluaranLainController::class, 'index']);
     Route::get('manager/pengeluaran_lain/search', [PengeluaranLainController::class, 'search']);
     Route::get('manager/pengeluaran_lain/add', [PengeluaranLainController::class, 'add']);
@@ -200,6 +203,7 @@ Route::post('/inputEmail/verifyResetPassword/{pass_key}', [CustomerController::c
 
 
 Route::get('/listOrders', [TransaksiController::class, 'listOrdersToConfirm']);
+Route::get('orders/accept/{id}', [TransaksiController::class, 'acceptOrder']);
+Route::get('/orders/reject/{id}', [TransaksiController::class, 'rejectOrder']);
 
 //customer 
-

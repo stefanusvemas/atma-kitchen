@@ -55,5 +55,5 @@ Route::group(
 );
 
 
-Route::post('orders/reject/{id}', [TransaksiController::class, 'rejectOrder']);
-Route::post('orders/accept/{id}', [TransaksiController::class, 'acceptOrder']);
+
+

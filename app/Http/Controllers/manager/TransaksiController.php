@@ -5,20 +5,24 @@ namespace App\Http\Controllers\manager;
 use App\Http\Controllers\Controller;
 use App\Models\BahanBaku;
 use App\Models\Customer;
+use App\Models\Karyawan;
 use App\Models\Produk;
 use App\Models\Resep;
 use App\Models\Transaksi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 use function PHPUnit\Framework\returnSelf;
 
 class TransaksiController extends Controller
 {
     //
-    public function listOrdersToConfirm()
+    public function index()
     {
-        $orders = Transaksi::where('status', 'pending')->get();
-        return response()->json($orders);
+        $user_data = Karyawan::where('id_karyawan', Auth::user()->id_karyawan)->with('jabatan')->first();
+        $orders = Transaksi::where('status', 'approved')->with('detail_transaksi')->get();
+        return view('manager.list_pesanan', compact('user_data', 'orders'));
+        // return response()->json($orders);
     }
 
     public function rejectOrder($id)
@@ -27,7 +31,7 @@ class TransaksiController extends Controller
         if (!$order) {
             return response()->json(['message' => 'Transaksi tidak ditemukan'], 404);
         }
-        $order->status = 'ditolak';
+        $order->status = 'Declined';
         $order->save();
 
         foreach ($order->detail_transaksi as $detail) {
@@ -36,32 +40,15 @@ class TransaksiController extends Controller
                 $product->stok += $detail->jumlah;
                 $product->kuota_produksi += $detail->jumlah;
                 $product->save();
-                return $product;
             }
         }
-
-        // Menampilkan bahan baku yang digunakan
-        // $usedBahanBaku = [];
-        // foreach ($order->detail_transaksi as $detail) {
-        //     $product = Produk::find($detail->id_produk);
-        //     if ($product) {
-        //         foreach ($product->resep as $resep) {
-        //             foreach ($resep->bahanbaku as $bahan) {
-        //                 $usedBahanBaku[] = $bahan->nama_bahan_baku;
-        //             }
-        //         }
-        //     }
-        // }
-        // return response()->json(['used_bahan_baku' => $usedBahanBaku]);
-
         // Mengembalikan Saldo
         $customer = Customer::find($order->id_customer);
         if ($customer) {
             $customer->saldo += $order->total_harga;
             $customer->save();
         }
-
-        return response()->json(['message' => 'Transaksi DItolak dan saldo dikembalikan']);
+        return redirect('/manager/list_pesanan');
     }
 
     public function acceptOrder($id)
@@ -69,27 +56,13 @@ class TransaksiController extends Controller
         $order = Transaksi::with('detail_transaksi')->find($id);
         // $bb = Transaksi::with('detail_transaksi.produk.resep.bahanbaku')->find($id);
 
-
         if (!$order) {
             return response()->json(['message' => 'Transaksi tidak ditemukan'], 404);
         }
 
         // Memastikan pesanan belum diterima sebelumnya
-        if ($order->status === 'diterima') {
-            return response()->json(['message' => 'Transksi sudah diterima'], 400);
-        }
-
-        // Mengubah status pesanan menjadi 'accepted'
-        $order->status = 'diterima';
-        $order->save();
-
-        // Menyimpan poin pelanggan jika pesanan diterima
-        $customer = Customer::find($order->id_customer);
-        if ($customer) {
-
-            $poinEarned = 10;
-            $customer->jumlah_poin += $poinEarned;
-            $customer->save();
+        if ($order->status === 'process') {
+            return response()->json(['message' => 'Transksi sudah diproses'], 400);
         }
 
         // Mengurangi stok bahan baku
@@ -120,12 +93,24 @@ class TransaksiController extends Controller
                 }
             }
         }
-
-
         if (!$bahanBakuKurang == []) {
             return response()->json(['bahan baku yang kurang' => $bahanBakuKurang]);
         }
 
-        return response()->json(['message' => 'Transaksi diterima dan poin pelanggan ditambahkan']);
+        // Mengubah status pesanan menjadi 'accepted'
+        $order->status = 'process';
+        $order->save();
+
+        // Menyimpan poin pelanggan jika pesanan diterima
+        $customer = Customer::find($order->id_customer);
+        if ($customer) {
+
+            $poinEarned = 10;
+            $customer->jumlah_poin += $poinEarned;
+            $customer->save();
+        }
+
+        return redirect('/manager/list_pesanan');
+        // return response()->json(['message' => 'Transaksi diterima dan poin pelanggan ditambahkan']);
     }
 }
