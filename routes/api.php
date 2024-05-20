@@ -4,6 +4,8 @@ use App\Http\Controllers\Api\CustomerController;
 use App\Http\Controllers\Api\KaryawanController;
 use App\Http\Controllers\Api\SessionController;
 use App\Http\Controllers\Api\AbsensiController;
+use App\Http\Controllers\manager\TransaksiController;
+use App\Http\Controllers\user\TransaksiCustomerController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -38,7 +40,7 @@ Route::group(
 
         //karyawan
         Route::get('karyawan', [KaryawanController::class, 'index']);
-       
+
         Route::get('karyawan/{id}', [KaryawanController::class, 'show']);
         Route::put('karyawan/{id}', [KaryawanController::class, 'update']);
         Route::delete('karyawan/{id} ', [KaryawanController::class, 'destroy']);
@@ -46,5 +48,12 @@ Route::group(
         //Absensi
         Route::get('absensi', [AbsensiController::class, 'index']);
         Route::post('absensi/store', [AbsensiController::class, 'store']);
+
+        //Transaksi
+        Route::post('/customer/daftarPesanan', [TransaksiCustomerController::class, 'daftarPesanan']);
     }
 );
+
+
+Route::post('orders/reject/{id}', [TransaksiController::class, 'rejectOrder']);
+Route::post('orders/accept/{id}', [TransaksiController::class, 'acceptOrder']);

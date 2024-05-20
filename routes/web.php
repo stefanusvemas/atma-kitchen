@@ -33,6 +33,7 @@ use App\Http\Controllers\owner\ProfileController as OwnerProfileController;
 use App\Http\Controllers\user\CartController;
 use App\Http\Controllers\user\CheckoutController;
 use App\Http\Controllers\DetailProdukController;
+use App\Http\Controllers\manager\TransaksiController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -196,3 +197,9 @@ Route::post('/inputEmail/verifyResetPassword/{pass_key}', [CustomerController::c
 
 // Route::get('/resetPassword', [CustomerController::class, 'resetPassword']);
 // Route::post('/resetPassword', [CustomerController::class, 'resetPasswordAction']);
+
+
+Route::get('/listOrders', [TransaksiController::class, 'listOrdersToConfirm']);
+
+//customer 
+

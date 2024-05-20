@@ -20,10 +20,16 @@ class Customer extends Model
         'tanggal_lahir',
         'jumlah_poin',
         'no_telp',
+        'saldo'
     ];
 
     public function user_credential()
     {
         return $this->hasOne(user_credential::class, 'id_customer', 'id_customer');
+    }
+
+    public function transaksi()
+    {
+        return $this->hasMany(Transaksi::class, 'id_customer', 'id_customer');
     }
 }
