@@ -10,7 +10,7 @@
         <div class="card mb-3 p-3">
             <div class="row justify-content-between">
                 <div class="col-md-auto col-4">
-                    <img src="https://masterytricks.com/wp-content/uploads/2024/02/Naked-Cake-Recipe-Card.jpg" class="img-fluid rounded" width="180px" alt="..." style="aspect-ratio:1/1; object-fit: cover;">
+                    <img src="{{asset($produk['produk']['gambar'])}}" class="img-fluid rounded" width="180px" alt="..." style="aspect-ratio:1/1; object-fit: cover;">
                 </div>
                 <div class="col">
                     <h4 class="card-title"><strong>{{$produk['produk']['nama']}}</strong></h4>
@@ -31,17 +31,20 @@
 
         <div class="row mt-4 justify-content-center justify-content-sm-between">
             <div class="col-md-6">
-                <form action="#" method="post">
+                <form action="{{url('checkout/poin')}}" method="post">
                     @csrf
                     <div class="form-group">
-
-                        <h5 class="mt-4">Select Payment Method</h5>
-                        <select class="form-control" id="paymentSelect" name="payment">
-                            <option value="self_pickup">Bank Transfer</option>
-                            <option value="grab">QRIS</option>
-                            <option value="gojek">Dana</option>
-                        </select>
-                        <button type="submit" class="btn btn-primary mt-2"><i class="fa-regular fa-floppy-disk"></i></button>
+                        <h4>Poin</h4>
+                        <p>Anda memiliki {{$user_data['jumlah_poin']}} poin, apakah anda ingin menggunakannya?</p>
+                        <div class="form-check">
+                            @if ($transaksi['poin'] > 0)
+                            <input type="checkbox" class="form-check-input" id="exampleCheck1" name="poin" value="true" checked>
+                            @else
+                            <input type="checkbox" class="form-check-input" id="exampleCheck1" name="poin" value="true">
+                            @endif
+                            <label class="form-check-label" for="exampleCheck1">Gunakan Poin</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
                     </div>
                 </form>
             </div>
@@ -52,7 +55,10 @@
                 <h5>Order Summary</h5>
                 <p>Total Items Price: Rp. {{number_format($total_item_price,2,",",".")}}</p>
                 <p>Shipping Fee: Rp. {{number_format($ongkir,2,",",".")}}</p>
-                <p>Taxes (11% PPN): {{number_format($taxes,2,",",".")}}</p>
+                <p>Taxes (11% PPN): Rp. {{number_format($taxes,2,",",".")}}</p>
+                @if ($transaksi['poin'] > 0)
+                <p>Potongan {{$transaksi['poin']/100}} poin: Rp. {{number_format($transaksi['poin'],2,",",".")}}</p>
+                @endif
                 <hr>
                 <div class="text-center">
                     <h5>Grand Total</h5>

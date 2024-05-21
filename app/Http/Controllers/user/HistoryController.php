@@ -14,7 +14,7 @@ class HistoryController extends Controller
     public function index()
     {
         $user_data = Customer::where('id_customer', Auth::user()->id_customer)->first()->load('user_credential');
-        $orders = Transaksi::where('id_customer', Auth::user()->id_customer)->with('detail_transaksi', 'detail_transaksi.produk')->get()->sortByDesc('id_transaksi');
+        $orders = Transaksi::where('id_customer', Auth::user()->id_customer)->with('detail_transaksi', 'detail_transaksi.produk')->where('id_pembayaran', '!=', null)->get()->sortByDesc('id_transaksi');
         // return $orders;
         $transaksi = Transaksi::where('id_customer', Auth::user()->id_customer)->whereNull('id_pembayaran')->first();
 

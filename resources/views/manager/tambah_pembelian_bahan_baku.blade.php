@@ -10,7 +10,7 @@
                     <li class="breadcrumb-item active" aria-current="page">Tambah</li>
                 </ol>
             </nav>
-            <h4>Tambah Penitip</h4>
+            <h4>Tambah Bahan Baku</h4>
             @if(session('error'))
             <div class="alert alert-danger" role="alert">
                 {{session('error')->first()}}

@@ -23,7 +23,8 @@ class Transaksi extends Model
         'tgl_transaksi',
         'total_harga',
         'foto_bukti',
-        'tgl_ambil'
+        'tgl_ambil',
+        'poin'
     ];
 
     public function customer()
@@ -40,11 +41,6 @@ class Transaksi extends Model
     {
         return $this->hasMany(DetailTransaksi::class, 'id_transaksi', 'id_transaksi');
     }
-
-    //     public function pembayaran()
-    //     {
-    //         return $this->belongsTo(Pembayaran::class, 'id_pembayaran', 'id_pembayaran');
-    //     }
 
     public function pembayaran()
     {

@@ -28,6 +28,6 @@ class Resep extends Model
 
     public function bahanbaku()
     {
-        return $this->belongsTo(BahanBaku::class, 'id_bahan_baku');
+        return $this->hasMany(BahanBaku::class, 'id_bahan_baku', 'id_bahan_baku');
     }
 }

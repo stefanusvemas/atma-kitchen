@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Transaksi;
 
 class Pembayaran extends Model
 {
@@ -17,10 +18,19 @@ class Pembayaran extends Model
         'jumlah_pembayaran',
         'jenis_pembayaran',
         'verifikasi_pembayaran',
+        'tgl_konfirmasi',
+    ];
+
+    protected $casts = [
+        'verifikasi_pembayaran' => 'boolean',
+    ];
+
+    protected $dates = [
+        'tgl_konfirmasi',
     ];
 
     public function transaksi()
     {
-        return $this->hasMany(Transaksi::class, 'id_pembayaran', 'id_pembayaran');
+        return $this->belongsTo(Transaksi::class, 'id_transaksi', 'id_transaksi');
     }
 }
