@@ -20,9 +20,11 @@ class DetailProdukController extends Controller
             $transaksi = Transaksi::where('id_customer', Auth::user()->id_customer)->whereNull('id_pembayaran')->first();
 
             if ($transaksi == null) {
-                $transaksi = 0;
+                $cart_count = 0;
+            } else {
+                $cart_count = DetailTransaksi::where('id_transaksi', $transaksi->id_transaksi)->sum('jumlah');
             }
-            $cart_count = DetailTransaksi::where('id_transaksi', $transaksi->id_transaksi)->sum('jumlah');
+
             return view('product_detail', compact('user_data', 'produk', 'produk_lain', 'cart_count'));
         }
         $produk = Produk::where('id_produk', $id)->first();
