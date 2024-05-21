@@ -31,13 +31,13 @@ class CheckoutController extends Controller
         }
 
         $alamat = Pengiriman::where('id_transaksi', $transaksi->id_transaksi)->first();
-        if ($alamat == null) {
-            session()->flash('error', 'Please fill in the delivery address');
-            return redirect('/');
-        }
 
-        $pengiriman = Pengiriman::where('id_transaksi', $transaksi->id_transaksi)->first()->load('alamat');
-        $ongkir = $pengiriman['alamat']['jarak'] * 2000;
+        if ($alamat != null) {
+            $pengiriman = Pengiriman::where('id_transaksi', $transaksi->id_transaksi)->first()->load('alamat');
+            $ongkir = $pengiriman['alamat']['jarak'] * 2000;
+        } else {
+            $ongkir = 0;
+        }
         // return $user_data;
 
         $total_item_price = 0;
@@ -83,8 +83,14 @@ class CheckoutController extends Controller
             $transaksi = 0;
         }
 
-        $pengiriman = Pengiriman::where('id_transaksi', $transaksi->id_transaksi)->first()->load('alamat');
-        $ongkir = $pengiriman['alamat']['jarak'] * 2000;
+        $alamat = Pengiriman::where('id_transaksi', $transaksi->id_transaksi)->first();
+
+        if ($alamat == null) {
+            $ongkir = 0;
+        } else {
+            $pengiriman = Pengiriman::where('id_transaksi', $transaksi->id_transaksi)->first()->load('alamat');
+            $ongkir = $pengiriman['alamat']['jarak'] * 2000;
+        }
 
         $user_data = Customer::where('id_customer', Auth::user()->id_customer)->first();
         $cart_count = DetailTransaksi::where('id_transaksi', $transaksi->id_transaksi)->sum('jumlah');

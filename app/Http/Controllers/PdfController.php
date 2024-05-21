@@ -44,7 +44,14 @@ class PdfController extends Controller
 
         $data = NotaPemesanan::where('id_transaksi', $id)->first()->load('transaksi', 'transaksi.pembayaran', 'transaksi.customer');
         // return $data;
-        $pengiriman = Pengiriman::where('id_transaksi', $data->transaksi->id_transaksi)->first()->load('alamat');
+
+        $alamat = Pengiriman::where('id_transaksi', $id)->first();
+        if ($alamat != null) {
+            $pengiriman = Pengiriman::where('id_transaksi', $data->transaksi->id_transaksi)->first()->load('alamat');
+        } else {
+            $pengiriman = null;
+        }
+
         $detail_transaksi = $data->transaksi->detail_transaksi->load('produk');
         $email = user_credential::where('id_customer', $data->transaksi->id_customer)->first()->email;
         // return $email;
