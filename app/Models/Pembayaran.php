@@ -12,7 +12,6 @@ class Pembayaran extends Model
 
     protected $primaryKey = 'id_pembayaran';
     protected $table = 'pembayaran';
-    protected $table = 'pembayaran';
     public $timestamps = false;
 
     protected $fillable = [
@@ -21,8 +20,6 @@ class Pembayaran extends Model
         'verifikasi_pembayaran',
         'tgl_konfirmasi',
     ];
-
-    public $timestamps = false;
 
     protected $casts = [
         'verifikasi_pembayaran' => 'boolean',
