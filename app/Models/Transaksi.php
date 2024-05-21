@@ -43,6 +43,6 @@ class Transaksi extends Model
 
     public function pembayaran()
     {
-        return $this->hasMany(Pembayaran::class, 'id_transaksi', 'id_transaksi');
+        return $this->belongsTo(Pembayaran::class, 'id_pembayaran', 'id_transaksi');
     }
 }

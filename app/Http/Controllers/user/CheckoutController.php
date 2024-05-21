@@ -86,8 +86,8 @@ class CheckoutController extends Controller
 
     public function pembayaranAction(Request $request)
     {
-        $transaksi = Transaksi::where('id_customer', Auth::user()->id_customer)->whereNull('id_pembayaran')->first();
-
+        $transaksi = Transaksi::where('id_customer', Auth::user()->id_customer)->whereNull('id_pembayaran')->first()->load('pembayaran');
+        // return $transaksi;
         $pembayaran = $transaksi->pembayaran;
 
         // if ($pembayaran == null) {
@@ -130,6 +130,7 @@ class CheckoutController extends Controller
         $request->foto_bukti->move(public_path('images/bukti_pembayaran'), $imageName);
 
         $transaksi->foto_bukti = $imageName;
+        $transaksi->tgl_transaksi = date('Y-m-d H:i:s');
 
         $transaksi->save();
 
