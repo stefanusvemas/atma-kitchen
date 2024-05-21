@@ -11,7 +11,9 @@ class Pembayaran extends Model
     use HasFactory;
 
     protected $primaryKey = 'id_pembayaran';
-    protected $table = 'pembayaran'; // Pastikan tabelnya benar
+    protected $table = 'pembayaran';
+    protected $table = 'pembayaran';
+    public $timestamps = false;
 
     protected $fillable = [
         'jumlah_pembayaran',
@@ -20,7 +22,7 @@ class Pembayaran extends Model
         'tgl_konfirmasi',
     ];
 
-    public $timestamps = false; // Menonaktifkan timestamps
+    public $timestamps = false;
 
     protected $casts = [
         'verifikasi_pembayaran' => 'boolean',

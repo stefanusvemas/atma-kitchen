@@ -12,7 +12,9 @@ class Transaksi extends Model
     use HasFactory;
 
     protected $primaryKey = 'id_transaksi';
-    protected $table = 'transaksi'; // Pastikan tabelnya benar
+    protected $table = 'transaksi';
+    protected $table = 'transaksi';
+    public $timestamps = false;
 
     protected $fillable = [
         'id_customer',
@@ -22,6 +24,7 @@ class Transaksi extends Model
         'tgl_transaksi',
         'total_harga',
         'foto_bukti',
+        'tgl_ambil'
     ];
 
     public $timestamps = false; // Menonaktifkan timestamps

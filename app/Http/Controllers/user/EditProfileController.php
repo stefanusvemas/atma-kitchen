@@ -7,13 +7,22 @@ use Illuminate\Http\Request;
 use App\Models\Customer;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use App\Models\Transaksi;
+use App\Models\DetailTransaksi;
 
 class EditProfileController extends Controller
 {
     public function index()
     {
         $user_data = Customer::where('id_customer', Auth::user()->id_customer)->first()->load('user_credential');
-        return view('user.edit_profile', compact('user_data'));
+        $transaksi = Transaksi::where('id_customer', Auth::user()->id_customer)->whereNull('id_pembayaran')->first();
+
+        if ($transaksi == null) {
+            $cart_count = 0;
+        } else {
+            $cart_count = DetailTransaksi::where('id_transaksi', $transaksi->id_transaksi)->sum('jumlah');
+        }
+        return view('user.edit_profile', compact('user_data', 'cart_count'));
     }
 
     public function editAction(Request $request)

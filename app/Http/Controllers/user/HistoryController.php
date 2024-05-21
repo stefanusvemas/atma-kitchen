@@ -16,8 +16,14 @@ class HistoryController extends Controller
         $user_data = Customer::where('id_customer', Auth::user()->id_customer)->first()->load('user_credential');
         $orders = Transaksi::where('id_customer', Auth::user()->id_customer)->with('detail_transaksi', 'detail_transaksi.produk')->get()->sortByDesc('id_transaksi');
         // return $orders;
+        $transaksi = Transaksi::where('id_customer', Auth::user()->id_customer)->whereNull('id_pembayaran')->first();
 
-        return view('user.orders_history', compact('user_data', 'orders'));
+        if ($transaksi == null) {
+            $cart_count = 0;
+        } else {
+            $cart_count = DetailTransaksi::where('id_transaksi', $transaksi->id_transaksi)->sum('jumlah');
+        }
+        return view('user.orders_history', compact('user_data', 'orders', 'cart_count'));
     }
 
     public function search(Request $request)
