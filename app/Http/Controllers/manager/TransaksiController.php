@@ -105,14 +105,18 @@ class TransaksiController extends Controller
         $customer = Customer::find($order->id_customer);
         if ($customer) {
             $total_harga = $order->total_harga;
+            $poinEarned = 0;
+
             if ($total_harga > 500000) {
                 $poinEarned = 50;
-            } elseif ($total_harga > 200000) {
+            }
+
+            if ($total_harga > 200000) {
                 $poinEarned = 30;
-            } elseif ($total_harga > 13000) {
+            }
+
+            if ($total_harga > 13000) {
                 $poinEarned = 1;
-            } else {
-                $poinEarned = 0;
             }
 
             $customer->jumlah_poin += $poinEarned;
