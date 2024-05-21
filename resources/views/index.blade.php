@@ -41,7 +41,7 @@
                                     <div class="dropdown-divider"></div>
                                     <li><a class="dropdown-item" href="{{url('/user/profile')}}">Profile</a></li>
                                     <li><a class="dropdown-item" href="{{url('/user/orders_history')}}">Orders History</a></li>
-                                    <li><a class="dropdown-item disabled" href="#">Address</a></li>
+                                    <li><a class="dropdown-item" href="{{url('/user/address')}}">Address</a></li>
                                     <li><a class="dropdown-item" href="{{url('/logout')}}">Logout</a></li>
                                 </ul>
                             </div>

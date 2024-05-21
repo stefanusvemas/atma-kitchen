@@ -12,7 +12,7 @@ class Transaksi extends Model
     use HasFactory;
 
     protected $primaryKey = 'id_transaksi';
-    protected $table = 'transaksi';
+    protected $table = 'transaksi'; // Pastikan tabelnya benar
 
     protected $fillable = [
         'id_customer',
@@ -21,8 +21,10 @@ class Transaksi extends Model
         'status',
         'tgl_transaksi',
         'total_harga',
-        'foto_bukti'
+        'foto_bukti',
     ];
+
+    public $timestamps = false; // Menonaktifkan timestamps
 
     public function customer()
     {
@@ -39,8 +41,8 @@ class Transaksi extends Model
         return $this->hasMany(DetailTransaksi::class, 'id_transaksi', 'id_transaksi');
     }
 
-    //     public function pembayaran()
-    //     {
-    //         return $this->belongsTo(Pembayaran::class, 'id_pembayaran', 'id_pembayaran');
-    //     }
+    public function pembayaran()
+    {
+        return $this->hasMany(Pembayaran::class, 'id_transaksi', 'id_transaksi');
+    }  
 }
