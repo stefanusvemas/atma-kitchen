@@ -13,6 +13,7 @@ class Transaksi extends Model
 
     protected $primaryKey = 'id_transaksi';
     protected $table = 'transaksi';
+    protected $table = 'transaksi';
     public $timestamps = false;
 
     protected $fillable = [
@@ -25,6 +26,8 @@ class Transaksi extends Model
         'foto_bukti',
         'tgl_ambil'
     ];
+
+    public $timestamps = false; // Menonaktifkan timestamps
 
     public function customer()
     {
@@ -41,13 +44,8 @@ class Transaksi extends Model
         return $this->hasMany(DetailTransaksi::class, 'id_transaksi', 'id_transaksi');
     }
 
-    //     public function pembayaran()
-    //     {
-    //         return $this->belongsTo(Pembayaran::class, 'id_pembayaran', 'id_pembayaran');
-    //     }
-
     public function pembayaran()
     {
-        return $this->belongsTo(Pembayaran::class, 'id_pembayaran', 'id_pembayaran');
-    }
+        return $this->hasMany(Pembayaran::class, 'id_transaksi', 'id_transaksi');
+    }  
 }

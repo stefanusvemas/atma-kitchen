@@ -26,6 +26,9 @@ use App\Http\Controllers\manager\ProfileController as ManagerProfileController;
 use App\Http\Controllers\user\EditProfileController as UserEditProfileController;
 use App\Http\Controllers\user\HistoryController;
 use App\Http\Controllers\user\ProfileController as UserProfileController;
+use App\Http\Controllers\user\AddressController;
+use App\Http\Controllers\admin\AddressDistanceController;
+use App\Http\Controllers\admin\KonfirmasiPembayaranController;
 
 use App\Http\Controllers\owner\DashboardController as OwnerDashboardController;
 use App\Http\Controllers\owner\KaryawanController as OwnerKaryawanController;
@@ -51,6 +54,15 @@ Route::post('loginAction', [LoginController::class, 'loginAction'])->name('login
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin', [DashboardController::class, 'index'])->name('admin');
+    
+    Route::get('/admin/address', [AddressDistanceController::class, 'index']);
+    Route::post('/admin/address/input-distance/{id}', [AddressDistanceController::class, 'inputDistance']);
+    Route::put('/admin/address/update-distance/{id}', [AddressDistanceController::class, 'updateDistance']);
+
+    Route::get('/admin/konfirmasi-pembayaran', [KonfirmasiPembayaranController::class, 'index']);
+    Route::post('/admin/konfirmasi-pembayaran/confirm', [KonfirmasiPembayaranController::class, 'confirmPayment']);
+
+    Route::get('/admin/address', [AddressDistanceController::class, 'index']);
 
     Route::get('/logout', function () {
         Auth::logout();
@@ -167,6 +179,12 @@ Route::middleware(['auth', 'user'])->group(function () {
     Route::get('/cart', [CartController::class, 'index']);
 
     Route::get('/checkout', [CheckoutController::class, 'index']);
+    Route::get('/user/address', [AddressController::class, 'index']);
+    Route::get('/user/address/input', [AddressController::class, 'create']); // New route for input address
+    Route::post('/user/address/input', [AddressController::class, 'store']);
+    Route::get('/user/address/delete/{id}', [AddressController::class, 'delete']);
+    Route::get('/user/address/edit/{id}', [AddressController::class, 'edit']);
+    Route::post('/user/address/update/{id}', [AddressController::class, 'update']);
     Route::post('/checkout/pengiriman', [CheckoutController::class, 'pengirimanAction']);
 
     Route::get('/actionAddCart/{id}', [CartController::class, 'addAction']);
