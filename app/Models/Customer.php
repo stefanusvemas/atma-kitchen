@@ -32,4 +32,8 @@ class Customer extends Model
     {
         return $this->hasMany(Transaksi::class, 'id_customer', 'id_customer');
     }
+    public function addresses()
+    {
+        return $this->hasMany(Address::class, 'id_customer', 'id_customer');
+    }  
 }

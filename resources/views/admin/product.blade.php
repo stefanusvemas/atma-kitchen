@@ -32,6 +32,7 @@
                 <thead>
                     <tr>
                         <th scope="col">Nama</th>
+                        <th scope="col">Gambar</th>
                         <th scope="col">Stok</th>
                         <th scope="col">Kuota Produksi</th>
                         <th scope="col">Harga</th>
@@ -46,6 +47,7 @@
                         @else
                         <td scope="row">{{$item['nama']}}</td>
                         @endif
+                        <td><img src="{{asset($item['gambar'])}}" alt="" style="width: 100px;"></td>
                         <td>{{$item['stok']}}</td>
                         <td>{{$item['kuota_produksi']}}</td>
                         <td>Rp. {{number_format($item['harga'],2,",",".")}}</td>

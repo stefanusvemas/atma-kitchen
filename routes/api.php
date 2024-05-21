@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\SessionController;
 use App\Http\Controllers\Api\AbsensiController;
 use App\Http\Controllers\manager\TransaksiController;
 use App\Http\Controllers\user\TransaksiCustomerController;
+use App\Http\Controllers\Api\ProdukController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -13,6 +14,7 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
+Route::get('produk', [ProdukController::class, 'index']);
 
 
 //Customer

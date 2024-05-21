@@ -26,6 +26,9 @@ use App\Http\Controllers\manager\ProfileController as ManagerProfileController;
 use App\Http\Controllers\user\EditProfileController as UserEditProfileController;
 use App\Http\Controllers\user\HistoryController;
 use App\Http\Controllers\user\ProfileController as UserProfileController;
+use App\Http\Controllers\user\AddressController;
+use App\Http\Controllers\admin\AddressDistanceController;
+use App\Http\Controllers\admin\KonfirmasiPembayaranController;
 
 use App\Http\Controllers\owner\DashboardController as OwnerDashboardController;
 use App\Http\Controllers\owner\KaryawanController as OwnerKaryawanController;
@@ -34,10 +37,11 @@ use App\Http\Controllers\user\CartController;
 use App\Http\Controllers\user\CheckoutController;
 use App\Http\Controllers\DetailProdukController;
 use App\Http\Controllers\manager\TransaksiController;
+use App\Http\Controllers\PdfController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/detail_product', [DetailProdukController::class, 'index']);
+Route::get('/detail_product/{id}', [DetailProdukController::class, 'index']);
 
 
 
@@ -51,6 +55,15 @@ Route::post('loginAction', [LoginController::class, 'loginAction'])->name('login
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin', [DashboardController::class, 'index'])->name('admin');
+    
+    Route::get('/admin/address', [AddressDistanceController::class, 'index']);
+    Route::post('/admin/address/input-distance/{id}', [AddressDistanceController::class, 'inputDistance']);
+    Route::put('/admin/address/update-distance/{id}', [AddressDistanceController::class, 'updateDistance']);
+
+    Route::get('/admin/konfirmasi-pembayaran', [KonfirmasiPembayaranController::class, 'index']);
+    Route::post('/admin/konfirmasi-pembayaran/confirm', [KonfirmasiPembayaranController::class, 'confirmPayment']);
+
+    Route::get('/admin/address', [AddressDistanceController::class, 'index']);
 
     Route::get('/logout', function () {
         Auth::logout();
@@ -155,6 +168,12 @@ Route::middleware(['auth', 'MO'])->group(function () {
 
     Route::get('/manager/profile', [ManagerProfileController::class, 'index']);
     Route::post('/manager/profile/edit', [ManagerProfileController::class, 'edit']);
+  
+  // Route::get('/resetPassword', [CustomerController::class, 'resetPassword']);
+  Route::get('/listOrders', [TransaksiController::class, 'listOrdersToConfirm']);
+  Route::get('orders/accept/{id}', [TransaksiController::class, 'acceptOrder']);
+  Route::get('/orders/reject/{id}', [TransaksiController::class, 'rejectOrder']);
+
 });
 
 Route::middleware(['auth', 'user'])->group(function () {
@@ -170,6 +189,26 @@ Route::middleware(['auth', 'user'])->group(function () {
     Route::get('/cart', [CartController::class, 'index']);
 
     Route::get('/checkout', [CheckoutController::class, 'index']);
+    Route::get('/user/address', [AddressController::class, 'index']);
+    Route::get('/user/address/input', [AddressController::class, 'create']); // New route for input address
+    Route::post('/user/address/input', [AddressController::class, 'store']);
+    Route::get('/user/address/delete/{id}', [AddressController::class, 'delete']);
+    Route::get('/user/address/edit/{id}', [AddressController::class, 'edit']);
+    Route::post('/user/address/update/{id}', [AddressController::class, 'update']);
+    Route::post('/checkout/pengiriman', [CheckoutController::class, 'pengirimanAction']);
+
+    Route::get('/actionAddCart/{id}', [CartController::class, 'addAction']);
+    Route::get('/addToCart/{id}', [CartController::class, 'addToCart']);
+    route::get('/removeCart/{id}', [CartController::class, 'removeAction']);
+
+    route::post('/cart/update/{id}', [CartController::class, 'updateAction']);
+    route::post('/cart/updateTglAmbil', [CartController::class, 'updateTanggalAmbil']);
+
+    route::get('/invoice', [PdfController::class, 'invoice']);
+  
+  // Route::get('user/complatedPurcase', [CheckoutController::class, 'complatedPurcase']);
+  Route::post('/user/pembayaranAction', [CheckoutController::class, 'pembayaranAction']);
+  Route::get('/user/pembayaran', [CheckoutController::class, 'pembayaran']);
 });
 
 Route::get('/logout', function () {
@@ -198,12 +237,6 @@ Route::get('/inputEmail/verifyResetPassword/{pass_key}', [CustomerController::cl
 Route::post('/inputEmail/verifyResetPassword/{pass_key}', [CustomerController::class, 'verifyResetPasswordAction'])->name('verifyResetPasswordAction');
 
 
-// Route::get('/resetPassword', [CustomerController::class, 'resetPassword']);
-// Route::post('/resetPassword', [CustomerController::class, 'resetPasswordAction']);
 
 
-Route::get('/listOrders', [TransaksiController::class, 'listOrdersToConfirm']);
-Route::get('orders/accept/{id}', [TransaksiController::class, 'acceptOrder']);
-Route::get('/orders/reject/{id}', [TransaksiController::class, 'rejectOrder']);
 
-//customer 

@@ -22,7 +22,7 @@
                 @csrf
                 <div class="mb-2">
                     <label for="nama" class="form-label">Nama</label>
-                    <input type="text" class="form-control" id="nama" name="nama" value="{{ $produk['nama']}}">
+                    <input type="text" class="form-control" id="nama" name="nama" value="{{ $produk['nama']}}" required>
                 </div>
                 <div class="mb-2">
                     <label for="gambar" class="form-label">Gambar</label>
@@ -45,11 +45,11 @@
 
                 <div class="mb-2">
                     <label for="stok" class="form-label">Stok</label>
-                    <input type="number" class="form-control" id="stok" min="0" name="stok" value="{{ $produk['stok']}}">
+                    <input type="number" class="form-control" id="stok" min="0" name="stok" value="{{ $produk['stok']}}" required>
                 </div>
                 <div class="mb-2">
                     <label for="kuota_produksi" class="form-label">Kuota Produksi</label>
-                    <input type="number" class="form-control" id="kuota_produksi" min="0" name="kuota_produksi" value="{{ $produk['kuota_produksi']}}">
+                    <input type="number" class="form-control" id="kuota_produksi" min="0" name="kuota_produksi" value="{{ $produk['kuota_produksi']}}" required>
                 </div>
                 <div class="mb-2">
                     <label for="deskripsi" class="form-label">Deskripsi</label>
@@ -57,7 +57,7 @@
                 </div>
                 <div class="mb-2">
                     <label for="harga" class="form-label">Harga</label>
-                    <input type="number" class="form-control" id="harga" min="0" name="harga" value="{{ $produk['harga']}}">
+                    <input type="number" class="form-control" id="harga" min="0" name="harga" value="{{ $produk['harga']}}" required>
                 </div>
                 <button type=" submit" class="btn btn-primary">Submit</button>
             </form>
