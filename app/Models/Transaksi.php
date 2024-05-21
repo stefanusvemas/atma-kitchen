@@ -45,4 +45,9 @@ class Transaksi extends Model
     //     {
     //         return $this->belongsTo(Pembayaran::class, 'id_pembayaran', 'id_pembayaran');
     //     }
+
+    public function pembayaran()
+    {
+        return $this->belongsTo(Pembayaran::class, 'id_pembayaran', 'id_pembayaran');
+    }
 }
