@@ -98,7 +98,7 @@ class TransaksiController extends Controller
         }
 
         // Mengubah status pesanan menjadi 'accepted'
-        $order->status = 'process';
+        $order->status = 'completed';
         $order->save();
 
         // Menyimpan poin pelanggan jika pesanan diterima

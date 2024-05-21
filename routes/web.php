@@ -55,7 +55,7 @@ Route::post('loginAction', [LoginController::class, 'loginAction'])->name('login
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin', [DashboardController::class, 'index'])->name('admin');
-    
+
     Route::get('/admin/address', [AddressDistanceController::class, 'index']);
     Route::post('/admin/address/input-distance/{id}', [AddressDistanceController::class, 'inputDistance']);
     Route::put('/admin/address/update-distance/{id}', [AddressDistanceController::class, 'updateDistance']);
@@ -168,12 +168,11 @@ Route::middleware(['auth', 'MO'])->group(function () {
 
     Route::get('/manager/profile', [ManagerProfileController::class, 'index']);
     Route::post('/manager/profile/edit', [ManagerProfileController::class, 'edit']);
-  
-  // Route::get('/resetPassword', [CustomerController::class, 'resetPassword']);
-  Route::get('/listOrders', [TransaksiController::class, 'listOrdersToConfirm']);
-  Route::get('orders/accept/{id}', [TransaksiController::class, 'acceptOrder']);
-  Route::get('/orders/reject/{id}', [TransaksiController::class, 'rejectOrder']);
 
+    // Route::get('/resetPassword', [CustomerController::class, 'resetPassword']);
+    Route::get('/listOrders', [TransaksiController::class, 'listOrdersToConfirm']);
+    Route::get('orders/accept/{id}', [TransaksiController::class, 'acceptOrder']);
+    Route::get('/orders/reject/{id}', [TransaksiController::class, 'rejectOrder']);
 });
 
 Route::middleware(['auth', 'user'])->group(function () {
@@ -196,6 +195,7 @@ Route::middleware(['auth', 'user'])->group(function () {
     Route::get('/user/address/edit/{id}', [AddressController::class, 'edit']);
     Route::post('/user/address/update/{id}', [AddressController::class, 'update']);
     Route::post('/checkout/pengiriman', [CheckoutController::class, 'pengirimanAction']);
+    route::post('/checkout/poin', [CheckoutController::class, 'poinAction']);
 
     Route::get('/actionAddCart/{id}', [CartController::class, 'addAction']);
     Route::get('/addToCart/{id}', [CartController::class, 'addToCart']);
@@ -205,10 +205,10 @@ Route::middleware(['auth', 'user'])->group(function () {
     route::post('/cart/updateTglAmbil', [CartController::class, 'updateTanggalAmbil']);
 
     route::get('/invoice', [PdfController::class, 'invoice']);
-  
-  // Route::get('user/complatedPurcase', [CheckoutController::class, 'complatedPurcase']);
-  Route::post('/user/pembayaranAction', [CheckoutController::class, 'pembayaranAction']);
-  Route::get('/user/pembayaran', [CheckoutController::class, 'pembayaran']);
+
+    // Route::get('user/complatedPurcase', [CheckoutController::class, 'complatedPurcase']);
+    Route::post('/user/pembayaranAction', [CheckoutController::class, 'pembayaranAction']);
+    Route::get('/user/pembayaran', [CheckoutController::class, 'pembayaran']);
 });
 
 Route::get('/logout', function () {
@@ -235,8 +235,3 @@ Route::get('/forgot_password', [CustomerController::class, 'resetPassword']);
 Route::post('/inputEmail', [CustomerController::class, 'resetPasswordAction']);
 Route::get('/inputEmail/verifyResetPassword/{pass_key}', [CustomerController::class, 'verifyResetPassword'])->name('verifyResetPassword');
 Route::post('/inputEmail/verifyResetPassword/{pass_key}', [CustomerController::class, 'verifyResetPasswordAction'])->name('verifyResetPasswordAction');
-
-
-
-
-

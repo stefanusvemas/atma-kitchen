@@ -23,7 +23,8 @@ class Transaksi extends Model
         'tgl_transaksi',
         'total_harga',
         'foto_bukti',
-        'tgl_ambil'
+        'tgl_ambil',
+        'poin'
     ];
 
     public function customer()

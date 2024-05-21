@@ -9,6 +9,8 @@ use App\Models\Customer;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Session;
+use App\Models\Transaksi;
+use App\Models\DetailTransaksi;
 
 class AddressController extends Controller
 {
@@ -16,15 +18,28 @@ class AddressController extends Controller
     {
         $user_id = Auth::user()->id_customer;
         $user_data = Customer::where('id_customer', $user_id)->first();
+        $transaksi = Transaksi::where('id_customer', $user_id)->whereNull('id_pembayaran')->first();
         $addresses = Address::where('id_customer', $user_id)->get();
-        return view('user.address_list', compact('user_data', 'addresses'));
+        if ($transaksi == null) {
+            $cart_count = 0;
+        } else {
+            $cart_count = DetailTransaksi::where('id_transaksi', $transaksi->id_transaksi)->sum('jumlah');
+        }
+        return view('user.address_list', compact('user_data', 'addresses', 'cart_count'));
     }
 
     public function create()
     {
         $user_id = Auth::user()->id_customer;
         $user_data = Customer::where('id_customer', $user_id)->first();
-        return view('user.address_input', compact('user_data'));
+        $transaksi = Transaksi::where('id_customer', Auth::user()->id_customer)->whereNull('id_pembayaran')->first();
+
+        if ($transaksi == null) {
+            $cart_count = 0;
+        } else {
+            $cart_count = DetailTransaksi::where('id_transaksi', $transaksi->id_transaksi)->sum('jumlah');
+        }
+        return view('user.address_input', compact('user_data', 'cart_count'));
     }
 
     public function store(Request $request)
@@ -56,6 +71,13 @@ class AddressController extends Controller
     {
         $address = Address::findOrFail($id);
         $user_id = Auth::user()->id_customer;
+        $transaksi = Transaksi::where('id_customer', Auth::user()->id_customer)->whereNull('id_pembayaran')->first();
+
+        if ($transaksi == null) {
+            $cart_count = 0;
+        } else {
+            $cart_count = DetailTransaksi::where('id_transaksi', $transaksi->id_transaksi)->sum('jumlah');
+        }
 
         if ($address->id_customer != $user_id) {
             return redirect('/user/address')->with('error', 'Unauthorized action');
@@ -63,7 +85,7 @@ class AddressController extends Controller
 
         $user_data = Customer::where('id_customer', $user_id)->first();
 
-        return view('user.address_edit', compact('address', 'user_data'));
+        return view('user.address_edit', compact('address', 'user_data', 'cart_count'));
     }
 
     public function update(Request $request, $id)
@@ -109,4 +131,3 @@ class AddressController extends Controller
         return redirect('/user/address');
     }
 }
-
