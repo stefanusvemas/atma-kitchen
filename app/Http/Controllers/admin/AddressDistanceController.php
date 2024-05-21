@@ -24,7 +24,7 @@ class AddressDistanceController extends Controller
             ->get();
 
         // Define the shipping rate (for example, 1000 per kilometer)
-        $shipping_rate = 1000;
+        $shipping_rate = 2000;
 
         return view('admin.address_distance', compact('addresses', 'orders', 'user_data', 'shipping_rate'));
     }
