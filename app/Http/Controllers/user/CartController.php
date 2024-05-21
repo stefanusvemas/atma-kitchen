@@ -42,7 +42,7 @@ class CartController extends Controller
             $jumlahTotal[$productId] = 0; // Initialize total jumlah for each product
 
             foreach ($details as $detail) {
-                if ($detail['id_transaksi'] != $currentTransactionId) {
+                if ($detail['id_transaksi'] != $currentTransactionId && $detail['transaksi']['id_pembayaran'] != null) {
                     $jumlahTotal[$productId] += $detail['jumlah']; // Sum jumlah for each detail, excluding the current transaction
                 }
             }

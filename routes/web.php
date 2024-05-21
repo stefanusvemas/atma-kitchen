@@ -33,6 +33,7 @@ use App\Http\Controllers\owner\ProfileController as OwnerProfileController;
 use App\Http\Controllers\user\CartController;
 use App\Http\Controllers\user\CheckoutController;
 use App\Http\Controllers\DetailProdukController;
+use App\Http\Controllers\PdfController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -173,6 +174,8 @@ Route::middleware(['auth', 'user'])->group(function () {
 
     route::post('/cart/update/{id}', [CartController::class, 'updateAction']);
     route::post('/cart/updateTglAmbil', [CartController::class, 'updateTanggalAmbil']);
+
+    route::get('/invoice', [PdfController::class, 'invoice']);
 });
 
 Route::get('/logout', function () {
