@@ -46,6 +46,7 @@
                         <a href="{{url('/manager/bahan_baku')}}" class="list-group-item list-group-item-action {{ Request::is('manager/bahan_baku') ? 'active' : '' }}">Bahan Baku</a>
                         <a href="{{url('/manager/pembelian_bahan_baku')}}" class="list-group-item list-group-item-action {{ Request::is('manager/pembelian_bahan_baku') ? 'active' : '' }}">Pembelian Bahan Baku</a>
                         <a href="{{url('/manager/pengeluaran_lain')}}" class="list-group-item list-group-item-action {{ Request::is('manager/pengeluaran_lain') ? 'active' : '' }}">Pengeluaran Lain</a>
+                        <a href="{{url('/manager/list_pesanan')}}" class="list-group-item list-group-item-action {{ Request::is('manager/list_pesanan') ? 'active' : '' }}">List Pesanan</a>
                     </div>
                 </div>
             </nav>

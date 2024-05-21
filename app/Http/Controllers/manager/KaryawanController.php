@@ -20,8 +20,6 @@ class KaryawanController extends Controller
         $karyawan = Karyawan::whereHas('jabatan', function ($query) {
             $query->where('id_jabatan', '<>', 1);
         })->with('jabatan')->get();
-        // return $karyawan;
-
         return view('manager.karyawan', compact('user_data', 'karyawan'));
     }
 

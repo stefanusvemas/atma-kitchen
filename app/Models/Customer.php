@@ -20,6 +20,7 @@ class Customer extends Model
         'tanggal_lahir',
         'jumlah_poin',
         'no_telp',
+        'saldo'
     ];
 
     public function user_credential()
@@ -27,6 +28,10 @@ class Customer extends Model
         return $this->hasOne(user_credential::class, 'id_customer', 'id_customer');
     }
 
+    public function transaksi()
+    {
+        return $this->hasMany(Transaksi::class, 'id_customer', 'id_customer');
+    }
     public function addresses()
     {
         return $this->hasMany(Address::class, 'id_customer', 'id_customer');

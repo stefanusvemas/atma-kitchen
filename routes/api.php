@@ -4,6 +4,8 @@ use App\Http\Controllers\Api\CustomerController;
 use App\Http\Controllers\Api\KaryawanController;
 use App\Http\Controllers\Api\SessionController;
 use App\Http\Controllers\Api\AbsensiController;
+use App\Http\Controllers\manager\TransaksiController;
+use App\Http\Controllers\user\TransaksiCustomerController;
 use App\Http\Controllers\Api\ProdukController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -48,5 +50,12 @@ Route::group(
         //Absensi
         Route::get('absensi', [AbsensiController::class, 'index']);
         Route::post('absensi/store', [AbsensiController::class, 'store']);
+
+        //Transaksi
+        Route::post('/customer/daftarPesanan', [TransaksiCustomerController::class, 'daftarPesanan']);
     }
 );
+
+
+
+
