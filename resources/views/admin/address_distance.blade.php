@@ -74,7 +74,7 @@
                                     </td>
                                     <td rowspan="{{ $order->detail_transaksi->count() }}">
                                         @php
-                                            $total_price = $order->total_harga + $shipping_cost;
+                                            $total_price = $order->total_harga;
                                         @endphp
                                         {{ $total_price }}
                                     </td>
