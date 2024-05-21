@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Customer;
 use Illuminate\Support\Facades\Auth;
 use App\Models\DetailTransaksi;
+use App\Models\Pengiriman;
 use App\Models\Transaksi;
 
 class CheckoutController extends Controller
@@ -33,6 +34,18 @@ class CheckoutController extends Controller
         $subtotal = $total_item_price + $taxes;
 
         return view('checkout', compact('user_data', 'cart_count', 'produk', 'total_item_price', 'taxes', 'subtotal'));
+    }
+
+    public function pengirimanAction(Request $request)
+    {
+        $transaksi = Transaksi::where('id_customer', Auth::user()->id_customer)->whereNull('id_pembayaran')->first();
+        $pengiriman = Pengiriman::where('id_transaksi', $transaksi['id_transaksi'])->first()->load('alamat');
+        $pengiriman->update([
+            'jenis' => $request->jenis,
+            'status_pengiriman' => null
+        ]);
+
+        return redirect('user/pembayaran');
     }
 
     public function pembayaran()
