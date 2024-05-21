@@ -63,7 +63,7 @@
                     <div class="row">
                         <div class="col">
                             <label for="">Alamat</label>
-                            <select class="form-control" id="addressSelect" name="alamat">
+                            <select class="form-control" id="addressSelect" name="alamat" required>
                                 @if ($alamat_selected != null)
                                 <option value="{{$alamat_selected['id_alamat']}}" selected hidden>{{$alamat_selected['alamat']['nama_jalan']}}</option>
                                 @endif
@@ -76,6 +76,19 @@
                                 @endforelse
                             </select>
 
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label for="">Metode Pengiriman</label>
+                            <select class="form-control" id="addressSelect" name="jenis" required>
+                                @if ($alamat_selected != null)
+                                <option value="{{$alamat_selected['jenis']}}" selected hidden>{{$alamat_selected['jenis']}}</option>
+                                @endif
+                                <option value="self_pickup">Self Pickup</option>
+                                <option value="grab">Grab</option>
+                                <option value="gojek">Gojek</option>
+                            </select>
                         </div>
                     </div>
                     <div class="row">

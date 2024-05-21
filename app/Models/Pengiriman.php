@@ -20,6 +20,7 @@ class Pengiriman extends Model
         'status_pengiriman',
         'waktu_pickup',
         'foto_bukti_diterima',
+        'jenis'
     ];
 
     public function transaksi()

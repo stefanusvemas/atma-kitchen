@@ -167,6 +167,7 @@ Route::middleware(['auth', 'user'])->group(function () {
     Route::get('/cart', [CartController::class, 'index']);
 
     Route::get('/checkout', [CheckoutController::class, 'index']);
+    Route::post('/checkout/pengiriman', [CheckoutController::class, 'pengirimanAction']);
 
     Route::get('/actionAddCart/{id}', [CartController::class, 'addAction']);
     Route::get('/addToCart/{id}', [CartController::class, 'addToCart']);

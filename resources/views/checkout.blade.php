@@ -31,20 +31,17 @@
 
         <div class="row mt-4 justify-content-center justify-content-sm-between">
             <div class="col-md-6">
-                <form>
+                <form action="#" method="post">
+                    @csrf
                     <div class="form-group">
-                        <h5>Delivery Methods</h5>
-                        <select class="form-control" id="addressSelect" name="address">
-                            <option value="self_pickup">Self Pickup</option>
-                            <option value="grab">Grab</option>
-                            <option value="gojek">Gojek</option>
-                        </select>
+
                         <h5 class="mt-4">Select Payment Method</h5>
                         <select class="form-control" id="paymentSelect" name="payment">
                             <option value="self_pickup">Bank Transfer</option>
                             <option value="grab">QRIS</option>
                             <option value="gojek">Dana</option>
                         </select>
+                        <button type="submit" class="btn btn-primary mt-2"><i class="fa-regular fa-floppy-disk"></i></button>
                     </div>
                 </form>
             </div>

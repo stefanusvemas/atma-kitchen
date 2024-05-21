@@ -27,7 +27,7 @@ class CartController extends Controller
         if ($transaksi != null) {
             $alamat_selected = Pengiriman::where('id_transaksi', $transaksi['id_transaksi'])->first()->load('alamat');
         }
-
+        // return $alamat_selected;
 
         // return $alamat_selected;
 
@@ -161,16 +161,19 @@ class CartController extends Controller
     public function updateTanggalAmbil(Request $request)
     {
         $transaksi = Transaksi::where('id_customer', Auth::user()->id_customer)->whereNull('id_pembayaran')->first();
-        $pengiriman = Pengiriman::where('id_transaksi', $transaksi['id_transaksi'])->first();
+        $pengiriman = Pengiriman::where('id_transaksi', $transaksi['id_transaksi'])->first()->load('alamat');
 
         if ($pengiriman == null) {
             $pengiriman = Pengiriman::create([
                 'id_transaksi' => $transaksi->id_transaksi,
                 'id_customer' => Auth::user()->id_customer,
                 'id_alamat' => $request->alamat,
+                'jenis' => $request->jenis,
+                'status_pengiriman' => null
             ]);
         } else {
             $pengiriman->id_alamat = $request->alamat;
+            $pengiriman->jenis = $request->jenis;
             $pengiriman->save();
         }
 

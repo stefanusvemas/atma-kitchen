@@ -40,6 +40,18 @@ class CheckoutController extends Controller
         return view('checkout', compact('user_data', 'cart_count', 'produk', 'total_item_price', 'taxes', 'subtotal', 'ongkir'));
     }
 
+    public function pengirimanAction(Request $request)
+    {
+        $transaksi = Transaksi::where('id_customer', Auth::user()->id_customer)->whereNull('id_pembayaran')->first();
+        $pengiriman = Pengiriman::where('id_transaksi', $transaksi['id_transaksi'])->first()->load('alamat');
+        $pengiriman->update([
+            'jenis' => $request->jenis,
+            'status_pengiriman' => null
+        ]);
+
+        return redirect('user/pembayaran');
+    }
+
     public function pembayaran()
     {
         $transaksi = Transaksi::where('id_customer', Auth::user()->id_customer)->whereNull('id_pembayaran')->first();
