@@ -29,8 +29,8 @@
                         <div class="{{ Auth::check() ? 'd-flex' : 'd-none'}}">
                             <a class="nav-link mx-2" href="{{url('/cart')}}"><i class="fa fa-cart-shopping"></i>
                                 <span class="position-absolute top-10 start-10 translate-middle badge rounded-pill bg-danger">
-                                    2
-                                    <span class="visually-hidden">unread items</span>
+                                    {{$cart_count}}
+                                    <span class="visually-hidden">cart</span>
                                 </span>
                             </a>
                             <div class="btn-group">

@@ -36,10 +36,11 @@ use App\Http\Controllers\owner\ProfileController as OwnerProfileController;
 use App\Http\Controllers\user\CartController;
 use App\Http\Controllers\user\CheckoutController;
 use App\Http\Controllers\DetailProdukController;
+use App\Http\Controllers\PdfController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/detail_product', [DetailProdukController::class, 'index']);
+Route::get('/detail_product/{id}', [DetailProdukController::class, 'index']);
 
 
 
@@ -178,13 +179,22 @@ Route::middleware(['auth', 'user'])->group(function () {
     Route::get('/cart', [CartController::class, 'index']);
 
     Route::get('/checkout', [CheckoutController::class, 'index']);
-
     Route::get('/user/address', [AddressController::class, 'index']);
     Route::get('/user/address/input', [AddressController::class, 'create']); // New route for input address
     Route::post('/user/address/input', [AddressController::class, 'store']);
     Route::get('/user/address/delete/{id}', [AddressController::class, 'delete']);
     Route::get('/user/address/edit/{id}', [AddressController::class, 'edit']);
     Route::post('/user/address/update/{id}', [AddressController::class, 'update']);
+    Route::post('/checkout/pengiriman', [CheckoutController::class, 'pengirimanAction']);
+
+    Route::get('/actionAddCart/{id}', [CartController::class, 'addAction']);
+    Route::get('/addToCart/{id}', [CartController::class, 'addToCart']);
+    route::get('/removeCart/{id}', [CartController::class, 'removeAction']);
+
+    route::post('/cart/update/{id}', [CartController::class, 'updateAction']);
+    route::post('/cart/updateTglAmbil', [CartController::class, 'updateTanggalAmbil']);
+
+    route::get('/invoice', [PdfController::class, 'invoice']);
 });
 
 Route::get('/logout', function () {
@@ -214,4 +224,6 @@ Route::post('/inputEmail/verifyResetPassword/{pass_key}', [CustomerController::c
 
 
 // Route::get('/resetPassword', [CustomerController::class, 'resetPassword']);
-// Route::post('/resetPassword', [CustomerController::class, 'resetPasswordAction']);
+// Route::get('user/complatedPurcase', [CheckoutController::class, 'complatedPurcase']);
+Route::post('/user/pembayaranAction', [CheckoutController::class, 'pembayaranAction']);
+Route::get('/user/pembayaran', [CheckoutController::class, 'pembayaran']);

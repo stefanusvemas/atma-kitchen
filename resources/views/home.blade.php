@@ -25,71 +25,33 @@
         </div>
 
         <div class="row mt-4">
+            @forelse($produk as $produk)
             <div class="col-md-4 mb-4">
                 <div class="card">
-                    <img src="https://img.freepik.com/free-photo/red-velvet-cake-slices-with-yellof-cherry-top-mint-leaves_114579-2593.jpg?t=st=1712044026~exp=1712047626~hmac=95ffc92b21fed5600d087f69210cf3f48aaecdb566fde2e342af1aaa75a8274d&w=360" class="card-img-top" alt="Menu Item" height="380px" style="aspect-ratio:1/1; object-fit: cover;">
+                    <img src="{{asset($produk['gambar'])}}" class="card-img-top" alt="Menu Item" height="380px" style="aspect-ratio:1/1; object-fit: cover;">
                     <div class="card-body">
-                        <a href="{{url('/detail_product')}}" class="card-title text-decoration-none">
-                            <h5>Red Velvet</h5>
+                        <a href="{{url('/detail_product'.'/'.$produk['id_produk'])}}" class="card-title text-decoration-none">
+                            <h5>{{$produk['nama']}}</h5>
                         </a>
-                        <p class="card-text">A symphony of crimson cake, cocoa whispers, and cream cheese dreams. Pure bliss in every bite! 🍰✨</p>
-                        <a href="{{url('/cart')}}" class="btn btn-dark">Order Now</a>
-                        <a href="#" class="btn btn-outline-dark"><i class="fa fa-cart-plus"></i></a>
+                        <p class="card-text">Rp. {{number_format($produk['harga'],2,",",".")}}</p>
+                        @if ($produk['stok'] <= 0 && $produk['kuota_produksi'] <=0) <a href="#" class="btn btn-dark disabled">Order Now</a>
+                            <a href="#" class="btn btn-outline-dark disabled"><i class="fa fa-cart-plus"></i></a>
+                            @else
+                            <a href="{{url('/addToCart'.'/'.$produk['id_produk'])}}" class="btn btn-dark">Order Now</a>
+                            <a href="{{url('/actionAddCart'.'/'.$produk['id_produk'])}}" class="btn btn-outline-dark"><i class="fa fa-cart-plus"></i></a>
+
+
+                            @endif
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 mb-4">
-                <div class="card">
-                    <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?q=80&w=1989&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="card-img-top" alt="Menu Item" height="380px" style="aspect-ratio:1/1; object-fit: cover;">
-                    <div class="card-body">
-                        <a href="{{url('/detail_product')}}" class="card-title text-decoration-none">
-                            <h5>Chocolate Cake</h5>
-                        </a>
-                        <p class="card-text">A symphony of crimson cake, cocoa whispers, and cream cheese dreams. Pure bliss in every bite! 🍰✨</p>
-                        <a href="{{url('/cart')}}" class="btn btn-dark">Order Now</a>
-                        <a href="#" class="btn btn-outline-dark"><i class="fa fa-cart-plus"></i></a>
-                    </div>
+            @empty
+            <div class="col-md">
+                <div class="alert alert-danger text-center">
+                    No products found.
                 </div>
             </div>
-            <div class="col-md-4 mb-4">
-                <div class="card">
-                    <img src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?q=80&w=1872&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="card-img-top" alt="Menu Item" height="380px" style="aspect-ratio:1/1; object-fit: cover;">
-                    <div class="card-body">
-                        <a href="#" class="card-title text-decoration-none">
-                            <h5>Birth Day Cake</h5>
-                        </a>
-                        <p class="card-text">A symphony of crimson cake, cocoa whispers, and cream cheese dreams. Pure bliss in every bite! 🍰✨</p>
-                        <a href="{{url('/cart')}}" class="btn btn-dark">Order Now</a>
-                        <a href="#" class="btn btn-outline-dark"><i class="fa fa-cart-plus"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 mb-4">
-                <div class="card">
-                    <img src="https://img.freepik.com/free-photo/red-velvet-cake-slices-with-yellof-cherry-top-mint-leaves_114579-2593.jpg?t=st=1712044026~exp=1712047626~hmac=95ffc92b21fed5600d087f69210cf3f48aaecdb566fde2e342af1aaa75a8274d&w=360" class="card-img-top" alt="Menu Item" height="380px" style="aspect-ratio:1/1; object-fit: cover;">
-                    <div class="card-body">
-                        <a href="{{url('/detail_product')}}" class="card-title text-decoration-none">
-                            <h5>Red Velvet</h5>
-                        </a>
-                        <p class="card-text">A symphony of crimson cake, cocoa whispers, and cream cheese dreams. Pure bliss in every bite! 🍰✨</p>
-                        <a href="{{url('/cart')}}" class="btn btn-dark">Order Now</a>
-                        <a href="#" class="btn btn-outline-dark"><i class="fa fa-cart-plus"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 mb-4">
-                <div class="card">
-                    <img src="https://img.freepik.com/free-photo/red-velvet-cake-slices-with-yellof-cherry-top-mint-leaves_114579-2593.jpg?t=st=1712044026~exp=1712047626~hmac=95ffc92b21fed5600d087f69210cf3f48aaecdb566fde2e342af1aaa75a8274d&w=360" class="card-img-top" alt="Menu Item" height="380px" style="aspect-ratio:1/1; object-fit: cover;">
-                    <div class="card-body">
-                        <a href="{{url('/detail_product')}}" class="card-title text-decoration-none">
-                            <h5>Red Velvet</h5>
-                        </a>
-                        <p class="card-text">A symphony of crimson cake, cocoa whispers, and cream cheese dreams. Pure bliss in every bite! 🍰✨</p>
-                        <a href="{{url('/cart')}}" class="btn btn-dark disabled">Out of Stock</a>
-                        <a href="#" class="btn btn-outline-dark disabled"><i class="fa fa-cart-plus"></i></a>
-                    </div>
-                </div>
-            </div>
+            @endforelse
         </div>
 
         <div class="row">
