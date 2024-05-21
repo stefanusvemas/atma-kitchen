@@ -66,17 +66,10 @@
                                 @if ($loop->first)
                                     <td rowspan="{{ $order->detail_transaksi->count() }}">{{ $order->total_harga }}</td>
                                     <td rowspan="{{ $order->detail_transaksi->count() }}">
-                                        @php
-                                            $address = $order->customer->addresses->first();
-                                            $shipping_cost = $address ? $address->jarak * $shipping_rate : 0;
-                                        @endphp
-                                        {{ $shipping_cost }}
+                                        {{ $order->calculated_shipping_cost }}
                                     </td>
                                     <td rowspan="{{ $order->detail_transaksi->count() }}">
-                                        @php
-                                            $total_price = $order->total_harga + $shipping_cost;
-                                        @endphp
-                                        {{ $total_price }}
+                                        {{ $order->calculated_total_price }}
                                     </td>
                                 @endif
                             </tr>
@@ -115,3 +108,4 @@
 </main>
 
 @endsection
+

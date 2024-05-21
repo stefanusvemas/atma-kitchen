@@ -8,7 +8,6 @@ use App\Models\Pembayaran;
 use App\Models\Karyawan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class KonfirmasiPembayaranController extends Controller
 {
@@ -16,10 +15,25 @@ class KonfirmasiPembayaranController extends Controller
     {
         $user_data = Karyawan::where('id_karyawan', Auth::user()->id_karyawan)->with('jabatan')->first();
 
-        $pending_payments = Transaksi::get()->load('pembayaran')->where('pembayaran.verifikasi_pembayaran', 0)->where('status', 'pending');
-        // return $pending_payments;
+        $pending_payments = Transaksi::with(['pembayaran', 'customer.addresses', 'detail_transaksi.produk'])
+            ->whereHas('pembayaran', function($query) {
+                $query->where('verifikasi_pembayaran', 0);
+            })
+            ->where('status', 'pending')
+            ->get();
 
-        return view('admin.konfirmasi_pembayaran', compact('pending_payments', 'user_data'));
+        // Define the shipping rate (for example, 2000 per kilometer)
+        $shipping_rate = 2000;
+
+        // Calculate shipping costs and total prices for each pending payment
+        foreach ($pending_payments as $payment) {
+            $address = $payment->customer->addresses->first();
+            $shipping_cost = $address ? $address->jarak * $shipping_rate : 0;
+            $payment->calculated_shipping_cost = $shipping_cost;
+            $payment->calculated_total_price = $payment->total_harga + $shipping_cost;
+        }
+
+        return view('admin.konfirmasi_pembayaran', compact('pending_payments', 'user_data', 'shipping_rate'));
     }
 
     public function confirmPayment(Request $request)
@@ -28,8 +42,6 @@ class KonfirmasiPembayaranController extends Controller
             'id_transaksi' => 'required|exists:transaksi,id_transaksi',
             'jumlah_pembayaran' => 'required|numeric|min:0',
         ]);
-
-        // return $request;
 
         $transaksi = Transaksi::where('id_transaksi', $request->id_transaksi)->first();
         $pembayaran = Pembayaran::where('id_pembayaran', $transaksi->id_pembayaran)->first();
@@ -41,7 +53,8 @@ class KonfirmasiPembayaranController extends Controller
         $transaksi->save();
         $pembayaran->save();
 
-
         return redirect('/admin/konfirmasi-pembayaran')->with('success', 'Payment confirmed successfully');
     }
 }
+
+

@@ -23,8 +23,16 @@ class AddressDistanceController extends Controller
             ->with(['customer', 'customer.addresses', 'detail_transaksi.produk'])
             ->get();
 
-        // Define the shipping rate (for example, 1000 per kilometer)
+        // Define the shipping rate (for example, 2000 per kilometer)
         $shipping_rate = 2000;
+
+        // Calculate shipping costs and total prices for each order
+        foreach ($orders as $order) {
+            $address = $order->customer->addresses->first();
+            $shipping_cost = $address ? $address->jarak * $shipping_rate : 0;
+            $order->calculated_shipping_cost = $shipping_cost;
+            $order->calculated_total_price = $order->total_harga + $shipping_cost;
+        }
 
         return view('admin.address_distance', compact('addresses', 'orders', 'user_data', 'shipping_rate'));
     }
@@ -40,10 +48,7 @@ class AddressDistanceController extends Controller
             'jarak' => $request->input('jarak'),
         ]);
 
-        // Update related orders
-        $this->updateOrderTotalHarga($address);
-
-        return redirect('/admin/address')->with('success', 'Address and order total updated successfully');
+        return redirect('/admin/address')->with('success', 'Address distance updated successfully');
     }
 
     public function updateDistance(Request $request, $id)
@@ -57,22 +62,6 @@ class AddressDistanceController extends Controller
             'jarak' => $request->input('jarak'),
         ]);
 
-        // Update related orders
-        $this->updateOrderTotalHarga($address);
-
-        return redirect('/admin/address')->with('success', 'Address and order total updated successfully');
-    }
-
-    private function updateOrderTotalHarga(Address $address)
-    {
-        $shipping_rate = 1000; // Define your shipping rate here
-
-        $orders = Transaksi::where('id_customer', $address->id_customer)->where('status', 'pending')->get();
-
-        foreach ($orders as $order) {
-            $shipping_cost = $address->jarak * $shipping_rate;
-            $order->total_harga = $order->total_harga + $shipping_cost;
-            $order->save();
-        }
+        return redirect('/admin/address')->with('success', 'Address distance updated successfully');
     }
 }
