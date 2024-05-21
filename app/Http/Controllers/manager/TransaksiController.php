@@ -29,7 +29,7 @@ class TransaksiController extends Controller
     {
         $order = Transaksi::with('detail_transaksi')->find($id);
         if (!$order) {
-            return response()->json(['message' => 'Transaksi tidak ditemukan'], 404);
+            abort(404);
         }
         $order->status = 'Declined';
         $order->save();
@@ -104,8 +104,17 @@ class TransaksiController extends Controller
         // Menyimpan poin pelanggan jika pesanan diterima
         $customer = Customer::find($order->id_customer);
         if ($customer) {
+            $total_harga = $order->total_harga;
+            if ($total_harga > 500000) {
+                $poinEarned = 50;
+            } elseif ($total_harga > 200000) {
+                $poinEarned = 30;
+            } elseif ($total_harga > 13000) {
+                $poinEarned = 1;
+            } else {
+                $poinEarned = 0;
+            }
 
-            $poinEarned = 10;
             $customer->jumlah_poin += $poinEarned;
             $customer->save();
         }

@@ -106,18 +106,23 @@ class CheckoutController extends Controller
         $subtotal = $total_item_price + $taxes;
 
 
+
         if ($pembayaran == null) {
             $pembayaran = new Pembayaran();
-            $pembayaran->jumlah_pembayaran = $subtotal;
+            $transaksi->total_harga = $subtotal;
+            $transaksi->status = 'pending';
             $pembayaran->jenis_pembayaran = 'Bank Transfer';
             $pembayaran->verifikasi_pembayaran = 0;
             $pembayaran->save();
+            $transaksi->save();
             $transaksi->id_pembayaran = $pembayaran->id_pembayaran;
         } else {
-            $pembayaran->jumlah_pembayaran = $subtotal;
+            $transaksi->total_harga = $subtotal;
+            $transaksi->status = 'pending';
             $pembayaran->jenis_pembayaran = 'Bank Transfer';
             $pembayaran->verifikasi_pembayaran = 0;
             $pembayaran->save();
+            $transaksi->save();
             $transaksi->id_pembayaran = $pembayaran->id_pembayaran;
         }
 

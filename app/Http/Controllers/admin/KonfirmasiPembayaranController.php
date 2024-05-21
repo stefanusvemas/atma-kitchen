@@ -16,12 +16,8 @@ class KonfirmasiPembayaranController extends Controller
     {
         $user_data = Karyawan::where('id_karyawan', Auth::user()->id_karyawan)->with('jabatan')->first();
 
-        $pending_payments = Transaksi::where('status', 'pending')
-            ->whereHas('customer.addresses', function($query) {
-                $query->where('jarak', '>', 0);
-            })
-            ->with(['customer.addresses', 'detail_transaksi.produk'])
-            ->get();
+        $pending_payments = Transaksi::get()->load('pembayaran')->where('pembayaran.verifikasi_pembayaran', 0)->where('status', 'pending');
+        // return $pending_payments;
 
         return view('admin.konfirmasi_pembayaran', compact('pending_payments', 'user_data'));
     }
@@ -32,26 +28,20 @@ class KonfirmasiPembayaranController extends Controller
             'id_transaksi' => 'required|exists:transaksi,id_transaksi',
             'jumlah_pembayaran' => 'required|numeric|min:0',
         ]);
-    
-        DB::transaction(function () use ($request) {
-            $transaksi = Transaksi::findOrFail($request->id_transaksi);
-            
-            $pembayaran = new Pembayaran([
-                'jumlah_pembayaran' => $request->jumlah_pembayaran,
-                'jenis_pembayaran' => 'YourPaymentType', // Sesuaikan dengan jenis pembayaran yang sesuai
-                'verifikasi_pembayaran' => 1,
-                'tgl_konfirmasi' => now(), // Tambahkan tanggal konfirmasi saat ini
-                'id_transaksi' => $transaksi->id_transaksi,
-            ]);
-    
-            $pembayaran->save();
-    
-            if ($pembayaran->verifikasi_pembayaran == 1) {
-                $transaksi->status = 'complete';
-                $transaksi->save();
-            }
-        });
-    
+
+        // return $request;
+
+        $transaksi = Transaksi::where('id_transaksi', $request->id_transaksi)->first();
+        $pembayaran = Pembayaran::where('id_pembayaran', $transaksi->id_pembayaran)->first();
+
+        $pembayaran->verifikasi_pembayaran = 1;
+        $pembayaran->jumlah_pembayaran = $request->jumlah_pembayaran;
+        $pembayaran->tgl_konfirmasi = date('Y-m-d H:i:s');
+        $transaksi->status = 'approved';
+        $transaksi->save();
+        $pembayaran->save();
+
+
         return redirect('/admin/konfirmasi-pembayaran')->with('success', 'Payment confirmed successfully');
-    }    
+    }
 }
