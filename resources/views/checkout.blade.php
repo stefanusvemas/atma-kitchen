@@ -54,7 +54,7 @@
             <div class="col-md-auto col-8">
                 <h5>Order Summary</h5>
                 <p>Total Items Price: Rp. {{number_format($total_item_price,2,",",".")}}</p>
-                <p>Shipping Fee: Rp. 10,000</p>
+                <p>Shipping Fee: Rp. {{number_format($ongkir,2,",",".")}}</p>
                 <p>Taxes (11% PPN): {{number_format($taxes,2,",",".")}}</p>
                 <hr>
                 <div class="text-center">

@@ -18,7 +18,7 @@
                             @csrf
                             <div class="mb-2">
                                 <!-- <label for="gambar" class="form-label">Gambar</label> -->
-                                <input type="file" accept="image/png, image/jpeg" class="form-control" id="gambar" name="gambar" required>
+                                <input type="file" accept="image/png, image/jpeg" class="form-control" id="foto_bukti" name="foto_bukti" required>
                             </div>
                             <br>
                             <div class="col-auto">
@@ -34,7 +34,7 @@
             <div class="col-md-auto col-8">
                 <h5>Order Summary</h5>
                 <p>Total Items Price: Rp. {{number_format($total_item_price,2,",",".")}}</p>
-                <p>Shipping Fee: Rp. 10,000</p>
+                <p>Shipping Fee: Rp. {{number_format($ongkir,2,",",".")}}</p>
                 <p>Taxes (11% PPN): {{number_format($taxes,2,",",".")}}</p>
                 <hr>
                 <div class="text-center">
@@ -47,7 +47,7 @@
 
         <hr>
 
-        <div class="row justify-content-end mb-5">
+        <!-- <div class="row justify-content-end mb-5">
             <div class="col">
                 <div class="row justify-content-end">
                     <div class="col-auto">
@@ -58,7 +58,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 </div>
 
