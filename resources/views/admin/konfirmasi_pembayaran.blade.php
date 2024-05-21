@@ -27,8 +27,6 @@
                         @php
                             $address = $payment->customer->addresses->first();
                         @endphp
-
-                        {{-- Only display payments with a defined "jarak" --}}
                         @if ($address && $address->jarak)
                             @foreach ($payment->detail_transaksi as $detail)
                                 <tr>
@@ -65,7 +63,6 @@
     @php
         $address = $payment->customer->addresses->first();
     @endphp
-    {{-- Only include modal for payments with a defined "jarak" --}}
     @if ($address && $address->jarak)
         <div class="modal fade" id="confirmModal{{ $payment->id_transaksi }}" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
             <div class="modal-dialog">

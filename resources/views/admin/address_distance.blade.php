@@ -79,8 +79,6 @@
             </table>
         </div>
     </div>
-
-    <!-- Modals for inputting distance -->
     @foreach ($addresses as $address)
         <div class="modal fade" id="inputDistanceModal{{ $address->id_alamat }}" tabindex="-1" aria-labelledby="inputDistanceModalLabel{{ $address->id_alamat }}" aria-hidden="true">
             <div class="modal-dialog">

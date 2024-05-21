@@ -22,10 +22,8 @@ class KonfirmasiPembayaranController extends Controller
             ->where('status', 'pending')
             ->get();
 
-        // Define the shipping rate (for example, 2000 per kilometer)
         $shipping_rate = 2000;
 
-        // Calculate shipping costs and total prices for each pending payment
         foreach ($pending_payments as $payment) {
             $address = $payment->customer->addresses->first();
             $shipping_cost = $address ? $address->jarak * $shipping_rate : 0;

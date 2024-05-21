@@ -15,18 +15,14 @@ class AddressDistanceController extends Controller
     {
         $user_data = Karyawan::where('id_karyawan', Auth::user()->id_karyawan)->with('jabatan')->first();
 
-        // Fetch addresses where jarak is 0
         $addresses = Address::where('jarak', 0)->with('customer')->get();
 
-        // Fetch pending orders with related customer and addresses and details
         $orders = Transaksi::where('status', 'pending')
             ->with(['customer', 'customer.addresses', 'detail_transaksi.produk'])
             ->get();
 
-        // Define the shipping rate (for example, 2000 per kilometer)
         $shipping_rate = 2000;
 
-        // Calculate shipping costs and total prices for each order
         foreach ($orders as $order) {
             $address = $order->customer->addresses->first();
             $shipping_cost = $address ? $address->jarak * $shipping_rate : 0;
