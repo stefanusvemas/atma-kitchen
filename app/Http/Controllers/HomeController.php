@@ -22,10 +22,10 @@ class HomeController extends Controller
                 $transaksi = Transaksi::where('id_customer', Auth::user()->id_customer)->whereNull('id_pembayaran')->first();
 
                 if ($transaksi == null) {
-                    $transaksi = 0;
+                    $cart_count = 0;
+                } else {
+                    $cart_count = DetailTransaksi::where('id_transaksi', $transaksi->id_transaksi)->sum('jumlah');
                 }
-
-                $cart_count = DetailTransaksi::where('id_transaksi', $transaksi->id_transaksi)->sum('jumlah');
 
                 // return $cart_count;
 

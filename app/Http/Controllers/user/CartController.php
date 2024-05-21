@@ -18,9 +18,17 @@ class CartController extends Controller
         $user_data = Customer::where('id_customer', Auth::user()->id_customer)->first();
 
         $transaksi = Transaksi::where('id_customer', Auth::user()->id_customer)->whereNull('id_pembayaran')->first();
-
+        if ($transaksi == null) {
+            $transaksi = Transaksi::create([
+                'id_customer' => Auth::user()->id_customer,
+            ]);
+        }
         $alamat = Alamat::where('id_customer', Auth::user()->id_customer)->get();
-        $alamat_selected = Pengiriman::where('id_transaksi', $transaksi['id_transaksi'])->first()->load('alamat');
+        if ($transaksi != null) {
+            $alamat_selected = Pengiriman::where('id_transaksi', $transaksi['id_transaksi'])->first()->load('alamat');
+        }
+
+
         // return $alamat_selected;
 
         // -------------------------- Hitung Kuota/Stok berdasarkan tgl (subject to change) ------------------------------
