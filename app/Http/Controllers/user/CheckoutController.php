@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Customer;
 use Illuminate\Support\Facades\Auth;
 use App\Models\DetailTransaksi;
+use App\Models\NotaPemesanan;
 use App\Models\Pembayaran;
 use App\Models\Pengiriman;
 use App\Models\Transaksi;
@@ -169,6 +170,7 @@ class CheckoutController extends Controller
 
         $user_data->jumlah_poin = 0;
         $user_data->save();
+
 
 
         return redirect('/');

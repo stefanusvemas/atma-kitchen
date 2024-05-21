@@ -21,14 +21,16 @@
                     <tr>
                         <th scope="col">Date</th>
                         <th scope="col">Total Price</th>
+                        <th>Nota</th>
                         <th scope="col" class="w-50">Products</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($orders as $order)
                     <tr>
-                        <td rowspan="{{ count($order['detail_transaksi']) }}" scope="row">{{ $order['tgl_transaksi'] }}</td>
-                        <td rowspan="{{ count($order['detail_transaksi']) }}">{{ number_format($order['total_harga'],2,",",".") }}</td>
+                        <td rowspan="{{ count($order['detail_transaksi']) }}" scope="row">{{ $order['tgl_transaksi'] }} @if ($order['status'] == 'completed') <span class="badge text-bg-success">Success</span> @endif</td>
+                        <td rowspan="{{ count($order['detail_transaksi']) }}">Rp. {{ number_format($order['total_harga'],2,",",".") }}</td>
+                        <td rowspan="{{ count($order['detail_transaksi']) }}"><a href="{{url('cetak-nota'.'/'.$order['id_transaksi'])}}">Cetak Nota</a></td>
                         @foreach($order['detail_transaksi'] as $index => $detail)
                         @if($index > 0)
                     </tr>

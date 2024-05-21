@@ -204,7 +204,8 @@ Route::middleware(['auth', 'user'])->group(function () {
     route::post('/cart/update/{id}', [CartController::class, 'updateAction']);
     route::post('/cart/updateTglAmbil', [CartController::class, 'updateTanggalAmbil']);
 
-    route::get('/invoice', [PdfController::class, 'invoice']);
+    route::get('/invoice/{id}', [PdfController::class, 'invoice']);
+    route::get('/cetak-nota/{id}', [PdfController::class, 'invoiceByProduct']);
 
     // Route::get('user/complatedPurcase', [CheckoutController::class, 'complatedPurcase']);
     Route::post('/user/pembayaranAction', [CheckoutController::class, 'pembayaranAction']);
@@ -235,3 +236,4 @@ Route::get('/forgot_password', [CustomerController::class, 'resetPassword']);
 Route::post('/inputEmail', [CustomerController::class, 'resetPasswordAction']);
 Route::get('/inputEmail/verifyResetPassword/{pass_key}', [CustomerController::class, 'verifyResetPassword'])->name('verifyResetPassword');
 Route::post('/inputEmail/verifyResetPassword/{pass_key}', [CustomerController::class, 'verifyResetPasswordAction'])->name('verifyResetPasswordAction');
+// route::get('/invoice', [PdfController::class, 'invoice']);
