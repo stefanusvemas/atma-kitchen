@@ -205,4 +205,6 @@ Route::post('/inputEmail/verifyResetPassword/{pass_key}', [CustomerController::c
 
 
 // Route::get('/resetPassword', [CustomerController::class, 'resetPassword']);
-// Route::post('/resetPassword', [CustomerController::class, 'resetPasswordAction']);
+// Route::get('user/complatedPurcase', [CheckoutController::class, 'complatedPurcase']);
+Route::post('/user/pembayaranAction', [CheckoutController::class, 'pembayaranAction']);
+Route::get('/user/pembayaran', [CheckoutController::class, 'pembayaran']);

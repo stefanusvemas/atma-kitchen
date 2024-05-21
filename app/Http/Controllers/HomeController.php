@@ -18,7 +18,6 @@ class HomeController extends Controller
             if ($user_data) {
                 $produk = Produk::all()->sortByDesc('id_produk');
 
-
                 $transaksi = Transaksi::where('id_customer', Auth::user()->id_customer)->whereNull('id_pembayaran')->first();
 
                 if ($transaksi == null) {
