@@ -174,7 +174,7 @@ class CheckoutController extends Controller
 
         $transaksi->save();
 
-        $user_data->jumlah_poin = 0;
+        $user_data->jumlah_poin = $user_data->jumlah_poin - $transaksi->poin / 100;
         $user_data->save();
 
 
