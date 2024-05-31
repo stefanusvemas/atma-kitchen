@@ -68,7 +68,7 @@
                                 @if ($alamat_selected != null)
                                 <option value="{{$alamat_selected['id_alamat']}}" selected hidden>{{$alamat_selected['alamat']['nama_jalan']}}</option>
                                 @endif
-                                <option value="-1">Self Pickup</option>
+                                <option value=null>Self Pickup</option>
 
                                 @forelse($alamat as $item)
                                 <option value="{{$item['id_alamat']}}">{{$item['nama_jalan']}}</option>
@@ -82,17 +82,17 @@
                     <div class="row">
                         <div class="col">
                             <label for="">Metode Pengiriman</label>
-                            <select class="form-control" id="addressSelect" name="jenis" required>
+                            <select class="form-control" id="deliveryMethod" name="jenis" required>
                                 <option value="" selected>Pilih Pengiriman</option>
                                 @if ($alamat_selected != null)
                                 <option value="{{$alamat_selected['jenis']}}" selected hidden>{{$alamat_selected['jenis']}}</option>
                                 @endif
-                                <option value="self_pickup">Self Pickup</option>
                                 <option value="grab">Grab</option>
                                 <option value="gojek">Gojek</option>
                             </select>
                         </div>
                     </div>
+
                     <div class="row">
                         <div class="col mt-2">
                             <button type="submit" class="btn btn-primary"><i class="fa-regular fa-floppy-disk"></i></button>
@@ -133,6 +133,8 @@
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         const quantityInputs = document.querySelectorAll('.quantity-input');
+        const addressSelect = document.getElementById('addressSelect');
+        const deliveryMethodSelect = document.getElementById('deliveryMethod');
 
         function calculateGrandTotal() {
             let grandTotal = 0;
@@ -148,8 +150,17 @@
             input.addEventListener('input', calculateGrandTotal);
         });
 
+        addressSelect.addEventListener('change', function() {
+            if (this.value === 'null') {
+                deliveryMethodSelect.setAttribute('disabled', 'disabled');
+            } else {
+                deliveryMethodSelect.removeAttribute('disabled');
+            }
+        });
+
         calculateGrandTotal();
     });
 </script>
+
 
 @endsection

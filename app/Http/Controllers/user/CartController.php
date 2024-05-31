@@ -164,8 +164,9 @@ class CartController extends Controller
     {
         $transaksi = Transaksi::where('id_customer', Auth::user()->id_customer)->whereNull('id_pembayaran')->first();
         $pengiriman = Pengiriman::where('id_transaksi', $transaksi['id_transaksi'])->first();
+        // return $request;
 
-        if ($pengiriman == null) {
+        if ($pengiriman == null && $request->jenis != null) {
             $pengiriman = Pengiriman::create([
                 'id_transaksi' => $transaksi->id_transaksi,
                 'id_customer' => Auth::user()->id_customer,
@@ -173,7 +174,7 @@ class CartController extends Controller
                 'jenis' => $request->jenis,
                 'status_pengiriman' => null
             ]);
-        } else {
+        } else if ($request->jenis == null && $request->alamat != "null") {
             $pengiriman->id_alamat = $request->alamat;
             $pengiriman->jenis = $request->jenis;
             $pengiriman->save();

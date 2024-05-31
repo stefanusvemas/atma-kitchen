@@ -107,6 +107,7 @@ class TransaksiController extends Controller
         if ($customer) {
             $total_harga = $order->total_harga;
             $poinEarned = 0;
+
             if ($total_harga > 500000) {
                 $poinEarned += 50;
             }
@@ -115,6 +116,7 @@ class TransaksiController extends Controller
             }
             if ($total_harga > 13000) {
                 $poinEarned += 1;
+
             }
 
             $customer->jumlah_poin += $poinEarned;

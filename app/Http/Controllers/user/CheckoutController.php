@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Customer;
 use Illuminate\Support\Facades\Auth;
 use App\Models\DetailTransaksi;
+use App\Models\NotaPemesanan;
 use App\Models\Pembayaran;
 use App\Models\Pengiriman;
 use App\Models\Transaksi;
@@ -30,13 +31,13 @@ class CheckoutController extends Controller
         }
 
         $alamat = Pengiriman::where('id_transaksi', $transaksi->id_transaksi)->first();
-        if ($alamat == null) {
-            session()->flash('error', 'Please fill in the delivery address');
-            return redirect('/');
-        }
 
-        $pengiriman = Pengiriman::where('id_transaksi', $transaksi->id_transaksi)->first()->load('alamat');
-        $ongkir = $pengiriman['alamat']['jarak'] * 2000;
+        if ($alamat != null) {
+            $pengiriman = Pengiriman::where('id_transaksi', $transaksi->id_transaksi)->first()->load('alamat');
+            $ongkir = $pengiriman['alamat']['jarak'] * 2000;
+        } else {
+            $ongkir = 0;
+        }
         // return $user_data;
 
         $total_item_price = 0;
@@ -82,8 +83,14 @@ class CheckoutController extends Controller
             $transaksi = 0;
         }
 
-        $pengiriman = Pengiriman::where('id_transaksi', $transaksi->id_transaksi)->first()->load('alamat');
-        $ongkir = $pengiriman['alamat']['jarak'] * 2000;
+        $alamat = Pengiriman::where('id_transaksi', $transaksi->id_transaksi)->first();
+
+        if ($alamat == null) {
+            $ongkir = 0;
+        } else {
+            $pengiriman = Pengiriman::where('id_transaksi', $transaksi->id_transaksi)->first()->load('alamat');
+            $ongkir = $pengiriman['alamat']['jarak'] * 2000;
+        }
 
         $user_data = Customer::where('id_customer', Auth::user()->id_customer)->first();
         $cart_count = DetailTransaksi::where('id_transaksi', $transaksi->id_transaksi)->sum('jumlah');
@@ -167,8 +174,9 @@ class CheckoutController extends Controller
 
         $transaksi->save();
 
-        $user_data->jumlah_poin = 0;
+        $user_data->jumlah_poin = $user_data->jumlah_poin - $transaksi->poin / 100;
         $user_data->save();
+
 
 
         return redirect('/');
