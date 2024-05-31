@@ -53,6 +53,7 @@ class TransaksiController extends Controller
 
     public function acceptOrder($id)
     {
+        $user_data = Karyawan::where('id_karyawan', Auth::user()->id_karyawan)->with('jabatan')->first();
         $order = Transaksi::with('detail_transaksi')->find($id);
         // $bb = Transaksi::with('detail_transaksi.produk.resep.bahanbaku')->find($id);
 
@@ -94,7 +95,7 @@ class TransaksiController extends Controller
             }
         }
         if (!$bahanBakuKurang == []) {
-            return response()->json(['bahan baku yang kurang' => $bahanBakuKurang]);
+            return view('manager.Kekurangan_bahan_baku', compact('bahanBakuKurang' , 'user_data'));
         }
 
         // Mengubah status pesanan menjadi 'accepted'
@@ -108,15 +109,14 @@ class TransaksiController extends Controller
             $poinEarned = 0;
 
             if ($total_harga > 500000) {
-                $poinEarned = 50;
+                $poinEarned += 50;
             }
-
             if ($total_harga > 200000) {
-                $poinEarned = 30;
+                $poinEarned += 30;
             }
-
             if ($total_harga > 13000) {
-                $poinEarned = 1;
+                $poinEarned += 1;
+
             }
 
             $customer->jumlah_poin += $poinEarned;
