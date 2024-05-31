@@ -173,6 +173,8 @@ Route::middleware(['auth', 'MO'])->group(function () {
     Route::get('/listOrders', [TransaksiController::class, 'listOrdersToConfirm']);
     Route::get('orders/accept/{id}', [TransaksiController::class, 'acceptOrder']);
     Route::get('/orders/reject/{id}', [TransaksiController::class, 'rejectOrder']);
+
+    Route::get('/manager/kekurangan_bahan_baku', [ManagerBahanBakuController::class, 'kekuranganBahanBaku']);
 });
 
 Route::middleware(['auth', 'user'])->group(function () {
