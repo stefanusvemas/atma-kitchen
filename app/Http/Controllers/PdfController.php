@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\NotaPemesanan;
 use App\Models\Pengiriman;
+use App\Models\Transaksi;
 use App\Models\user_credential;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\DB;
+
 
 class PdfController extends Controller
 {
@@ -67,6 +70,35 @@ class PdfController extends Controller
         }
 
         $pdf = Pdf::loadView('pdf.invoice', ['data' => $data, 'pengiriman' => $pengiriman, 'detail_transaksi' => $detail_transaksi, 'poinEarned' => $poinEarned, 'email' => $email]);
+
+        return $pdf->stream();
+    }
+
+    public function penjualanProduk(Request $request)
+    {
+        $month = $request->month;
+        $bulan = date("F", mktime(0, 0, 0, $month, 1));
+        $tahun = date('Y');
+        $tgl_cetak = date('d F Y');
+
+        $groupedTransactions = DB::table('transaksi')
+            ->join('detail_transaksi', 'transaksi.id_transaksi', '=', 'detail_transaksi.id_transaksi')
+            ->join('produk', 'detail_transaksi.id_produk', '=', 'produk.id_produk')
+            ->select(
+                'detail_transaksi.id_produk',
+                'produk.nama as product_name',
+                'produk.harga as product_price',
+                DB::raw('SUM(detail_transaksi.jumlah) as total_amount'),
+                DB::raw('SUM(detail_transaksi.jumlah * produk.harga) as total_price'),
+            )
+            ->whereMonth('transaksi.tgl_transaksi', $month)
+            ->where('transaksi.status', 'completed')
+            ->groupBy('detail_transaksi.id_produk', 'produk.nama', 'produk.harga')
+            ->get();
+
+        $totalPrice = $groupedTransactions->sum('total_price');
+        // return $groupedTransactions;
+        $pdf = Pdf::loadView('pdf.penjualan_by_produk', ['groupedTransactions' => $groupedTransactions, 'bulan' => $bulan, 'tahun' => $tahun, 'tgl_cetak' => $tgl_cetak, 'totalPrice' => $totalPrice]);
 
         return $pdf->stream();
     }

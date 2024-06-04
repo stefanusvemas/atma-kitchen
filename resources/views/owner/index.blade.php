@@ -40,6 +40,7 @@
                             Dashboard
                         </a>
                         <a href="{{url('/owner/karyawan')}}" class="list-group-item list-group-item-action {{ Request::is('owner/karyawan') ? 'active' : '' }}">Karyawan</a>
+                        <a href="{{url('/owner/laporan-produk')}}" class="list-group-item list-group-item-action {{ Request::is('owner/laporan-produk') ? 'active' : '' }}">Laporan Produk</a>
                     </div>
                 </div>
             </nav>
