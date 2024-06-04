@@ -95,11 +95,11 @@ class TransaksiController extends Controller
             }
         }
         if (!$bahanBakuKurang == []) {
-            return view('manager.Kekurangan_bahan_baku', compact('bahanBakuKurang' , 'user_data'));
+            return view('manager.Kekurangan_bahan_baku', compact('bahanBakuKurang', 'user_data'));
         }
 
         // Mengubah status pesanan menjadi 'accepted'
-        $order->status = 'completed';
+        $order->status = 'diproses';
         $order->save();
 
         // Menyimpan poin pelanggan jika pesanan diterima
@@ -116,7 +116,6 @@ class TransaksiController extends Controller
             }
             if ($total_harga > 13000) {
                 $poinEarned += 1;
-
             }
 
             $customer->jumlah_poin += $poinEarned;
