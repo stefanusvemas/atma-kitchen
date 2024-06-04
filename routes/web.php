@@ -40,6 +40,7 @@ use App\Http\Controllers\manager\TransaksiController;
 use App\Http\Controllers\owner\LaporanProdukController as LaporanProdukOwnerController;
 use App\Http\Controllers\manager\LaporanProdukController as LaporanProdukManagerController;
 use App\Http\Controllers\PdfController;
+use App\Http\Controllers\manager\PemakaianBahanBakuController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -175,6 +176,8 @@ Route::middleware(['auth', 'MO'])->group(function () {
     Route::get('/listOrders', [TransaksiController::class, 'listOrdersToConfirm']);
     Route::get('orders/accept/{id}', [TransaksiController::class, 'acceptOrder']);
     Route::get('/orders/reject/{id}', [TransaksiController::class, 'rejectOrder']);
+
+    Route::get('/manager/pemakaian_bahan_baku', [PemakaianBahanBakuController::class, 'index']);
 
     Route::get('/manager/kekurangan_bahan_baku', [ManagerBahanBakuController::class, 'kekuranganBahanBaku']);
 
