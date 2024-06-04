@@ -6,7 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\Karyawan;
 use App\Models\user_credential;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+
+
 
 class KaryawanController extends Controller
 {
@@ -17,7 +20,7 @@ class KaryawanController extends Controller
     {
         //
         try {
-            $karyawan = Karyawan::all(); 
+            $karyawan = Karyawan::all();
 
             return response()->json([
                 'data' => $karyawan,
@@ -56,7 +59,7 @@ class KaryawanController extends Controller
 
         $atribut = [
             'id_karyawan' => $karyawan['id_karyawan'],
-            'email' => $request['email'] , 
+            'email' => $request['email'],
             'password' => Hash::make($request['password']),
         ];
 
@@ -66,7 +69,6 @@ class KaryawanController extends Controller
             'message' => 'Register Success',
             'customer' => $karyawan,
         ], 200);
-  
     }
 
     /**
@@ -112,16 +114,16 @@ class KaryawanController extends Controller
             'id_jabatan' => 'required'
         ]);
 
-        $karyawan->update($validatedData); 
+        $karyawan->update($validatedData);
         $atribut = [
             'id_karyawan' => $karyawan['id_karyawan'],
-            'email' => $request['email'], 
+            'email' => $request['email'],
             'password' => Hash::make($request['password']),
         ];
 
-          
-        $user_credential= user_credential::where('id_karyawan', $id)->first();
-        
+
+        $user_credential = user_credential::where('id_karyawan', $id)->first();
+
         $user_credential->update($atribut);
 
         return response([
@@ -136,7 +138,7 @@ class KaryawanController extends Controller
     public function destroy(string $id)
     {
         //
-         try {
+        try {
             $karyawan = Karyawan::find($id);
             if (!$karyawan) {
                 throw new \Exception('karyawan tidak ditemukan');
@@ -157,4 +159,23 @@ class KaryawanController extends Controller
             ], 400);
         }
     }
+
+    // public function showAbsensi()
+    // {
+    //     try {
+    //         $user_data = Karyawan::where('id_karyawan', Auth::user()->id_karyawan)->first()->load('user_credential');
+    //         $absensi = $user_data->absensi()->get();
+    //         return response()->json([
+    //             'status' => true,
+    //             'message' => 'Berhasil ambil data absensi',
+    //             'data' => $absensi
+    //         ], 200);
+    //     } catch (\Exception $e) {
+    //         return response()->json([
+    //             'status' => false,
+    //             'message' => $e->getMessage(),
+    //             'data absensi' => []
+    //         ], 400);
+    //     }
+    // }
 }

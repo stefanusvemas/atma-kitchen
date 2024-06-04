@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AbsensiController;
 use App\Http\Controllers\admin\BahanBakuController as AdminBahanBakuController;
 use App\Http\Controllers\admin\CustomerController as AdminCustomerController;
 use App\Http\Controllers\admin\ProfileController as AdminProfileController;
@@ -230,12 +231,20 @@ Route::middleware(['auth', 'owner'])->group(function () {
 
     Route::get('/owner/profile', [OwnerProfileController::class, 'index']);
     Route::post('/owner/profile/edit', [OwnerProfileController::class, 'edit']);
+
+    Route::get('/owner/absensi', [AbsensiController::class, 'index']);
+    Route::get('/absensi', [AbsensiController::class, 'showAbsensi']);
 });
 
+// Route::middleware(['auth:sanctum', 'KL'])->group(function () {
+
+//     Route::get('/absensi', [AbsensiController::class, 'showAbsensi']);
+// });
 
 
 Route::get('/forgot_password', [CustomerController::class, 'resetPassword']);
 Route::post('/inputEmail', [CustomerController::class, 'resetPasswordAction']);
 Route::get('/inputEmail/verifyResetPassword/{pass_key}', [CustomerController::class, 'verifyResetPassword'])->name('verifyResetPassword');
 Route::post('/inputEmail/verifyResetPassword/{pass_key}', [CustomerController::class, 'verifyResetPasswordAction'])->name('verifyResetPasswordAction');
+
 // route::get('/invoice', [PdfController::class, 'invoice']);

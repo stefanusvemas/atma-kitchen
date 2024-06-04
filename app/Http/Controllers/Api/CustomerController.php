@@ -85,20 +85,18 @@ class CustomerController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show()
     {
         //
         try {
-            $customer = Customer::where('id_customer', $id)->get()->load('user_credential');
-
-
-            if (!$customer) {
+            $user_data = Customer::where('id_customer', Auth::user()->id_customer)->first()->load('user_credential');
+            if (!$user_data) {
                 throw new \Exception('Customer tidak ditemukan');
             }
             return response()->json([
                 'status' => true,
                 'message' => 'Berhasil ambil data',
-                'data' => $customer
+                'data' => $user_data
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
@@ -193,4 +191,6 @@ class CustomerController extends Controller
             ], 404);
         }
     }
+
+    
 }
