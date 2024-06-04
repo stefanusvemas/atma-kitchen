@@ -30,7 +30,7 @@ use App\Http\Controllers\user\ProfileController as UserProfileController;
 use App\Http\Controllers\user\AddressController;
 use App\Http\Controllers\admin\AddressDistanceController;
 use App\Http\Controllers\admin\KonfirmasiPembayaranController;
-
+use App\Http\Controllers\admin\PenarikanSaldoController;
 use App\Http\Controllers\owner\DashboardController as OwnerDashboardController;
 use App\Http\Controllers\owner\KaryawanController as OwnerKaryawanController;
 use App\Http\Controllers\owner\ProfileController as OwnerProfileController;
@@ -116,6 +116,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     Route::get('/admin/customers/history/{id}', [HistoryPesananController::class, 'index']);
     Route::get('/admin/customers/history/{id}/search', [HistoryPesananController::class, 'search']);
+
+    Route::get('/admin/penarikan-saldo', [PenarikanSaldoController::class, 'index']);
+    Route::post('/admin/penarikan-saldo/konfirmasi/{id}', [PenarikanSaldoController::class, 'konfirmasi']);
 });
 
 Route::middleware(['auth', 'MO'])->group(function () {
