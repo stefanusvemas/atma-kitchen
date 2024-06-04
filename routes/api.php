@@ -28,6 +28,8 @@ Route::put('customer/verifyForgetPw/{pass_key}', [SessionController::class, 'ver
 
 Route::post('karyawan/store', [KaryawanController::class, 'store']);
 
+Route::get('customer/showSaldo/{id}', [CustomerController::class, 'showSaldo']);
+
 Route::group(
     ['middleware' => 'auth:sanctum'],
     function () {
@@ -54,6 +56,8 @@ Route::group(
         //Transaksi
         Route::post('/customer/daftarPesanan', [TransaksiCustomerController::class, 'daftarPesanan']);
     }
+
+    
 );
 
 

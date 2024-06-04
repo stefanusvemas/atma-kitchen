@@ -147,19 +147,37 @@ class CartController extends Controller
     public function updateAction($id, Request $request)
     {
         $transaksi = Transaksi::where('id_customer', Auth::user()->id_customer)->whereNull('id_pembayaran')->first();
-
+    
         if ($transaksi) {
-            $produk = DetailTransaksi::where('id_transaksi', $transaksi->id_transaksi)->where('id_produk', $id)->first();
-
-            if ($produk) {
-                $produk->jumlah = $request->jumlah;
+            $detailTransaksi = DetailTransaksi::where('id_transaksi', $transaksi->id_transaksi)->where('id_produk', $id)->first();
+    
+            if ($detailTransaksi) {
+                $produk = $detailTransaksi->produk; // Get the associated product
+                $oldJumlah = $detailTransaksi->jumlah; // Old quantity
+                $newJumlah = $request->input('jumlah'); // New quantity
+    
+                // Calculate the difference in quantity
+                $diff = $newJumlah - $oldJumlah;
+    
+                // Update the product's stock or quota based on the difference
+                if ($produk->id_penitip == null) {
+                    $produk->kuota_produksi -= $diff;
+                } else {
+                    $produk->stok -= $diff;
+                }
+    
+                // Save the changes to the product
                 $produk->save();
+    
+                // Update the quantity in the cart
+                $detailTransaksi->jumlah = $newJumlah;
+                $detailTransaksi->save();
             }
         }
-
+    
         return redirect('/cart');
     }
-
+    
     public function updateTanggalAmbil(Request $request)
     {
         $transaksi = Transaksi::where('id_customer', Auth::user()->id_customer)->whereNull('id_pembayaran')->first();

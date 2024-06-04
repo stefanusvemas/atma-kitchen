@@ -24,6 +24,22 @@
                         </div>
                     </div>
                 </div>
+                <div class="col">
+    <div class="card">
+        <div class="card-body">
+            <h6 class="card-title">Laporan</h6>
+            <a href="{{ url('/laporan-penjualan-mo') }}">Download Laporan disini</a>
+        </div>
+    </div>
+</div>
+<div class="col">
+    <div class="card">
+        <div class="card-body">
+            <h6 class="card-title">Laporan Pemakaian Bahan Baku</h6>
+            <a href="{{ url('/laporan-bahanBaku-mo/{startDate}/{endDate}') }}">Download Laporan disini</a>
+        </div>
+    </div>
+</div>
             </div>
             <h4 class="mt-3">Recent Transactions</h4>
             <table class="table table-responsive">

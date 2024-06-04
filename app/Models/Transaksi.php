@@ -13,7 +13,8 @@ class Transaksi extends Model
 
     protected $primaryKey = 'id_transaksi';
     protected $table = 'transaksi';
-    public $timestamps = false;
+    public $timestamps = true;
+    const UPDATED_AT = null; // Disable updated_at column
 
     protected $fillable = [
         'id_customer',
@@ -24,7 +25,8 @@ class Transaksi extends Model
         'total_harga',
         'foto_bukti',
         'tgl_ambil',
-        'poin'
+        'poin',
+        'created_at' // Include created_at in fillable
     ];
 
     public function customer()
@@ -47,3 +49,4 @@ class Transaksi extends Model
         return $this->belongsTo(Pembayaran::class, 'id_pembayaran', 'id_pembayaran');
     }
 }
+
