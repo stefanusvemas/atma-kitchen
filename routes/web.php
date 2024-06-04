@@ -180,6 +180,7 @@ Route::middleware(['auth', 'MO'])->group(function () {
 
     Route::get('/manager/laporan-produk', [LaporanProdukManagerController::class, 'index']);
     Route::get('/pdf/penjualan-produk', [PdfController::class, 'penjualanProduk']);
+    Route::get('/manager/pdf/penjualan-produk', [PdfController::class, 'penjualanProduk']);
 });
 
 Route::middleware(['auth', 'user'])->group(function () {
@@ -241,6 +242,7 @@ Route::middleware(['auth', 'owner'])->group(function () {
 });
 
 
+Route::get('/pdf/stok-bahan-baku', [PdfController::class, 'stokBahanBaku']);
 
 Route::get('/forgot_password', [CustomerController::class, 'resetPassword']);
 Route::post('/inputEmail', [CustomerController::class, 'resetPasswordAction']);

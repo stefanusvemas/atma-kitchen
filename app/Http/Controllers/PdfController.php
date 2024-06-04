@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BahanBaku;
 use App\Models\NotaPemesanan;
 use App\Models\Pengiriman;
 use App\Models\Transaksi;
@@ -77,8 +78,8 @@ class PdfController extends Controller
     public function penjualanProduk(Request $request)
     {
         $month = $request->month;
-        $bulan = date("F", mktime(0, 0, 0, $month, 1));
-        $tahun = date('Y');
+        list($tahun, $month) = explode('-', $month);
+        $bulan = date('F', mktime(0, 0, 0, $month, 10));
         $tgl_cetak = date('d F Y');
 
         $groupedTransactions = DB::table('transaksi')
@@ -91,7 +92,7 @@ class PdfController extends Controller
                 DB::raw('SUM(detail_transaksi.jumlah) as total_amount'),
                 DB::raw('SUM(detail_transaksi.jumlah * produk.harga) as total_price'),
             )
-            ->whereMonth('transaksi.tgl_transaksi', $month)
+            ->whereMonth('transaksi.tgl_transaksi', $month)->whereYear('transaksi.tgl_transaksi', $tahun)
             ->where('transaksi.status', 'completed')
             ->groupBy('detail_transaksi.id_produk', 'produk.nama', 'produk.harga')
             ->get();
@@ -99,6 +100,16 @@ class PdfController extends Controller
         $totalPrice = $groupedTransactions->sum('total_price');
         // return $groupedTransactions;
         $pdf = Pdf::loadView('pdf.penjualan_by_produk', ['groupedTransactions' => $groupedTransactions, 'bulan' => $bulan, 'tahun' => $tahun, 'tgl_cetak' => $tgl_cetak, 'totalPrice' => $totalPrice]);
+
+        return $pdf->stream();
+    }
+
+    public function stokBahanBaku()
+    {
+        $tgl_cetak = date('d F Y');
+        $data = BahanBaku::all();
+        // return $data;
+        $pdf = Pdf::loadView('pdf.stok_bahan_baku', ['tgl_cetak' => $tgl_cetak, 'data' => $data]);
 
         return $pdf->stream();
     }
