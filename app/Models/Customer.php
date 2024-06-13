@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\PenarikanSaldo as ModelsPenarikanSaldo;
+use App\PenarikanSaldo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\Customer as Authenticatable;
@@ -35,5 +37,9 @@ class Customer extends Model
     public function addresses()
     {
         return $this->hasMany(Address::class, 'id_customer', 'id_customer');
-    }  
+    }
+    public function penarikan_saldo()
+    {
+        return $this->hasMany(ModelsPenarikanSaldo::class, 'id_customer', 'id_customer');
+    }
 }

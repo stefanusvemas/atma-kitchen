@@ -16,7 +16,8 @@ class BahanBaku extends Model
     protected $fillable = [
         'nama',
         'stok',
-        'harga'
+        'harga',
+        'satuan',
     ];
 
     public function resep()

@@ -62,9 +62,11 @@
             <div class="col-md-6 text-right">
                 <p><strong>Customer</strong> : {{$email}} / {{$data['transaksi']['customer']['nama']}}
                     <br>
+                    @if ($pengiriman != null)
                     {{$pengiriman['alamat']['nama_jalan']. ', ' . $pengiriman['alamat']['kecamatan'] . ', '. $pengiriman['alamat']['kelurahan']}}
                     <br>
                     Delivery: {{$pengiriman['jenis']}}
+                    @endif
                 </p>
             </div>
         </div>
@@ -87,6 +89,7 @@
                             <td colspan="2">Total</td>
                             <td>Rp. {{number_format($data['transaksi']['total_harga']+$data['transaksi']['poin'],2,",",".")}}</td>
                         </tr>
+                        @if ($pengiriman != null)
                         <tr>
                             <td colspan="2">Ongkos Kirim (rad. {{$pengiriman['alamat']['jarak']}} km)</td>
                             <td>Rp. {{number_format($pengiriman['alamat']['jarak']*2000,2,",",".")}}</td>
@@ -95,6 +98,7 @@
                             <td colspan="2">Total</td>
                             <td>Rp. {{number_format($pengiriman['alamat']['jarak']*2000+$data['transaksi']['total_harga'],2,",",".")}}</td>
                         </tr>
+                        @endif
                         @if ($data['transaksi']['poin'] > 0)
                         <tr>
                             <td colspan="2">Potongan {{$data['transaksi']['poin']/100}} poin</td>

@@ -38,4 +38,10 @@ class Produk extends Model
     {
         return $this->belongsTo(Penitip::class, 'id_penitip', 'id_penitip');
     }
+
+    //buatkan uuntuk detail transaksi
+    public function detailTransaksi()
+    {
+        return $this->hasMany(DetailTransaksi::class, 'id_produk');
+    }
 }

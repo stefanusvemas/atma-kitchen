@@ -37,8 +37,8 @@ Route::group(
         Route::post('logout', [SessionController::class, 'logout']);
 
         //customer
-        Route::get('customer', [CustomerController::class, 'index']); // tidak perlu untuk customer
-        Route::get('customer/{id} ', [CustomerController::class, 'show']);
+        // Route::get('customer', [CustomerController::class, 'index']); // tidak perlu untuk customer
+        Route::get('/customer ', [CustomerController::class, 'show']);
         Route::put('customer/{id} ', [CustomerController::class, 'update']);
         Route::delete('customer/{id} ', [CustomerController::class, 'destroy']);
 
@@ -55,11 +55,22 @@ Route::group(
 
         //Transaksi
         Route::post('/customer/daftarPesanan', [TransaksiCustomerController::class, 'daftarPesanan']);
+
+        //absensi
+        // Route::get('/karyawan/absensi/', [KaryawanController::class, 'showAbsensi']);
     }
 
     
 );
 
+Route::middleware(['auth:sanctum', 'KL'])->group(function () {
 
+    // Route::get('/allabsensi', [AbsensiController::class, 'showAbsensi']);
+    Route::get('/absensi/{bulan}', [AbsensiController::class, 'sumAbsensi']);
+});
 
+Route::middleware(['auth:sanctum', 'owner'])->group(function () {
+    Route::get('/allabsensi/{bulan}', [AbsensiController::class, 'showAbsensi']);
+    // Route::get('/absensi/{bulan}', [AbsensiController::class, 'sumAbsensi']);
 
+});

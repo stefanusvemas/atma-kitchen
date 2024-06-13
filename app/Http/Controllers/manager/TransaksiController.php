@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\BahanBaku;
 use App\Models\Customer;
 use App\Models\Karyawan;
+use App\Models\PemakaianBahanBaku;
 use App\Models\Produk;
 use App\Models\Resep;
 use App\Models\Transaksi;
@@ -53,6 +54,7 @@ class TransaksiController extends Controller
 
     public function acceptOrder($id)
     {
+        $user_data = Karyawan::where('id_karyawan', Auth::user()->id_karyawan)->with('jabatan')->first();
         $order = Transaksi::with('detail_transaksi')->find($id);
         // $bb = Transaksi::with('detail_transaksi.produk.resep.bahanbaku')->find($id);
 
@@ -81,6 +83,11 @@ class TransaksiController extends Controller
                             // jika  bahan baku tersedia 
                             $bb->stok -= $bb_dibutuhkan;
                             $bb->save();
+                            PemakaianBahanBaku::create([
+                                'id_bahan_baku' => $bb->id_bahan_baku,
+                                'jumlah' => $bb_dibutuhkan,
+                                'tgl_pemakaian' => date('Y-m-d h:i:s'),
+                            ]);
                             // return $bb;
                         } else {
                             // jika bahan baku kurang 
@@ -94,25 +101,27 @@ class TransaksiController extends Controller
             }
         }
         if (!$bahanBakuKurang == []) {
-            return response()->json(['bahan baku yang kurang' => $bahanBakuKurang]);
+            return view('manager.Kekurangan_bahan_baku', compact('bahanBakuKurang', 'user_data'));
         }
 
         // Mengubah status pesanan menjadi 'accepted'
-        $order->status = 'completed';
+        $order->status = 'diproses';
         $order->save();
 
         // Menyimpan poin pelanggan jika pesanan diterima
         $customer = Customer::find($order->id_customer);
         if ($customer) {
             $total_harga = $order->total_harga;
+            $poinEarned = 0;
+
             if ($total_harga > 500000) {
-                $poinEarned = 50;
-            } elseif ($total_harga > 200000) {
-                $poinEarned = 30;
-            } elseif ($total_harga > 13000) {
-                $poinEarned = 1;
-            } else {
-                $poinEarned = 0;
+                $poinEarned += 50;
+            }
+            if ($total_harga > 200000) {
+                $poinEarned += 30;
+            }
+            if ($total_harga > 13000) {
+                $poinEarned += 1;
             }
 
             $customer->jumlah_poin += $poinEarned;

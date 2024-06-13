@@ -47,6 +47,12 @@
                         <a href="{{url('/manager/pembelian_bahan_baku')}}" class="list-group-item list-group-item-action {{ Request::is('manager/pembelian_bahan_baku') ? 'active' : '' }}">Pembelian Bahan Baku</a>
                         <a href="{{url('/manager/pengeluaran_lain')}}" class="list-group-item list-group-item-action {{ Request::is('manager/pengeluaran_lain') ? 'active' : '' }}">Pengeluaran Lain</a>
                         <a href="{{url('/manager/list_pesanan')}}" class="list-group-item list-group-item-action {{ Request::is('manager/list_pesanan') ? 'active' : '' }}">List Pesanan</a>
+                        <a href="{{url('/manager/pemakaian_bahan_baku')}}" class="list-group-item list-group-item-action {{ Request::is('manager/pemakaian_bahan_baku') ? 'active' : '' }}">Pemakaian Bahan Baku</a>
+                        <a href="{{url('/manager/laporan-produk')}}" class="list-group-item list-group-item-action {{ Request::is('manager/laporan-produk') ? 'active' : '' }}">Laporan Produk</a>
+                        <a href="{{url('/pdf/stok-bahan-baku')}}" class="list-group-item list-group-item-action ">Laporan Stok Bahan Baku</a>
+
+                        <a href="{{url('/owner/absensi')}}" class="list-group-item list-group-item-action {{ Request::is('owner/absensi') ? 'active' : '' }}">Absensi</a>
+                        <a href="{{url('/owner/rekapPenitip')}}" class="list-group-item list-group-item-action {{ Request::is('/owner/rekapPenitip') ? 'active' : '' }}">Rekap Penitip</a>
                     </div>
                 </div>
             </nav>

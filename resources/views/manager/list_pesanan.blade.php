@@ -35,17 +35,18 @@
                     @foreach ($p->detail_transaksi as $detail)
                     <tr>
                         <td>{{ $p->tgl_transaksi }}</td>
+
                         <td>{{ $detail->produk->nama }}</td>
                         <td>{{ $detail->jumlah }}</td>
                         <td scope="row">{{ $detail->jumlah * $detail->produk->harga}}</td>
                         <td>
                             <a href="{{url('/orders/accept/'.$p['id_transaksi'])}}">Proses</a> |
                             <a href="{{url('/orders/reject/'.$p['id_transaksi'])}}">Tolak</a> |
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $p->id_orders }}">Hapus</a>
+
                         </td>
                     </tr>
                     @endforeach
-                    <!-- <div class="modal fade" id="deleteModal{{$p['id_orders']}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="deleteModal{{$p['id_orders']}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -61,7 +62,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div> -->
+                    </div>
                     @empty
                     <tr>
                         <td colspan="5" class="text-center">No data</td>
