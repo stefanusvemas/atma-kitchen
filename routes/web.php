@@ -39,7 +39,10 @@ use App\Http\Controllers\user\CartController;
 use App\Http\Controllers\user\CheckoutController;
 use App\Http\Controllers\DetailProdukController;
 use App\Http\Controllers\manager\TransaksiController;
+use App\Http\Controllers\owner\LaporanProdukController as LaporanProdukOwnerController;
+use App\Http\Controllers\manager\LaporanProdukController as LaporanProdukManagerController;
 use App\Http\Controllers\PdfController;
+use App\Http\Controllers\manager\PemakaianBahanBakuController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -180,10 +183,18 @@ Route::middleware(['auth', 'MO'])->group(function () {
     Route::get('orders/accept/{id}', [TransaksiController::class, 'acceptOrder']);
     Route::get('/orders/reject/{id}', [TransaksiController::class, 'rejectOrder']);
 
+    Route::get('/manager/pemakaian_bahan_baku', [PemakaianBahanBakuController::class, 'index']);
+
     Route::get('/manager/kekurangan_bahan_baku', [ManagerBahanBakuController::class, 'kekuranganBahanBaku']);
+
+
+    Route::get('/manager/laporan-produk', [LaporanProdukManagerController::class, 'index']);
+    Route::get('/pdf/penjualan-produk', [PdfController::class, 'penjualanProduk']);
+    Route::get('/manager/pdf/penjualan-produk', [PdfController::class, 'penjualanProduk']);
 
     // Route::get('/manager/absensi', [AbsensiMController::class, 'index']);
     // Route::get('/absensi', [AbsensiMController::class, 'showAbsensi']);
+
 });
 
 Route::middleware(['auth', 'user'])->group(function () {
@@ -240,6 +251,10 @@ Route::middleware(['auth', 'owner'])->group(function () {
     Route::get('/owner/profile', [OwnerProfileController::class, 'index']);
     Route::post('/owner/profile/edit', [OwnerProfileController::class, 'edit']);
 
+
+    Route::get('/owner/laporan-produk', [LaporanProdukOwnerController::class, 'index']);
+    Route::get('/pdf/penjualan-produk', [PdfController::class, 'penjualanProduk']);
+
     Route::get('/owner/absensi', [AbsensiController::class, 'index']);
     Route::get('/absensi', [AbsensiController::class, 'showAbsensi']);
     //BELUM SELESAI
@@ -247,6 +262,7 @@ Route::middleware(['auth', 'owner'])->group(function () {
 
     Route::get('/owner/rekapPenitip', [AbsensiController::class, 'rekapPenitip']);
     // Route::get('/rekap-penitip', [PenitipController::class, 'rekapPenitip']);
+
 });
 
 // Route::middleware(['auth:sanctum', 'KL'])->group(function () {
@@ -254,6 +270,7 @@ Route::middleware(['auth', 'owner'])->group(function () {
 //     Route::get('/absensi', [AbsensiController::class, 'showAbsensi']);
 // });
 
+Route::get('/pdf/stok-bahan-baku', [PdfController::class, 'stokBahanBaku']);
 
 Route::get('/forgot_password', [CustomerController::class, 'resetPassword']);
 Route::post('/inputEmail', [CustomerController::class, 'resetPasswordAction']);

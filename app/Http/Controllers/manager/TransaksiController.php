@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\BahanBaku;
 use App\Models\Customer;
 use App\Models\Karyawan;
+use App\Models\PemakaianBahanBaku;
 use App\Models\Produk;
 use App\Models\Resep;
 use App\Models\Transaksi;
@@ -82,6 +83,11 @@ class TransaksiController extends Controller
                             // jika  bahan baku tersedia 
                             $bb->stok -= $bb_dibutuhkan;
                             $bb->save();
+                            PemakaianBahanBaku::create([
+                                'id_bahan_baku' => $bb->id_bahan_baku,
+                                'jumlah' => $bb_dibutuhkan,
+                                'tgl_pemakaian' => date('Y-m-d h:i:s'),
+                            ]);
                             // return $bb;
                         } else {
                             // jika bahan baku kurang 
@@ -99,7 +105,7 @@ class TransaksiController extends Controller
         }
 
         // Mengubah status pesanan menjadi 'accepted'
-        $order->status = 'completed';
+        $order->status = 'diproses';
         $order->save();
 
         // Menyimpan poin pelanggan jika pesanan diterima
