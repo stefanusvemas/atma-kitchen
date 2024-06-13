@@ -31,7 +31,12 @@ use App\Http\Controllers\user\ProfileController as UserProfileController;
 use App\Http\Controllers\user\AddressController;
 use App\Http\Controllers\admin\AddressDistanceController;
 use App\Http\Controllers\admin\KonfirmasiPembayaranController;
+
+use App\Http\Controllers\admin\ProcessedTransaction;
+
+
 use App\Http\Controllers\admin\PenarikanSaldoController;
+
 use App\Http\Controllers\owner\DashboardController as OwnerDashboardController;
 use App\Http\Controllers\owner\KaryawanController as OwnerKaryawanController;
 use App\Http\Controllers\owner\ProfileController as OwnerProfileController;
@@ -65,8 +70,13 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('/admin/address/input-distance/{id}', [AddressDistanceController::class, 'inputDistance']);
     Route::put('/admin/address/update-distance/{id}', [AddressDistanceController::class, 'updateDistance']);
 
+    Route::get('/admin/proses-pesanan', [ProcessedTransaction::class, 'index']);
+    Route::post('/admin/update-status/{id}', [ProcessedTransaction::class, 'updateStatus'])->name('admin.updateStatus');
+    Route::post('/admin/finalize-status/{id}', [ProcessedTransaction::class, 'finalizeStatus'])->name('admin.finalizeStatus');
+
     Route::get('/admin/konfirmasi-pembayaran', [KonfirmasiPembayaranController::class, 'index']);
     Route::post('/admin/konfirmasi-pembayaran/confirm', [KonfirmasiPembayaranController::class, 'confirmPayment']);
+    Route::get('/admin/konfirmasi-pembayaran/cancel/{id_transaksi}', [KonfirmasiPembayaranController::class, 'cancelOrder'])->name('cancel.order');
 
     Route::get('/admin/address', [AddressDistanceController::class, 'index']);
 
@@ -183,6 +193,12 @@ Route::middleware(['auth', 'MO'])->group(function () {
     Route::get('orders/accept/{id}', [TransaksiController::class, 'acceptOrder']);
     Route::get('/orders/reject/{id}', [TransaksiController::class, 'rejectOrder']);
 
+
+
+    Route::get('/laporanBahanBakuPerPeriode/{startDate}/{endDate}', [PdfController::class, 'laporanPenjualanBulanan']);
+    Route::get('/laporan-penjualan-mo', [PdfController::class, 'laporanPenjualanBulanan']);
+    Route::get('/laporan-bahanBaku-mo/{startDate}/{endDate}', [PdfController::class, 'laporanBahanBakuPerPeriode']);
+
     Route::get('/manager/pemakaian_bahan_baku', [PemakaianBahanBakuController::class, 'index']);
 
     Route::get('/manager/kekurangan_bahan_baku', [ManagerBahanBakuController::class, 'kekuranganBahanBaku']);
@@ -195,6 +211,7 @@ Route::middleware(['auth', 'MO'])->group(function () {
     // Route::get('/manager/absensi', [AbsensiMController::class, 'index']);
     // Route::get('/absensi', [AbsensiMController::class, 'showAbsensi']);
 
+
 });
 
 Route::middleware(['auth', 'user'])->group(function () {
@@ -206,6 +223,7 @@ Route::middleware(['auth', 'user'])->group(function () {
 
     Route::get('/user/orders_history', [HistoryController::class, 'index']);
     Route::get('/user/orders_history/search', [HistoryController::class, 'search']);
+    Route::post('/user/orders_history/update_status/{id}', [HistoryController::class, 'updateStatus'])->name('user.updateStatus');
 
     Route::get('/cart', [CartController::class, 'index']);
 
@@ -252,6 +270,10 @@ Route::middleware(['auth', 'owner'])->group(function () {
     Route::post('/owner/profile/edit', [OwnerProfileController::class, 'edit']);
 
 
+
+    Route::get('/laporan-penjualan', [PdfController::class, 'laporanPenjualanBulanan']);
+    Route::get('/laporan-bahanBaku/{startDate}/{endDate}', [PdfController::class, 'laporanBahanBakuPerPeriode']);
+
     Route::get('/owner/laporan-produk', [LaporanProdukOwnerController::class, 'index']);
     Route::get('/pdf/penjualan-produk', [PdfController::class, 'penjualanProduk']);
 
@@ -262,6 +284,7 @@ Route::middleware(['auth', 'owner'])->group(function () {
 
     Route::get('/owner/rekapPenitip', [AbsensiController::class, 'rekapPenitip']);
     // Route::get('/rekap-penitip', [PenitipController::class, 'rekapPenitip']);
+
 
 });
 

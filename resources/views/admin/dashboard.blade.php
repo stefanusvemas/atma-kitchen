@@ -24,6 +24,15 @@
                         </div>
                     </div>
                 </div>
+                <div class="col">
+                <div class="col">
+    <div class="card">
+        <div class="card-body">
+            <h6 class="card-title">Today's Tips</h6>
+            <h5 class="card-text">Rp. {{ number_format(session('today_tips', 0), 2, ',', '.') }}</h5>
+        </div>
+    </div>
+</div>
             </div>
             <h4 class="mt-3">Recent Transactions</h4>
             <table class="table table-responsive">

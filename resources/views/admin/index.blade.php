@@ -46,6 +46,7 @@
                         <a href="{{url('/admin/customers')}}" class="list-group-item list-group-item-action {{ Request::is('admin/customers') ? 'active' : '' }}">Customers</a>
                         <a href="{{url('/admin/address')}}" class="list-group-item list-group-item-action {{ Request::is('admin/address') ? 'active' : '' }}">Address Distance</a>
                         <a href="{{url('/admin/konfirmasi-pembayaran')}}" class="list-group-item list-group-item-action {{ Request::is('admin/konfirmasi-pembayaran') ? 'active' : '' }}">Konfirmasi Pembayaran</a>
+                        <a href="{{url('/admin/proses-pesanan')}}" class="list-group-item list-group-item-action {{ Request::is('admin/proses-pesanan') ? 'active' : '' }}">Transaction Status</a>
                         <a href="{{url('/admin/poin')}}" class="list-group-item list-group-item-action disabled {{ Request::is('admin/poin') ? 'active' : '' }}">Poin</a>
                         <a href="{{url('/admin/penarikan-saldo')}}" class="list-group-item list-group-item-action {{ Request::is('/admin/penarikan-saldo') ? 'active' : '' }}">Pengajuan Penarikan</a>
                     </div>

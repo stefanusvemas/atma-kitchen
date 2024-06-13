@@ -7,7 +7,7 @@
             <h3>Payment Confirmation</h3>
             <hr>
 
-            <h4 class="mt-3">Pending Payments</h4>
+            <h4 class="mt-3">Confirmation Payments</h4>
             <table class="table table-bordered table-responsive">
                 <thead>
                     <tr>
@@ -44,6 +44,45 @@
                                     <td rowspan="{{ $payment->detail_transaksi->count() }}">{{ $payment->status }}</td>
                                     <td rowspan="{{ $payment->detail_transaksi->count() }}">
                                         <a href="#" data-bs-toggle="modal" data-bs-target="#confirmModal{{ $payment->id_transaksi }}">Confirm</a>
+                                    </td>
+                                @endif
+                            </tr>
+                        @endforeach
+                    @endforeach
+                </tbody>
+            </table>
+
+            <h4 class="mt-5">All Late Payments</h4>
+            <table class="table table-bordered table-responsive">
+                <thead>
+                    <tr>
+                        <th scope="col">Customer's Name</th>
+                        <th scope="col">Address</th>
+                        <th scope="col">Item</th>
+                        <th scope="col">Distance</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($late_payments as $payment)
+                        @foreach ($payment->detail_transaksi as $detail)
+                            @php
+                                $address = $payment->customer->addresses->first();
+                            @endphp
+                            <tr>
+                                @if ($loop->first)
+                                    <td rowspan="{{ $payment->detail_transaksi->count() }}">{{ $payment->customer->nama }}</td>
+                                    <td rowspan="{{ $payment->detail_transaksi->count() }}">
+                                        {{ $address->nama_jalan }}<br>
+                                        {{ $address->kecamatan }}<br>
+                                        {{ $address->kelurahan }}<br>
+                                    </td>
+                                @endif
+                                <td>{{ $detail->produk->nama }}</td>
+                                @if ($loop->first)
+                                    <td rowspan="{{ $payment->detail_transaksi->count() }}">{{ $address->jarak }} km</td>
+                                    <td rowspan="{{ $payment->detail_transaksi->count() }}">
+                                        <a href="{{ route('cancel.order', $payment->id_transaksi) }}" class="btn btn-danger">Cancel Order</a>
                                     </td>
                                 @endif
                             </tr>

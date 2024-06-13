@@ -17,7 +17,7 @@ class ResepController extends Controller
     public function index()
     {
         $user_data = Karyawan::where('id_karyawan', Auth::user()->id_karyawan)->with('jabatan')->first();
-        $products = Produk::has('resep')->get()->load('resep', 'resep.bahanBaku')->groupBy('id_produk');
+        $products = Produk::with(['resep', 'resep.bahanBaku'])->get();
         // return ($products);
         return view('admin.resep', compact('user_data', 'products'));
     }

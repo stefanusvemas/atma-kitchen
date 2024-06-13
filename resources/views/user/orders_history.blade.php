@@ -23,6 +23,8 @@
                         <th scope="col">Total Price</th>
                         <th>Nota</th>
                         <th scope="col" class="w-50">Products</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -38,6 +40,15 @@
                         @endif
                         <td>{{ $detail['produk']['nama'] }}</td>
                         @endforeach
+                        <td rowspan="{{ count($order['detail_transaksi']) }}">{{ $order['status'] }}</td>
+                        <td rowspan="{{ count($order['detail_transaksi']) }}">
+                            @if($order['status'] == 'sedang dikirim')
+                                <form action="{{ route('user.updateStatus', $order['id_transaksi']) }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="btn btn-success">Sudah Dikirim</button>
+                                </form>
+                            @endif
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>
