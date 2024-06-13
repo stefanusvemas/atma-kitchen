@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AbsensiController;
+use App\Http\Controllers\AbsensiMController;
 use App\Http\Controllers\admin\BahanBakuController as AdminBahanBakuController;
 use App\Http\Controllers\admin\CustomerController as AdminCustomerController;
 use App\Http\Controllers\admin\ProfileController as AdminProfileController;
@@ -29,7 +31,7 @@ use App\Http\Controllers\user\ProfileController as UserProfileController;
 use App\Http\Controllers\user\AddressController;
 use App\Http\Controllers\admin\AddressDistanceController;
 use App\Http\Controllers\admin\KonfirmasiPembayaranController;
-
+use App\Http\Controllers\admin\PenarikanSaldoController;
 use App\Http\Controllers\owner\DashboardController as OwnerDashboardController;
 use App\Http\Controllers\owner\KaryawanController as OwnerKaryawanController;
 use App\Http\Controllers\owner\ProfileController as OwnerProfileController;
@@ -118,6 +120,10 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     Route::get('/admin/customers/history/{id}', [HistoryPesananController::class, 'index']);
     Route::get('/admin/customers/history/{id}/search', [HistoryPesananController::class, 'search']);
+
+    Route::get('/admin/penarikan-saldo', [PenarikanSaldoController::class, 'index']);
+    Route::post('/admin/penarikan-saldo/konfirmasi/{id}', [PenarikanSaldoController::class, 'konfirmasi']);
+    Route::post('/admin/penarikan-saldo/tolak/{id}', [PenarikanSaldoController::class, 'tolak']);
 });
 
 Route::middleware(['auth', 'MO'])->group(function () {
@@ -181,9 +187,14 @@ Route::middleware(['auth', 'MO'])->group(function () {
 
     Route::get('/manager/kekurangan_bahan_baku', [ManagerBahanBakuController::class, 'kekuranganBahanBaku']);
 
+
     Route::get('/manager/laporan-produk', [LaporanProdukManagerController::class, 'index']);
     Route::get('/pdf/penjualan-produk', [PdfController::class, 'penjualanProduk']);
     Route::get('/manager/pdf/penjualan-produk', [PdfController::class, 'penjualanProduk']);
+
+    // Route::get('/manager/absensi', [AbsensiMController::class, 'index']);
+    // Route::get('/absensi', [AbsensiMController::class, 'showAbsensi']);
+
 });
 
 Route::middleware(['auth', 'user'])->group(function () {
@@ -240,10 +251,24 @@ Route::middleware(['auth', 'owner'])->group(function () {
     Route::get('/owner/profile', [OwnerProfileController::class, 'index']);
     Route::post('/owner/profile/edit', [OwnerProfileController::class, 'edit']);
 
+
     Route::get('/owner/laporan-produk', [LaporanProdukOwnerController::class, 'index']);
     Route::get('/pdf/penjualan-produk', [PdfController::class, 'penjualanProduk']);
+
+    Route::get('/owner/absensi', [AbsensiController::class, 'index']);
+    Route::get('/absensi', [AbsensiController::class, 'showAbsensi']);
+    //BELUM SELESAI
+    // Route::get('/owner/generateReport', [AbsensiController::class, 'generateReport']);
+
+    Route::get('/owner/rekapPenitip', [AbsensiController::class, 'rekapPenitip']);
+    // Route::get('/rekap-penitip', [PenitipController::class, 'rekapPenitip']);
+
 });
 
+// Route::middleware(['auth:sanctum', 'KL'])->group(function () {
+
+//     Route::get('/absensi', [AbsensiController::class, 'showAbsensi']);
+// });
 
 Route::get('/pdf/stok-bahan-baku', [PdfController::class, 'stokBahanBaku']);
 
@@ -251,4 +276,5 @@ Route::get('/forgot_password', [CustomerController::class, 'resetPassword']);
 Route::post('/inputEmail', [CustomerController::class, 'resetPasswordAction']);
 Route::get('/inputEmail/verifyResetPassword/{pass_key}', [CustomerController::class, 'verifyResetPassword'])->name('verifyResetPassword');
 Route::post('/inputEmail/verifyResetPassword/{pass_key}', [CustomerController::class, 'verifyResetPasswordAction'])->name('verifyResetPasswordAction');
+
 // route::get('/invoice', [PdfController::class, 'invoice']);

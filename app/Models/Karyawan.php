@@ -31,4 +31,8 @@ class Karyawan extends Model
     {
         return $this->hasOne(user_credential::class);
     }
+    public function absensi()
+    {
+        return $this->hasMany(Absensi::class, 'id_karyawan');
+    }
 }
