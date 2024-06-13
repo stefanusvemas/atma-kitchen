@@ -65,4 +65,20 @@ class PenarikanSaldoController extends Controller
         $withdrawal->save();
         return view('admin.pengajuan_penarikan', compact('user_data', 'withdrawals'));
     }
+
+    public function tolak($id)
+    {
+        // Retrieve the withdrawal request
+        $user_data = Karyawan::where(
+            'id_karyawan',
+            Auth::user()->id_karyawan
+        )->with('jabatan')->first();
+        $withdrawal = PenarikanSaldo::find($id);
+        $withdrawals = PenarikanSaldo::with('customer')->where('status', 'pending')->get();
+
+        // Update the status of the withdrawal request to 'failed'
+        $withdrawal->status = 'failed';
+        $withdrawal->save();
+        return view('admin.pengajuan_penarikan', compact('user_data', 'withdrawals'));
+    }
 }

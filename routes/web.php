@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AbsensiController;
+use App\Http\Controllers\AbsensiMController;
 use App\Http\Controllers\admin\BahanBakuController as AdminBahanBakuController;
 use App\Http\Controllers\admin\CustomerController as AdminCustomerController;
 use App\Http\Controllers\admin\ProfileController as AdminProfileController;
@@ -119,6 +120,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     Route::get('/admin/penarikan-saldo', [PenarikanSaldoController::class, 'index']);
     Route::post('/admin/penarikan-saldo/konfirmasi/{id}', [PenarikanSaldoController::class, 'konfirmasi']);
+    Route::post('/admin/penarikan-saldo/tolak/{id}', [PenarikanSaldoController::class, 'tolak']);
 });
 
 Route::middleware(['auth', 'MO'])->group(function () {
@@ -179,6 +181,9 @@ Route::middleware(['auth', 'MO'])->group(function () {
     Route::get('/orders/reject/{id}', [TransaksiController::class, 'rejectOrder']);
 
     Route::get('/manager/kekurangan_bahan_baku', [ManagerBahanBakuController::class, 'kekuranganBahanBaku']);
+
+    // Route::get('/manager/absensi', [AbsensiMController::class, 'index']);
+    // Route::get('/absensi', [AbsensiMController::class, 'showAbsensi']);
 });
 
 Route::middleware(['auth', 'user'])->group(function () {
@@ -237,6 +242,11 @@ Route::middleware(['auth', 'owner'])->group(function () {
 
     Route::get('/owner/absensi', [AbsensiController::class, 'index']);
     Route::get('/absensi', [AbsensiController::class, 'showAbsensi']);
+    //BELUM SELESAI
+    // Route::get('/owner/generateReport', [AbsensiController::class, 'generateReport']);
+
+    Route::get('/owner/rekapPenitip', [AbsensiController::class, 'rekapPenitip']);
+    // Route::get('/rekap-penitip', [PenitipController::class, 'rekapPenitip']);
 });
 
 // Route::middleware(['auth:sanctum', 'KL'])->group(function () {

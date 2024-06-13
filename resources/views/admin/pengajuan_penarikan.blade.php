@@ -14,6 +14,7 @@
                         <th scope="col">No Rek</th>
                         <th scope="col">Bank</th>
                         <th scope="col">Action</th>
+                        <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -28,8 +29,14 @@
                                 @csrf
                                 <input type="file" name="foto_bukti" class="form-control-file" onchange="document.getElementById('konfirmasiBtn').disabled = !this.value;">
                                 <button id="konfirmasiBtn" type="submit" class="btn btn-success" disabled>Konfirmasi</button>
+
                             </form>
                         </td>
+                        <td>
+                            <form action="{{ url('admin/penarikan-saldo/tolak/'. $withdrawal->id_penarikan) }}" method="POST">
+                                @csrf
+                                <button type="submit" class="btn btn-danger">Tolak</button>
+                            </form>
                         </td>
                     </tr>
                     @endforeach
